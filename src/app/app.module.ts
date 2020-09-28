@@ -44,8 +44,6 @@ import { AgmCoreModule } from "@agm/core";
 		HttpClientModule,
 		SharedModule.forRoot(),
 		AgmCoreModule.forRoot({
-			// please get your own API key here:
-			// https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en
 			apiKey: "",
 		}),
 		// RouterModule.forRoot(ROUTES, { preloadingStrategy: PreloadAllModules })
