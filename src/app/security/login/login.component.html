@@ -1,0 +1,82 @@
+<!-- BACKGROUND IMAGE -->
+<!--===================================================-->
+<div
+	id="bg-overlay"
+	style="background-image: url(assets/img/bg-img/bg-img-3.jpg);"
+	class="bg-img"
+></div>
+<!-- <div id="bg-overlay" style="background-image: url(assets/img/bg-img/bg1.jpg);" class="bg-img"></div> -->
+<!-- <div id="bg-overlay" style="background-image: url(assets/img/bg-img/bg2.jpg);" class="bg-img"></div> -->
+
+<!-- LOGIN FORM -->
+<!--===================================================-->
+<div class="cls-content">
+	<div class="cls-content-sm panel">
+		<div class="panel-body">
+			<div class="mar-ver pad-btm">
+				<h1 class="h3">Fiance | Login</h1>
+				<p>Entre na sua conta</p>
+			</div>
+
+			<form [formGroup]="loginForm">
+				<app-input-container [showTip]="false">
+					<input
+						type="text"
+						formControlName="login"
+						class="form-control"
+						placeholder="Username"
+						autofocus
+					/>
+					<span
+						class="glyphicon glyphicon-envelope form-control-feedback"
+					></span>
+				</app-input-container>
+
+				<app-input-container [showTip]="false">
+					<input
+						type="password"
+						formControlName="password"
+						class="form-control"
+						placeholder="Password"
+					/>
+					<span
+						class="glyphicon glyphicon-lock form-control-feedback"
+					></span>
+				</app-input-container>
+
+				<div class="checkbox pad-btm text-left">
+					<input
+						id="demo-form-checkbox"
+						class="magic-checkbox"
+						type="checkbox"
+					/>
+					<label for="demo-form-checkbox">Lembrar Usuário</label>
+				</div>
+				<button
+					(click)="login()"
+					class="btn btn-primary btn-lg btn-block"
+					[disabled]="loginForm.invalid"
+				>
+					Entrar
+				</button>
+			</form>
+		</div>
+
+		<!-- <div class="pad-all"> -->
+		<!-- <a href="pages-password-reminder.html" class="btn-link mar-rgt">Forgot password ?</a>
+			<a href="pages-register.html" class="btn-link mar-lft">Create a new account</a> -->
+		<!--
+			<div class="media pad-top bord-top">
+				<div class="pull-right">
+					<a href="#" class="pad-rgt"><i class="demo-psi-facebook icon-lg text-primary"></i></a>
+					<a href="#" class="pad-rgt"><i class="demo-psi-twitter icon-lg text-info"></i></a>
+					<a href="#" class="pad-rgt"><i class="demo-psi-google-plus icon-lg text-danger"></i></a>
+				</div> -->
+		<!-- <div class="media-body text-left text-bold text-main">
+					Login with
+					{{user | json}}
+				</div> -->
+		<!-- </div>
+		</div> -->
+	</div>
+</div>

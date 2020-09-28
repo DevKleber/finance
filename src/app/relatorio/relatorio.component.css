@@ -1,0 +1,39 @@
+.vencido {
+    font-style: normal;
+}
+
+.card-white {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
+    transition: 0.3s;
+    padding: 25px;
+}
+
+.line-two {
+    height: 340px;
+    overflow: hidden;
+}
+
+.line-three {
+    height: 240px;
+    overflow: hidden;
+}
+
+.text-1-4x {
+    font-size: 1.4em !important;
+}
+
+.text-1-32x {
+    font-size: 1.32em !important;
+}
+
+.text-1-1x {
+    font-size: 1.1em !important;
+}
+
+
+@media (max-width: 1500px) {
+    .heigth {
+        height: 180px;
+    }
+
+}
