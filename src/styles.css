@@ -1,6 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 
-
 @import "https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap";
 /* @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import "~@ng-select/ng-select/themes/default.theme.css";
@@ -12,10 +11,20 @@ body {
 }
 
 .obrigatorio {
-    color: #e34c45 !important;
-    font-size: .5em !important;
+	color: #e34c45 !important;
+	font-size: 0.5em !important;
 }
 .has-warning {
-    color: #e6a100;
-    font-weight: 700;
+	color: #e6a100;
+	font-weight: 700;
+}
+
+.card-1 {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	transition: 0.3s;
+	padding: 15px;
+}
+
+.card-1:hover {
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }

@@ -26,6 +26,24 @@ export const ROUTES: Routes = [
 		canLoad: [LoggedInGuard],
 		canActivate: [LoggedInGuard],
 	},
+	{
+		path: "cartao-credito",
+		loadChildren: () =>
+			import("./cartao-credito/cartao-credito.module").then(
+				(m) => m.CartaoCreditoModule
+			),
+		canLoad: [LoggedInGuard],
+		canActivate: [LoggedInGuard],
+	},
+	{
+		path: "mudar-texto",
+		loadChildren: () =>
+			import("./mudar-texto/mudar-texto.module").then(
+				(m) => m.MudarTextoModule
+			),
+		canLoad: [LoggedInGuard],
+		canActivate: [LoggedInGuard],
+	},
 
 	{
 		path: "not-found",
