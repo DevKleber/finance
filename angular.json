@@ -27,7 +27,11 @@
 							"src/favicon",
 							"src/assets"
 						],
-						"styles": ["src/assets/theme/css/sb-admin-2.min.css"],
+						"styles": [
+							"src/assets/theme/css/sb-admin-2.min.css",
+							"./node_modules/@fortawesome/fontawesome-free/css/all.css",
+							"src/styles.css"
+						],
 						"scripts": [
 							"src/assets/theme/js/jquery.min.js",
 							"src/assets/theme/js/bootstrap.bundle.min.js",

@@ -17,6 +17,15 @@ export const ROUTES: Routes = [
 		canLoad: [LoggedInGuard],
 		canActivate: [LoggedInGuard],
 	},
+	{
+		path: "mudar-texto",
+		loadChildren: () =>
+			import("./mudar-texto/mudar-texto.module").then(
+				(m) => m.MudarTextoModule
+			),
+		canLoad: [LoggedInGuard],
+		canActivate: [LoggedInGuard],
+	},
 
 	{
 		path: "not-found",

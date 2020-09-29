@@ -1,0 +1,15 @@
+.card{
+	 padding: 15px;
+	 margin: 15px;
+ }
+ .bodyCard{
+	 margin-top: 15px;
+ }
+.removeItem{
+	/* width: 20px;
+	height: 20px; */
+	position: absolute;
+	top: 0;
+	right: 0;
+	color: #e44c45;
+}

@@ -11,3 +11,11 @@ body {
 	font-family: "Roboto", sans-serif;
 }
 
+.obrigatorio {
+    color: #e34c45 !important;
+    font-size: .5em !important;
+}
+.has-warning {
+    color: #e6a100;
+    font-weight: 700;
+}
