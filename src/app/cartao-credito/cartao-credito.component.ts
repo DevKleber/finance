@@ -19,6 +19,8 @@ export class CartaoCreditoComponent implements OnInit {
 	form: FormGroup;
 	loader: boolean = true;
 	imgBin: string = "";
+	urlImgBin: string = "/assets/img/card/bin";
+	bandeira: string = "";
 
 	order: any = {};
 	columns: any;
@@ -53,6 +55,7 @@ export class CartaoCreditoComponent implements OnInit {
 			no_cartao_credito: this.formBuilder.control("", [
 				Validators.required,
 			]),
+			bandeira: this.formBuilder.control(""),
 			numero: this.formBuilder.control("", [Validators.required]),
 			vl_limite: this.formBuilder.control("", [Validators.required]),
 			dia_vencimento: this.formBuilder.control("", [Validators.required]),
@@ -65,9 +68,9 @@ export class CartaoCreditoComponent implements OnInit {
 	}
 	getBinCard() {
 		const number = this.form.get("numero").value;
-		this.imgBin = `/assets/img/card/bin/${this.helper.detectCard(
-			number
-		)}.png`;
+		this.bandeira = this.helper.detectCard(number);
+		this.form.controls["bandeira"].setValue(this.bandeira);
+		this.imgBin = `${this.urlImgBin}/${this.bandeira}.png`;
 	}
 
 	save(form) {
@@ -86,9 +89,9 @@ export class CartaoCreditoComponent implements OnInit {
 		});
 	}
 
-	inativar(mudarTexto) {
+	inativar(cartaoCredito) {
 		Swal.fire({
-			title: `Remover ${mudarTexto.frase}?`,
+			title: `Remover ${cartaoCredito.no_cartao_credito}?`,
 			type: "info",
 			showCancelButton: true,
 			confirmButtonColor: "#3085d6",
@@ -97,12 +100,12 @@ export class CartaoCreditoComponent implements OnInit {
 		}).then((result) => {
 			if (result.value) {
 				this.cartaoCreditoService
-					.inativar(mudarTexto.id_mudartexto)
+					.inativar(cartaoCredito.id_cartao_credito)
 					.subscribe((data) => {
 						if (data["response"]) {
-							mudarTexto.bo_ativo = 0;
+							cartaoCredito.bo_ativo = 0;
 							this.cartoes.splice(
-								this.cartoes.indexOf(mudarTexto),
+								this.cartoes.indexOf(cartaoCredito),
 								1
 							);
 							this.notificationService.notifySweet(`Excluido!`);

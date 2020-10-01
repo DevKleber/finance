@@ -37,6 +37,14 @@ export class Helper {
 			}
 		}
 	}
+	findAndRemoveClassByName(className) {
+		let item = document.getElementsByClassName(className);
+
+		if (item.length > 0) {
+			item[0].classList.remove(className);
+		}
+	}
+
 	retira_acentos(string) {
 		return string.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 	}

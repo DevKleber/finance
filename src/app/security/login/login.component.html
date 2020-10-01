@@ -1,82 +1,63 @@
 <!-- BACKGROUND IMAGE -->
 <!--===================================================-->
-<div
-	id="bg-overlay"
-	style="background-image: url(assets/img/bg-img/bg-img-3.jpg);"
-	class="bg-img"
-></div>
-<!-- <div id="bg-overlay" style="background-image: url(assets/img/bg-img/bg1.jpg);" class="bg-img"></div> -->
-<!-- <div id="bg-overlay" style="background-image: url(assets/img/bg-img/bg2.jpg);" class="bg-img"></div> -->
 
-<!-- LOGIN FORM -->
-<!--===================================================-->
-<div class="cls-content">
-	<div class="cls-content-sm panel">
-		<div class="panel-body">
-			<div class="mar-ver pad-btm">
-				<h1 class="h3">Fiance | Login</h1>
-				<p>Entre na sua conta</p>
-			</div>
 
-			<form [formGroup]="loginForm">
-				<app-input-container [showTip]="false">
-					<input
-						type="text"
-						formControlName="login"
-						class="form-control"
-						placeholder="Username"
-						autofocus
-					/>
-					<span
-						class="glyphicon glyphicon-envelope form-control-feedback"
-					></span>
-				</app-input-container>
+<div class="container">
 
-				<app-input-container [showTip]="false">
-					<input
-						type="password"
-						formControlName="password"
-						class="form-control"
-						placeholder="Password"
-					/>
-					<span
-						class="glyphicon glyphicon-lock form-control-feedback"
-					></span>
-				</app-input-container>
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
 
-				<div class="checkbox pad-btm text-left">
-					<input
-						id="demo-form-checkbox"
-						class="magic-checkbox"
-						type="checkbox"
-					/>
-					<label for="demo-form-checkbox">Lembrar Usuário</label>
-				</div>
-				<button
-					(click)="login()"
-					class="btn btn-primary btn-lg btn-block"
-					[disabled]="loginForm.invalid"
-				>
-					Entrar
-				</button>
-			</form>
-		</div>
+      <div class="col-xl-10 col-lg-12 col-md-9">
 
-		<!-- <div class="pad-all"> -->
-		<!-- <a href="pages-password-reminder.html" class="btn-link mar-rgt">Forgot password ?</a>
-			<a href="pages-register.html" class="btn-link mar-lft">Create a new account</a> -->
-		<!--
-			<div class="media pad-top bord-top">
-				<div class="pull-right">
-					<a href="#" class="pad-rgt"><i class="demo-psi-facebook icon-lg text-primary"></i></a>
-					<a href="#" class="pad-rgt"><i class="demo-psi-twitter icon-lg text-info"></i></a>
-					<a href="#" class="pad-rgt"><i class="demo-psi-google-plus icon-lg text-danger"></i></a>
-				</div> -->
-		<!-- <div class="media-body text-left text-bold text-main">
-					Login with
-					{{user | json}}
-				</div> -->
-		<!-- </div>
-		</div> -->
-	</div>
-</div>
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class=" p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+              <div class="col-lg-6 d-none d-lg-block bg-login-image" id="bglogin"></div>
+              <div class="col-lg-6">
+                <div class="p-5">
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                  </div>
+                  <form class="user" [formGroup]="loginForm">
+                    <div class="form-group">
+						<input type="text" formControlName="login" class="form-control form-control-user" placeholder="Enter Email Address..." autofocus />
+                    </div>
+                    <div class="form-group">
+					  <input type="password" formControlName="password" class="form-control form-control-user" placeholder="Password" />
+                    </div>
+                    <div class="form-group">
+                      <div class="custom-control custom-checkbox small">
+                        <input type="checkbox" class="custom-control-input" id="customCheck">
+                        <label class="custom-control-label" for="customCheck">Remember Me</label>
+                      </div>
+                    </div>
+                    <button (click)="login()" class="btn btn-primary btn-lg btn-block" [disabled]="loginForm.invalid" class="btn btn-primary btn-user btn-block">
+                      Login
+                    </button>
+                    <hr>
+                    <a href="#" class="btn btn-google btn-user btn-block">
+                      <i class="fab fa-google fa-fw"></i> Login with Google
+                    </a>
+                    <a href="#" class="btn btn-facebook btn-user btn-block">
+                      <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+                    </a>
+                  </form>
+                  <hr>
+                  <div class="text-center">
+                    <a class="small" href="forgot-password.html">Forgot Password?</a>
+                  </div>
+                  <div class="text-center">
+                    <a class="small" href="register.html">Create an Account!</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>

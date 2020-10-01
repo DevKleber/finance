@@ -54,5 +54,41 @@ export const ROUTES: Routes = [
 		canActivate: [LoggedInGuard],
 		canLoad: [LoggedInGuard],
 	},
+
+	{
+		path: "amigos",
+		loadChildren: () =>
+			import("./amigos/amigos.module").then((m) => m.AmigosModule),
+		canLoad: [LoggedInGuard],
+		canActivate: [LoggedInGuard],
+	},
+	{
+		path: "amigos/incluir",
+		loadChildren: () =>
+			import("./amigos/incluir/incluir.module").then(
+				(m) => m.IncluirModule
+			),
+		canLoad: [LoggedInGuard],
+		canActivate: [LoggedInGuard],
+	},
+	{
+		path: "amigos/alterar/:id",
+		loadChildren: () =>
+			import("./amigos/alterar/alterar.module").then(
+				(m) => m.AlterarModule
+			),
+		canLoad: [LoggedInGuard],
+		canActivate: [LoggedInGuard],
+	},
+	{
+		path: "amigos/detalhar/:id",
+		loadChildren: () =>
+			import("./amigos/detalhar/detalhar.module").then(
+				(m) => m.DetalharModule
+			),
+		canLoad: [LoggedInGuard],
+		canActivate: [LoggedInGuard],
+	},
+
 	{ path: "**", redirectTo: "not-found", pathMatch: "full" },
 ];

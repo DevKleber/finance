@@ -57,12 +57,16 @@
 		<div *ngFor="let item of cartoes">
 			<div class="credCard card-1" style="margin: 15px;">
 				<div class="displayFlexColumn">
+					<div class="removeItem btn btn-sm" (click)="inativar(item)">
+						<i class="fas fa-minus-circle"></i>
+					</div>
+
 					<div class="displayFlexRow">
 						<div class="titulo"></div>
 						<div class="empresa text-empresa text-center">
 							{{item?.no_cartao_credito}}
 						</div>
-						<div class="bandeira" [style.background-image]="'url(' + imgBin + ' )' | safeHtml: 'style' "></div>
+						<div class="bandeira" [style.background-image]="'url(' + urlImgBin +'/'+ item?.bandeira + '.png )' | safeHtml: 'style' "></div>
 					</div>
 
 					<div class="displayFlexRow">
