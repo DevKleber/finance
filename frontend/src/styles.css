@@ -28,6 +28,12 @@ body {
 .card-1:hover {
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
+.modal-header{
+	border-bottom-width: 0px!important;
+}
+.modal-footer{
+	border-top-width: 0px!important;
+}
 
 .uploadArquivo {
     width: 250px;
@@ -43,3 +49,4 @@ body {
     background-size: cover;
     background-position: center;
 }
+

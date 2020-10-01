@@ -32,17 +32,19 @@ export class AmigosComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this.searchControl = this.fb.control("");
-		this.searchForm = this.fb.group({
-			searchControl: this.searchControl,
-		});
-		this.breadcrumbService.chosenPagina([]);
+		this.breadCrumb();
 		this.getAmigos();
+	}
+	breadCrumb() {
+		this.breadcrumbService.chosenPagina([
+			{ no_rotina: "Amigos", ds_url: "amigos", active: "" },
+			{ no_rotina: "Inserir", ds_url: "mudar-texto", active: "active" },
+		]);
 	}
 
 	getAmigos() {
-		this.amigosService.getAmigos().subscribe((Amigo) => {
-			this.amigos = Amigo["dados"];
+		this.amigosService.getAmigos().subscribe((res) => {
+			this.amigos = res;
 			this.loader = false;
 		});
 	}

@@ -30,7 +30,7 @@ export class LoginService {
 		return this.http.get(`${API}/me`);
 	}
 	getUser() {
-		let user = localStorage.getItem("user");
+		let user = localStorage.getItem("pessoa");
 		let userDecrip = this.helper.decrypt(user);
 		let client = JSON.parse(atob(userDecrip));
 		return client;
@@ -44,6 +44,7 @@ export class LoginService {
 		// this.logout();
 		return false;
 	}
+
 	logoutForce() {
 		localStorage.removeItem("dG9rZW5maW5hbmNl");
 		localStorage.removeItem("user");
@@ -84,6 +85,11 @@ export class LoginService {
 						btoa(JSON.stringify(user.empresa))
 					);
 					localStorage.setItem("empresa", empresaString);
+
+					let pessoa = this.helper.encrypt(
+						btoa(JSON.stringify(user.pessoa))
+					);
+					localStorage.setItem("pessoa", pessoa);
 
 					(this.user = user), this.mostrarMenu.emit(true);
 				})

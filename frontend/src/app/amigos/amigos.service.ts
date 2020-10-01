@@ -20,21 +20,20 @@ export class AmigosService {
 	) {}
 
 	getAmigos(search?: string): Observable<Amigos[]> {
-		return this.http.get<Amigos[]>(`${API}/amigos`);
+		return this.http.get<Amigos[]>(`${API}/amigo`);
 	}
 
 	getamigosById(id: string): Observable<Amigos> {
-		return this.http.get<Amigos>(`${API}/amigos/${id}`);
+		return this.http.get<Amigos>(`${API}/amigo/${id}`);
 	}
 
 	save(form) {
-		return this.http.post<any>(`${API}/amigos`, form).subscribe(
+		return this.http.post<any>(`${API}/amigo`, form).subscribe(
 			(data) => {
 				if (data["dados"]) {
 					this.notifySweet("Registro Inserido Com Sucesso!");
-					this.router.navigate(["/amigos"]);
+					this.router.navigate(["/amigo"]);
 				}
-				console.log(data);
 			},
 			(error) => {
 				this.notifySweet(`Error: ${error}`);
@@ -43,11 +42,11 @@ export class AmigosService {
 	}
 
 	update(form, id) {
-		return this.http.put(`${API}/amigos/${id}`, form).subscribe(
+		return this.http.put(`${API}/amigo/${id}`, form).subscribe(
 			(data) => {
 				if (data["response"]) {
 					this.notifySweet("Registro Alterado Com Sucesso!");
-					this.router.navigate(["/amigos"]);
+					this.router.navigate(["/amigo"]);
 				}
 				console.log(data);
 			},
@@ -57,7 +56,7 @@ export class AmigosService {
 		);
 	}
 	inativar(id: string) {
-		return this.http.delete(`${API}/amigos/${id}`);
+		return this.http.delete(`${API}/amigo/${id}`);
 	}
 
 	notifySweet(msg) {

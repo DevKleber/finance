@@ -1,0 +1,44 @@
+/* margin */
+.margin-top-15{
+	margin-top: 15px;
+}
+.margin-right-15{
+	margin-right: 15px;
+}
+.margin-bottom-15{
+	margin-bottom: 15px;
+}
+.margin-left-15{
+	margin-left: 15px;
+}
+.margin-15{
+	margin: 15px;
+}
+
+/* padding */
+.padding-top-15{
+	padding-top: 15px;
+}
+.padding-right-15{
+	padding-right: 15px;
+}
+.padding-bottom-15{
+	padding-bottom: 15px;
+}
+.padding-left-15{
+	padding-left: 15px;
+}
+.padding-15{
+	padding: 15px;
+}
+
+.w-100{
+	width: 100%;
+}
+.h-100{
+	height: 100%;
+}
+
+.border{
+	border: 1px solid #defefe;
+}
