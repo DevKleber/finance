@@ -41,9 +41,9 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 
     Route::resource('menu', 'MenuController');
 
-    // Route::resource('despesa', 'DespesaController');
-    // Route::put('despesaItem/{id}', 'DespesaController@updateItem');
-    // Route::put('pagarItem/{id}', 'DespesaController@pagarDespesa');
+    Route::resource('despesa', 'DespesaController');
+    Route::put('despesaItem/{id}', 'DespesaController@updateItem');
+    Route::put('pagarItem/{id}', 'DespesaController@pagarDespesa');
 
     Route::put('repetir-receita/{id}', 'ReceitaController@changeBoRepetir');
     Route::get('solicitacao-amizade', 'AmigoController@getSolicitacoesAmizadePendente');
