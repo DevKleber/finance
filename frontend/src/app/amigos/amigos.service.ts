@@ -22,7 +22,25 @@ export class AmigosService {
 	getAmigos(search?: string): Observable<Amigos[]> {
 		return this.http.get<Amigos[]>(`${API}/amigo`);
 	}
+	getSolicitacoesAmizade(search?: string): Observable<Amigos[]> {
+		return this.http.get<Amigos[]>(`${API}/solicitacao-amizade`);
+	}
+	solicitarAmizade(id_pessoa): Observable<Amigos[]> {
+		return this.http.post<Amigos[]>(`${API}/amigo/`, {
+			id_pessoa: id_pessoa,
+		});
+	}
 
+	aceitarOuRecusar(id, situacao) {
+		return this.http.put(
+			`${API}/aceitar-solicitacao/${id}/${situacao}`,
+			null
+		);
+	}
+
+	procurarPessoa(nome: string): Observable<any[]> {
+		return this.http.get<any[]>(`${API}/pessoa/${nome}`);
+	}
 	getamigosById(id: string): Observable<Amigos> {
 		return this.http.get<Amigos>(`${API}/amigo/${id}`);
 	}

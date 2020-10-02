@@ -21,7 +21,7 @@ Route::post('new/user', 'PessoaController@store');
 Route::get('auth/logout', 'AuthController@logout');
 Route::post('auth/refresh', 'AuthController@refresh');
 
-Route::group(['middleware' => 'jwt.auth'], function(){
+Route::group(['middleware' => 'jwt.auth'], function () {
     Route::resource('tipoDespesa', 'TipoDespesaController');
     Route::resource('mudarTexto', 'MudarTextoController');
     Route::resource('user', 'PessoaController');
@@ -31,23 +31,26 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::resource('cartao-credito', 'CartaoCreditoController');
     Route::resource('amigo', 'AmigoController');
     Route::resource('receita', 'ReceitaController');
-    
+
     Route::resource('despesa_conta', 'DespesaContaController');
     Route::resource('despesa_cartao', 'DespesaCartaoController');
     Route::resource('despesa_compartilhada', 'DespesaCompartilhadaController');
 
     Route::put('despesaItem/{id}', 'DespesaController@updateItem');
     Route::put('pagarItem/{id}', 'DespesaController@pagarDespesa');
-    
+
     Route::resource('menu', 'MenuController');
 
     // Route::resource('despesa', 'DespesaController');
     // Route::put('despesaItem/{id}', 'DespesaController@updateItem');
     // Route::put('pagarItem/{id}', 'DespesaController@pagarDespesa');
-    
+
     Route::put('repetir-receita/{id}', 'ReceitaController@changeBoRepetir');
     Route::get('solicitacao-amizade', 'AmigoController@getSolicitacoesAmizadePendente');
-    Route::put('aceitar-solicitacao/{id}', 'AmigoController@aceitarSolicitacoesAmizadePendente');
+    Route::put('aceitar-solicitacao/{id}/{s}', 'AmigoController@aceitarOuRecusarSolicitacoesAmizadePendente');
+
+    Route::get('pessoa/{nome}', 'AmigoController@procurarPessoas');
+
     Route::post('amigo/novo', 'AmigoController@semUsuario');
     Route::put('conta/ativar/{id}', 'ContaController@ativar');
     Route::get('auth/me', 'AuthController@me');

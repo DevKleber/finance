@@ -16,15 +16,87 @@ class AmigoController extends Controller
 
     public function index()
     {
-        $amigo = \App\Amigo::where('id_usuario', $this->token['id_usuario'])
+        $euSouAmigo = \App\Amigo::where('id_usuario', $this->token['id_usuario'])->where('amigos.situacao', '<>', 'r')
             ->Join('pessoa', 'pessoa.id_pessoa', '=', 'amigos.id_pessoa')
+            ->select(
+                'pessoa.no_pessoa',
+                'pessoa.sexo',
+                'pessoa.dt_nascimento',
+                'pessoa.no_email',
+                'pessoa.nu_cpfcnpj',
+                'pessoa.bo_ativo',
+                'pessoa.img_perfil',
+                'amigos.*'
+            )
             ->get()
         ;
-        if (!$amigo) {
+        if (!$euSouAmigo) {
             return response(['response' => 'Amigo não encontrada'], 400);
         }
 
-        return $amigo;
+        $meusAmigos = \App\Amigo::where('amigos.id_pessoa', $this->token['id_pessoa'])->where('amigos.situacao', '<>', 'r')
+            ->Join('usuario', 'usuario.id_usuario', '=', 'amigos.id_usuario')
+            ->Join('pessoa', 'pessoa.id_pessoa', '=', 'usuario.id_pessoa')
+            ->select(
+                'pessoa.no_pessoa',
+                'pessoa.sexo',
+                'pessoa.dt_nascimento',
+                'pessoa.no_email',
+                'pessoa.nu_cpfcnpj',
+                'pessoa.bo_ativo',
+                'pessoa.img_perfil',
+                'amigos.*'
+            )
+            ->get()
+        ;
+        if (!$meusAmigos) {
+            return response(['response' => 'Amigo não encontrada'], 400);
+        }
+
+        return ['euSouAmigo' => $euSouAmigo, 'meusAmigos' => $meusAmigos, 'tudo' => $euSouAmigo->merge($meusAmigos)];
+    }
+
+    public function procurarPessoas($search)
+    {
+        $amigoSolicitadoPorMim = \App\Amigo::where('amigos.id_usuario', $this->token['id_usuario'])
+            ->Join('pessoa', 'pessoa.id_pessoa', '=', 'amigos.id_pessoa')
+            ->select(
+                'pessoa.no_pessoa',
+                'pessoa.sexo',
+                'pessoa.dt_nascimento',
+                'pessoa.no_email',
+                'pessoa.nu_cpfcnpj',
+                'pessoa.bo_ativo',
+                'pessoa.img_perfil',
+                'amigos.*'
+            )
+            ->get()
+        ;
+
+        $amigoSolicitadoPeloAmigo = \App\Amigo::where('amigos.id_pessoa', '=', $this->token['id_pessoa'])
+            ->Join('usuario', 'usuario.id_usuario', '=', 'amigos.id_usuario')
+            ->Join('pessoa', 'pessoa.id_pessoa', '=', 'usuario.id_pessoa')
+            ->select(
+                'pessoa.id_pessoa',
+                'pessoa.no_pessoa',
+                'pessoa.sexo',
+                'pessoa.dt_nascimento',
+                'pessoa.no_email',
+                'pessoa.nu_cpfcnpj',
+                'pessoa.bo_ativo',
+                'pessoa.img_perfil'
+            )->get();
+        $amigos = $amigoSolicitadoPorMim->merge($amigoSolicitadoPeloAmigo);
+        $idAmigos = [];
+        foreach ($amigos as $key => $value) {
+            $idAmigos[] = $value->id_pessoa;
+        }
+
+        return \App\Pessoa::where('bo_ativo', true)
+            ->where('no_pessoa', 'like', '%'.strtolower($search).'%')
+            ->whereNotIn('id_pessoa', $idAmigos)
+            ->get()
+        ;
     }
 
     public function store(Request $request)
@@ -34,7 +106,7 @@ class AmigoController extends Controller
         * c = cancelado
         * p = pendente
         */
-        $fomosAmigos = false;
+        $eramosAmigos = false;
         $pessoa = new \App\Pessoa();
 
         $request['id_usuario'] = $this->token['id_usuario']; // requisitante
@@ -49,30 +121,46 @@ class AmigoController extends Controller
         ;
 
         $amigo = null;
-        if (count($amigoSolicitadoByMe) > 0) {
+        if (null != $amigoSolicitadoByMe) {
             //verificando se eu já mandei solicitação de amizade para essa pessoa
-            $fomosAmigos = true;
+            $eramosAmigos = true;
             $amigo = $amigoSolicitadoByMe;
         } else {
             $pessoaSolicitada = $pessoa->getUsuarioPessoaByIdpessoa($request['id_pessoa']);
             //verificando se a pessoa já mandou solicitação de amizade para mim
             $solicitacoesPeloAmigo = \App\Amigo::where([['id_usuario', '=', $pessoaSolicitada->id_usuario], ['id_pessoa', '=', $usuarioPessoaLogado->id_pessoa]])->first();
 
-            if (count($solicitacoesPeloAmigo) > 0) {
-                $fomosAmigos = true;
+            if (null != $solicitacoesPeloAmigo) {
+                $eramosAmigos = true;
                 $amigo = $solicitacoesPeloAmigo;
             }
         }
-        if ($fomosAmigos) {
+        if ($eramosAmigos) {
             $amigo->situacao = 'p';
             if (!$amigo->save()) {
                 return response(['response' => 'Erro ao fazer amizade'], 400);
             }
 
-            return response(['response' => 'Amizade feita com sucesso']);
+            return response(['response' => 'Amizade feita com sucesso', 'dados' => $amigo]);
         }
+        $novoAmigo = \App\Amigo::create($request->all());
 
-        return \App\Amigo::create($request->all());
+        $amigo = \App\Amigo::where('id_amigos', $novoAmigo->id_amigos)
+            ->Join('pessoa', 'pessoa.id_pessoa', '=', 'amigos.id_pessoa')
+            ->select(
+                'pessoa.no_pessoa',
+                'pessoa.sexo',
+                'pessoa.dt_nascimento',
+                'pessoa.no_email',
+                'pessoa.nu_cpfcnpj',
+                'pessoa.bo_ativo',
+                'pessoa.img_perfil',
+                'amigos.*'
+            )
+            ->first()
+        ;
+
+        return ['dados' => $amigo];
     }
 
     public function show($id)
@@ -116,21 +204,35 @@ class AmigoController extends Controller
         $usuarioPessoaLogado = $pessoa->getUsuarioPessoa();
 
         return \App\Amigo::where([
-            ['id_pessoa', '=', $usuarioPessoaLogado->id_pessoa],
+            ['amigos.id_pessoa', '=', $usuarioPessoaLogado->id_pessoa],
             ['situacao', '=', 'p'],
-        ])->get();
+        ])
+            ->Join('usuario', 'usuario.id_usuario', '=', 'amigos.id_usuario')
+            ->Join('pessoa', 'pessoa.id_pessoa', '=', 'usuario.id_pessoa')
+            ->select(
+                'pessoa.no_pessoa',
+                'pessoa.sexo',
+                'pessoa.dt_nascimento',
+                'pessoa.no_email',
+                'pessoa.nu_cpfcnpj',
+                'pessoa.bo_ativo',
+                'pessoa.img_perfil',
+                'amigos.*'
+            )
+            ->get()
+        ;
     }
 
-    public function aceitarSolicitacoesAmizadePendente($id)
+    public function aceitarOuRecusarSolicitacoesAmizadePendente($id, $situacao)
     {
         $pessoa = new \App\Pessoa();
         $usuarioPessoaLogado = $pessoa->getUsuarioPessoa();
 
         $amigo = \App\Amigo::find($id);
         if ($usuarioPessoaLogado->id_pessoa != $amigo->id_pessoa) {
-            return response(['error' => 'você não tem permissao para aceitar essa solicitacao de amaizade']);
+            return response(['response' => 'você não tem permissao para aceitar essa solicitacao de amaizade'], 400);
         }
-        $amigo->situacao = 'a';
+        $amigo->situacao = $situacao;
         if (!$amigo->save()) {
             return response(['response' => 'Erro ao aceitar'], 400);
         }

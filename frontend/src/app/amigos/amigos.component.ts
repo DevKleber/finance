@@ -15,6 +15,7 @@ import { Observable } from "rxjs";
 })
 export class AmigosComponent implements OnInit {
 	amigos: Amigos[];
+	solicitacoesAmizade: Amigos[] = [];
 	searchForm: FormGroup;
 	searchControl: FormControl;
 	loader: boolean = true;
@@ -22,6 +23,12 @@ export class AmigosComponent implements OnInit {
 	itensPorPagina = 10;
 	order: any = {};
 	columns: any;
+
+	// loaders
+	fimCarregamentoProcurarPessoa: string = null;
+
+	nomePessoaModel: string = "";
+	pessoas: any[] = [];
 
 	constructor(
 		private amigosService: AmigosService,
@@ -41,12 +48,55 @@ export class AmigosComponent implements OnInit {
 			{ no_rotina: "Inserir", ds_url: "mudar-texto", active: "active" },
 		]);
 	}
-
+	procurarPessoa() {
+		if (!this.nomePessoaModel.length) return false;
+		this.amigosService
+			.procurarPessoa(this.nomePessoaModel)
+			.subscribe((res) => {
+				this.fimCarregamentoProcurarPessoa = !res.length
+					? "Nenhuma registro encontrado"
+					: null;
+				this.pessoas = res;
+			});
+	}
 	getAmigos() {
 		this.amigosService.getAmigos().subscribe((res) => {
-			this.amigos = res;
+			this.amigos = res["tudo"];
 			this.loader = false;
 		});
+	}
+
+	getSolicitacoesAmizade() {
+		this.amigosService.getSolicitacoesAmizade().subscribe((res) => {
+			this.solicitacoesAmizade = res;
+			this.loader = false;
+		});
+	}
+	solicitarAmizade(pessoa) {
+		this.amigosService
+			.solicitarAmizade(pessoa.id_pessoa)
+			.subscribe((res) => {
+				this.amigos.push(res["dados"]);
+				this.notificationService.notifySweet(
+					"Solicitação de amizade enviada"
+				);
+				this.loader = false;
+			});
+	}
+	aceitarOuRecusar(solicitacao, situacao) {
+		this.amigosService
+			.aceitarOuRecusar(solicitacao.id_amigos, situacao)
+			.subscribe((res) => {
+				let msg = "Amizade feita!";
+				if (situacao == "r") {
+					msg = "recusado!";
+				}
+				this.notificationService.notifySweet(msg);
+				this.solicitacoesAmizade.splice(
+					this.solicitacoesAmizade.indexOf(solicitacao),
+					1
+				);
+			});
 	}
 
 	inativar(amigo) {

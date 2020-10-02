@@ -42,3 +42,6 @@
 .border{
 	border: 1px solid #defefe;
 }
+.cursor-pointer{
+	cursor: pointer;
+}

@@ -33,8 +33,12 @@ export class LoginComponent implements OnInit, AfterContentInit {
 		this.navigateTo =
 			this.activatedRoute.snapshot.params["to"] || btoa("/");
 		// console.log(atob(this.navigateTo));
+		this.personalizarLogin();
 	}
 	ngAfterContentInit(): void {
+		this.personalizarLogin();
+	}
+	personalizarLogin() {
 		this.imgProfileLogin();
 		this.backgroundLogin();
 		this.cssPersonalizadoLogin();

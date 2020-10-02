@@ -8,10 +8,10 @@
 		<div id="content">
 			<app-header *ngIf=(mostrarMenu)></app-header>
 			<div class="container-fluid">
-				<app-breadcrumb></app-breadcrumb>
+				<app-breadcrumb *ngIf=(mostrarMenu)></app-breadcrumb>
 
 				<div class="col-xl-12 col-md-12 mb-4">
-					<div class="card shadow h-100 py-2">
+					<div [ngClass]="mostrarMenu ? 'card shadow h-100 py-2' : 'h-100 py-2'">
 						<div class="card-body">
 							<router-outlet></router-outlet>
 						</div>
