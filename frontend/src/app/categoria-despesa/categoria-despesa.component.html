@@ -4,7 +4,9 @@
 		class="card shadow h-100 margin-15 padding-45"
 		*ngFor="let pai of categoriaDespesas | keyvalue"
 	>
-		{{ pai.value.no_categoria_despesa }}
+		<p class="catPai">
+			{{ pai.value.no_categoria_despesa }}
+		</p>
 		<div class="action">
 			<div class="item itemRemove">
 				<i class="fas fa-trash"></i>
@@ -17,11 +19,15 @@
 			</button> -->
 		</div>
 		<div
-			class=""
-			style="margin-left: 30px"
+			class="catFilhas"
+			style="margin-left: 10px"
 			*ngFor="let filha of pai.value.children | keyvalue"
 		>
-			{{ filha.value.no_categoria_despesa }}
+			<img
+				src="assets/img/system/icons/right.png"
+				width="40px"
+				style="margin-top: -16px"
+			/>{{ filha.value.no_categoria_despesa }}
 		</div>
 	</div>
 </div>
