@@ -90,5 +90,24 @@ export const ROUTES: Routes = [
 		canActivate: [LoggedInGuard],
 	},
 
+	{
+		path: "categoria-despesa",
+		loadChildren: () =>
+			import("./categoria-despesa/categoria-despesa.module").then(
+				(m) => m.CategoriaDespesaModule
+			),
+		canLoad: [LoggedInGuard],
+		canActivate: [LoggedInGuard],
+	},
+	{
+		path: "categoria-despesa/incluir",
+		loadChildren: () =>
+			import("./categoria-despesa/incluir/incluir.module").then(
+				(m) => m.IncluirModule
+			),
+		canLoad: [LoggedInGuard],
+		canActivate: [LoggedInGuard],
+	},
+
 	{ path: "**", redirectTo: "not-found", pathMatch: "full" },
 ];
