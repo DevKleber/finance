@@ -99,15 +99,6 @@ export const ROUTES: Routes = [
 		canLoad: [LoggedInGuard],
 		canActivate: [LoggedInGuard],
 	},
-	{
-		path: "categoria-despesa/incluir",
-		loadChildren: () =>
-			import("./categoria-despesa/incluir/incluir.module").then(
-				(m) => m.IncluirModule
-			),
-		canLoad: [LoggedInGuard],
-		canActivate: [LoggedInGuard],
-	},
 
 	{ path: "**", redirectTo: "not-found", pathMatch: "full" },
 ];
