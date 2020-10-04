@@ -5,16 +5,17 @@
   To learn more about this file see: https://angular.io/config/solution-tsconfig.
 */
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./src/tsconfig.app.json"
-    },
-    {
-      "path": "./src/tsconfig.spec.json"
-    },
-    {
-      "path": "./e2e/tsconfig.e2e.json"
-    }
-  ]
+	"resolveJsonModule": true,
+	"files": [],
+	"references": [
+		{
+			"path": "./src/tsconfig.app.json"
+		},
+		{
+			"path": "./src/tsconfig.spec.json"
+		},
+		{
+			"path": "./e2e/tsconfig.e2e.json"
+		}
+	]
 }

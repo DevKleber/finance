@@ -1,46 +1,68 @@
 <!-- <button class="btn btn-primary margin-bottom-15	">Encontrar amigo</button> -->
-<a href="#" data-toggle="modal" data-target="#logoutModal"
-	class="btn btn-primary btn-icon-split btn-lg margin-bottom-15">
+<a
+	href="#"
+	data-toggle="modal"
+	data-target="#logoutModal"
+	class="btn btn-primary btn-icon-split btn-lg margin-bottom-15"
+>
 	<span class="icon text-white-50">
 		<i class="fas fa-search fa-sm"></i>
 	</span>
 	<span class="text">Encontrar amigo</span>
 </a>
 
-<a href="#" (click)="getSolicitacoesAmizade()" data-toggle="modal" data-target="#solicitacaoAmizadeModal"
-	class="btn btn-primary btn-icon-split btn-lg margin-bottom-15 margin-left-15">
+<a
+	href="#"
+	(click)="getSolicitacoesAmizade()"
+	data-toggle="modal"
+	data-target="#solicitacaoAmizadeModal"
+	class="btn btn-primary btn-icon-split btn-lg margin-bottom-15 margin-left-15"
+>
 	<span class="icon text-white-50">
 		<i class="fas fa-user-friends fa-sm"></i>
 	</span>
 	<span class="text">Solicitações de amizade</span>
 </a>
 <div class="row">
-
-
-	<div class="col-md-4" style="padding-bottom: 1.50rem;" *ngFor="let item of amigos">
-		<div class="card padding-15">
+	<div
+		class="col-md-4"
+		style="padding-bottom: 1.5rem"
+		*ngFor="let item of amigos"
+	>
+		<div class="card card shadow padding-15">
 			<!-- <pre>{{ item | json }}</pre> -->
 			<div class="row">
 				<div class="col-md-3">
 					<div class="imgPerfil">
-						<img src="/assets/img/profile-photos/{{item | helpers:'random'}}.png" alt="" srcset="">
+						<img
+							src="/assets/img/profile-photos/{{
+								item | helpers: 'random'
+							}}.png"
+							alt=""
+							srcset=""
+						/>
 					</div>
 				</div>
 				<div class="col-md-6">
-					{{item.no_pessoa}} <br>
-					{{item.email}} <br>
-					Amigo desde {{item.created_at}}
+					{{ item.no_pessoa }} <br />
+					{{ item.email }} <br />
+					Amigo desde {{ item.created_at }}
 				</div>
 				<div class="col-md-3">
-					<button class="btn h-100 border" [ngClass]="{'border-left-warning': item.situacao == 'p'}"
-						[innerHtml]="item.situacao | helpers:'statusMeusAmigos'">
-					</button>
+					<button
+						class="btn h-100 border"
+						[ngClass]="{
+							'border-left-warning': item.situacao == 'p'
+						}"
+						[innerHtml]="
+							item.situacao | helpers: 'statusMeusAmigos'
+						"
+					></button>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
 
 <!-- <div class="row margin-bottom-15">
 	<div class="col-md-4">
@@ -59,22 +81,45 @@
 </div> -->
 
 <!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-	aria-hidden="true">
+<div
+	class="modal fade"
+	id="logoutModal"
+	tabindex="-1"
+	role="dialog"
+	aria-labelledby="exampleModalLabel"
+	aria-hidden="true"
+>
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Encontrar amigos</h5>
-				<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+				<h5 class="modal-title" id="exampleModalLabel">
+					Encontrar amigos
+				</h5>
+				<button
+					class="close"
+					type="button"
+					data-dismiss="modal"
+					aria-label="Close"
+				>
 					<span aria-hidden="true">×</span>
 				</button>
 			</div>
 			<div class="modal-body">
 				<div class="input-group">
-					<input type="text" class="form-control bg-light border-0 small" placeholder="Nome"
-						aria-label="Search" aria-describedby="basic-addon2" [(ngModel)]="nomePessoaModel">
+					<input
+						type="text"
+						class="form-control bg-light border-0 small"
+						placeholder="Nome"
+						aria-label="Search"
+						aria-describedby="basic-addon2"
+						[(ngModel)]="nomePessoaModel"
+					/>
 					<div class="input-group-append">
-						<button class="btn btn-primary" type="button" (click)="procurarPessoa()">
+						<button
+							class="btn btn-primary"
+							type="button"
+							(click)="procurarPessoa()"
+						>
 							<i class="fas fa-search fa-sm"></i>
 						</button>
 					</div>
@@ -83,36 +128,48 @@
 					<h3 *ngIf="pessoas?.length">
 						Resultados
 						<a href="#" class="btn btn-primary btn-circle btn-sm">
-							{{pessoas?.length}}
+							{{ pessoas?.length }}
 						</a>
 					</h3>
 					<div *ngIf="fimCarregamentoProcurarPessoa">
-						{{fimCarregamentoProcurarPessoa}}: <b>{{nomePessoaModel}}</b>
+						{{ fimCarregamentoProcurarPessoa }}:
+						<b>{{ nomePessoaModel }}</b>
 					</div>
 					<div class="row">
-						<div class="col-md-12" style="padding-bottom: 1.50rem;" *ngFor="let item of pessoas">
-							<div class="card padding-15">
+						<div
+							class="col-md-12"
+							style="padding-bottom: 1.5rem"
+							*ngFor="let item of pessoas"
+						>
+							<div class="card shadow padding-15">
 								<!-- <pre>{{ item | json }}</pre> -->
 								<div class="row">
-
 									<div class="col-md-3">
 										<div class="imgPerfil">
-											<img src="/assets/img/profile-photos/{{item | helpers:'random'}}.png" alt=""
-												srcset="">
+											<img
+												src="/assets/img/profile-photos/{{
+													item | helpers: 'random'
+												}}.png"
+												alt=""
+												srcset=""
+											/>
 										</div>
 									</div>
 									<div class="col-md-6">
-										{{item.no_pessoa}} <br>
-										{{item.email}} <br>
-										Amigo desde {{item.created_at}}
+										{{ item.no_pessoa }} <br />
+										{{ item.email }} <br />
+										Amigo desde {{ item.created_at }}
 									</div>
 									<div class="col-md-3">
-										<button class="btn  h-100 border" (click)="solicitarAmizade(item)">Solicitar amizade</button>
+										<button
+											class="btn h-100 border"
+											(click)="solicitarAmizade(item)"
+										>
+											Solicitar amizade
+										</button>
 									</div>
 								</div>
-
 							</div>
-
 						</div>
 					</div>
 				</div>
@@ -127,70 +184,119 @@
 
 <!-- Solicitações de amizade -->
 
-<div class="modal fade" id="solicitacaoAmizadeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-	aria-hidden="true">
+<div
+	class="modal fade"
+	id="solicitacaoAmizadeModal"
+	tabindex="-1"
+	role="dialog"
+	aria-labelledby="exampleModalLabel"
+	aria-hidden="true"
+>
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Solicitações aguardando sua aprovação <a href="#" class="btn btn-primary btn-circle btn-sm">
-					{{solicitacoesAmizade?.length}}
-				</a></h5>
-				<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+				<h5 class="modal-title" id="exampleModalLabel">
+					Solicitações aguardando sua aprovação
+					<a href="#" class="btn btn-primary btn-circle btn-sm">
+						{{ solicitacoesAmizade?.length }}
+					</a>
+				</h5>
+				<button
+					class="close"
+					type="button"
+					data-dismiss="modal"
+					aria-label="Close"
+				>
 					<span aria-hidden="true">×</span>
 				</button>
 			</div>
 			<div class="modal-body">
-
-
 				<div class="resultados padding-bottom-15 margin-top-15">
-
 					<div class="row">
-						<div class="alert alert-warning w-100 text-center" role="alert" *ngIf="!solicitacoesAmizade.length">
+						<div
+							class="alert alert-warning w-100 text-center"
+							role="alert"
+							*ngIf="!solicitacoesAmizade.length"
+						>
 							Você não tem solicitações pendentes!
-						  </div>
+						</div>
 
-						<div class="col-md-12" style="padding-bottom: 1.50rem;"
-							*ngFor="let item of solicitacoesAmizade">
-							<div class="card padding-15">
-
+						<div
+							class="col-md-12"
+							style="padding-bottom: 1.5rem"
+							*ngFor="let item of solicitacoesAmizade"
+						>
+							<div class="card shadow padding-15">
 								<div class="row">
-
 									<div class="col-md-3">
 										<div class="imgPerfil">
-											<img src="/assets/img/profile-photos/{{item | helpers:'random' }}.png" alt=""
-												srcset="">
+											<img
+												src="/assets/img/profile-photos/{{
+													item | helpers: 'random'
+												}}.png"
+												alt=""
+												srcset=""
+											/>
 										</div>
 									</div>
 									<div class="col-md-9">
-										<span style="font-size: 1.4em;">{{item.no_pessoa}}</span>
-										{{item.email}} <br>
-										Solicitado em {{item.created_at}}
+										<span style="font-size: 1.4em">{{
+											item.no_pessoa
+										}}</span>
+										{{ item.email }} <br />
+										Solicitado em {{ item.created_at }}
 										<div class="row">
 											<div class="col-md-6">
-
-												<a (click)="aceitarOuRecusar(item,'a')" class="btn btn-success btn-icon-split w-100 text-white">
-													<span class="icon text-white-50">
-														<i class="fas fa-check"></i>
+												<a
+													(click)="
+														aceitarOuRecusar(
+															item,
+															'a'
+														)
+													"
+													class="btn btn-success btn-icon-split w-100 text-white"
+												>
+													<span
+														class="icon text-white-50"
+													>
+														<i
+															class="fas fa-check"
+														></i>
 													</span>
-													<span class="text  w-100">Aceitar</span>
+													<span class="text w-100"
+														>Aceitar</span
+													>
 												</a>
-
 											</div>
-											<div class="col-md-6" style="padding-left: 0;">
-												<a (click)="aceitarOuRecusar(item,'r')" class="btn btn-danger btn-icon-split w-100 text-white">
-													<span class="icon text-white-50">
-														<i class="fas fa-trash"></i>
+											<div
+												class="col-md-6"
+												style="padding-left: 0"
+											>
+												<a
+													(click)="
+														aceitarOuRecusar(
+															item,
+															'r'
+														)
+													"
+													class="btn btn-danger btn-icon-split w-100 text-white"
+												>
+													<span
+														class="icon text-white-50"
+													>
+														<i
+															class="fas fa-trash"
+														></i>
 													</span>
-													<span class="text  w-100">Recusar</span>
+													<span class="text w-100"
+														>Recusar</span
+													>
 												</a>
 											</div>
-
 										</div>
 									</div>
 								</div>
-
 							</div>
-
 						</div>
 					</div>
 				</div>

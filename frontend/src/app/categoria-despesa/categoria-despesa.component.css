@@ -31,9 +31,10 @@
 	background: #e74a3b;
 }
 .itemAdd {
-	/* border-radius: 0px 4px 0px 0; */
+	border-radius: 0px 4px 0px 0;
 	color: #fff;
-	background: #1ad274;
+	color: #1ad274;
+	/* background: #1ad274; */
 }
 .itemRemove:hover {
 	color: #fff;
@@ -50,4 +51,22 @@
 }
 .catFilhas {
 	font-size: 1.3em;
+}
+.iconeRemoverFilha {
+	font-size: 0.8em;
+	color: #e7e7e7;
+	cursor: pointer;
+	transition: 0.1s;
+}
+.iconeRemoverFilha:hover {
+	font-size: 0.85em;
+	color: #f73b29;
+	cursor: pointer;
+}
+div.form-group.is-empty.col-md-12 label {
+	font-size: 0.6em;
+	font-weight: bold;
+}
+.iconList {
+	margin-left: 5px;
 }

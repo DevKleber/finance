@@ -30,33 +30,11 @@ export class CategoriaDespesaService {
 	}
 
 	save(form) {
-		return this.http.post<any>(`${API}/categoria-despesa`, form).subscribe(
-			(data) => {
-				if (data["dados"]) {
-					this.notify("Registro Inserido Com Sucesso!");
-					this.router.navigate(["/categoria-despesa"]);
-				}
-				console.log(data);
-			},
-			(error) => {
-				this.notify(`Error: ${error}`);
-			}
-		);
+		return this.http.post<any>(`${API}/categoria-despesa`, form);
 	}
 
 	update(form, id) {
-		return this.http.put(`${API}/categoria-despesa/${id}`, form).subscribe(
-			(data) => {
-				if (data["response"]) {
-					this.notify("Registro Alterado Com Sucesso!");
-					this.router.navigate(["/categoria-despesa"]);
-				}
-				console.log(data);
-			},
-			(error) => {
-				this.notify(`Error: ${error}`);
-			}
-		);
+		return this.http.put(`${API}/categoria-despesa/${id}`, form);
 	}
 	inativar(id: string) {
 		return this.http.delete(`${API}/categoria-despesa/${id}`);

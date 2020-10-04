@@ -1,10 +1,17 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import {
+	FormBuilder,
+	FormControl,
+	Validators,
+	FormGroup,
+} from "@angular/forms";
 import { NotificationService } from "../shared/messages/notification.service";
 import { CategoriaDespesa } from "./categoria-despesa.model";
 import { CategoriaDespesaService } from "./categoria-despesa.service";
 import { Helper } from "../helper";
 import { BreadcrumbService } from "../layout/breadcrumb/breadcrumb.service";
+import Swal from "sweetalert2";
+import { hits } from "./../../assets/jsons/fontawesome.json";
 
 import { Observable } from "rxjs";
 
@@ -15,17 +22,19 @@ import { Observable } from "rxjs";
 })
 export class CategoriaDespesaComponent implements OnInit {
 	categoriaDespesas: CategoriaDespesa[];
-	searchForm: FormGroup;
-	searchControl: FormControl;
+	form: FormGroup;
 	loader: boolean = true;
-	page: number = 1;
-	itensPorPagina = 10;
-	order: any = {};
-	columns: any;
+	categoriaSelecionada: any = {};
+
+	fontawesome = hits;
+	fontawesomeIconesPorMenu: any[] = [];
+	iconeSelecionado: string = "";
+
+	@ViewChild("closeModalIcon") closeModalIcon: ElementRef;
 
 	constructor(
 		private categoriaDespesaService: CategoriaDespesaService,
-		private fb: FormBuilder,
+		private formBuilder: FormBuilder,
 		private notificationService: NotificationService,
 		private helper: Helper,
 		private breadcrumbService: BreadcrumbService
@@ -34,12 +43,62 @@ export class CategoriaDespesaComponent implements OnInit {
 	ngOnInit() {
 		this.getCategoriaDespesas();
 		this.breadCrumb();
+		this.initializeFormEmpty();
 	}
 	breadCrumb() {
 		this.breadcrumbService.chosenPagina([
 			{ no_rotina: "Categorias", ds_url: "categoria", active: "" },
 			{ no_rotina: "Inserir", ds_url: "mudar-texto", active: "active" },
 		]);
+	}
+	initializeFormEmpty() {
+		this.form = this.formBuilder.group({
+			id_categoria_despesa_pai: this.formBuilder.control(""),
+			icon: this.formBuilder.control(""),
+			no_categoria_despesa: this.formBuilder.control("", [
+				Validators.required,
+			]),
+		});
+	}
+	novaFilha(pai) {
+		this.categoriaSelecionada = pai;
+		this.form.controls["id_categoria_despesa_pai"].setValue(
+			pai.id_categoria_despesa
+		);
+		console.log(pai);
+	}
+
+	save(form) {
+		this.categoriaDespesaService.save(form).subscribe((data) => {
+			this.notificationService.notifySweet("Registro inserido!");
+			this.getCategoriaDespesas();
+			this.iconeSelecionado = "";
+			this.form.controls["icon"].setValue("");
+		});
+	}
+	savePai(form) {
+		delete form.id_categoria_despesa_pai;
+		// this.form.controls[""].setValue("");
+		this.save(form);
+	}
+	removerCategoriaFilha(filha) {
+		Swal.fire({
+			title: `Remover ${filha.no_categoria_despesa}?`,
+			type: "info",
+			showCancelButton: true,
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			confirmButtonText: `Sim, remover!`,
+		}).then((result) => {
+			if (result.value) {
+				this.categoriaDespesaService
+					.inativar(filha.id_categoria_despesa)
+					.subscribe((data) => {
+						this.notificationService.notifySweet(`Excluido!`);
+						this.getCategoriaDespesas();
+					});
+			}
+		});
 	}
 
 	getCategoriaDespesas() {
@@ -51,29 +110,19 @@ export class CategoriaDespesaComponent implements OnInit {
 			});
 	}
 
-	inativar(categoriaDespesa) {
-		if (
-			confirm(
-				"Você tem certeza que deseja remover o (a)  Categoria-despesaComponent "
-			)
-		) {
-			this.loader = true;
-			this.categoriaDespesaService
-				.inativar(categoriaDespesa.id_categoria_despesa)
-				.subscribe((data) => {
-					if (data["response"]) {
-						categoriaDespesa.bo_ativo = 0;
-						// this.categoriaDespesas.splice(this.categoriaDespesas.indexOf(categoriaDespesa),1)
-						this.notificationService.notifySweet(
-							`categoriaDespesa inativado`
-						);
-					}
-					this.loader = false;
-				});
-		}
-	}
-
 	update(form) {
 		this.categoriaDespesaService.update(form, form.id);
+	}
+
+	menuIcon(menu) {
+		this.fontawesomeIconesPorMenu = menu;
+	}
+	escolherOutroGrupoIcone() {
+		this.fontawesomeIconesPorMenu = [];
+	}
+	selectIcon(icon) {
+		this.form.controls["icon"].setValue("fa fa-" + icon);
+		this.iconeSelecionado = "fa fa-" + icon;
+		this.closeModalIcon.nativeElement.click();
 	}
 }

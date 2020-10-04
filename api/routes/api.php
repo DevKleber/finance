@@ -21,6 +21,8 @@ Route::post('new/user', 'PessoaController@store');
 Route::get('auth/logout', 'AuthController@logout');
 Route::post('auth/refresh', 'AuthController@refresh');
 
+Route::get('testando', 'CategoriaDespesaController@montandoarray');
+
 Route::group(['middleware' => 'jwt.auth'], function () {
     Route::resource('tipoDespesa', 'TipoDespesaController');
     Route::resource('mudarTexto', 'MudarTextoController');

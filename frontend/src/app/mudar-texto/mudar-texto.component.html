@@ -1,35 +1,52 @@
-<form [formGroup]='form' novalidate>
+<form [formGroup]="form" novalidate>
 	<div class="row">
-		<div class='form-group is-empty col-md-6'>
-			<app-input-container errorMessage='Campo obrigatório' label='Frase'>
-				<input class='form-control' formControlName='frase' placeholder=''>
+		<div class="form-group is-empty col-md-6">
+			<app-input-container errorMessage="Campo obrigatório" label="Frase">
+				<input
+					class="form-control"
+					formControlName="frase"
+					placeholder=""
+				/>
 			</app-input-container>
 		</div>
 
-		<div class='form-group is-empty col-md-4'>
-			<app-input-container errorMessage='Campo obrigatório' label='Apelido'>
-				<input class='form-control' formControlName='apelido' placeholder=''>
+		<div class="form-group is-empty col-md-4">
+			<app-input-container
+				errorMessage="Campo obrigatório"
+				label="Apelido"
+			>
+				<input
+					class="form-control"
+					formControlName="apelido"
+					placeholder=""
+				/>
 			</app-input-container>
 		</div>
 
-		<div class='col-md-12'>
-			<button (click)='save(form.value)' [disabled]='!form.valid' class='btn btn-primary'>Salvar</button>
+		<div class="col-md-12">
+			<button
+				(click)="save(form.value)"
+				[disabled]="!form.valid"
+				class="btn btn-primary"
+			>
+				Salvar
+			</button>
 		</div>
 	</div>
 </form>
-<hr>
+<hr />
 <h1>Frases cadastradas</h1>
 
 <div class="frases">
 	<div class="row">
-		<div class="card" *ngFor="let item of mudarTextos">
+		<div class="card shadow" *ngFor="let item of mudarTextos">
 			<div class="">
 				<div class="removeItem btn btn-sm" (click)="inativar(item)">
 					<i class="fas fa-minus-circle"></i>
 				</div>
 				<div class="bodyCard">
-					<p>{{item.frase}}</p>
-					<p>{{item.apelido}}</p>
+					<p>{{ item.frase }}</p>
+					<p>{{ item.apelido }}</p>
 				</div>
 			</div>
 		</div>

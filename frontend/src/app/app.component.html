@@ -1,17 +1,16 @@
 <router-outlet></router-outlet>
 <div id="wrapper">
-	<app-menu *ngIf=(mostrarMenu)></app-menu>
+	<app-menu *ngIf="mostrarMenu"></app-menu>
 
 	<div id="content-wrapper" class="d-flex flex-column">
-
 		<!-- Main Content -->
 		<div id="content">
-			<app-header *ngIf=(mostrarMenu)></app-header>
+			<app-header *ngIf="mostrarMenu"></app-header>
 			<div class="container-fluid">
-				<app-breadcrumb *ngIf=(mostrarMenu)></app-breadcrumb>
+				<app-breadcrumb *ngIf="mostrarMenu"></app-breadcrumb>
 
 				<div class="col-xl-12 col-md-12 mb-4">
-					<div [ngClass]="mostrarMenu ? 'card shadow h-100 py-2' : 'h-100 py-2'">
+					<div [ngClass]="mostrarMenu ? ' h-100 py-2' : 'h-100 py-2'">
 						<div class="card-body">
 							<router-outlet></router-outlet>
 						</div>
