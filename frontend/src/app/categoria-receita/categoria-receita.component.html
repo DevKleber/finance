@@ -1,4 +1,4 @@
-<!-- <pre>{{ categoriaDespesas | json }}</pre> -->
+<!-- <pre>{{ categoriaReceitas | json }}</pre> -->
 <!-- <i class="fas fa-brain"></i> -->
 <!-- <pre>{{ fontawesome | json }}</pre> -->
 
@@ -15,7 +15,7 @@
 						</label>
 						<input
 							class="form-control"
-							formControlName="no_categoria_despesa"
+							formControlName="no_categoria_receita"
 							placeholder=""
 						/>
 						<button
@@ -43,7 +43,7 @@
 
 	<div
 		class="card shadow margin-15 padding-30 hover"
-		*ngFor="let pai of categoriaDespesas | keyvalue"
+		*ngFor="let pai of categoriaReceitas | keyvalue"
 	>
 		<p class="catPai">
 			<i
@@ -53,7 +53,7 @@
 			></i>
 			<i style="font-size: 0.7em" class="{{ pai.value.icon }} iconList">
 			</i>
-			{{ pai.value.no_categoria_despesa }}
+			{{ pai.value.no_categoria_receita }}
 		</p>
 		<div class="action">
 			<!-- <div class="item itemRemove">
@@ -86,7 +86,7 @@
 				class="fas fa-minus-circle iconeRemoverFilha"
 			></i>
 			<i class="{{ filha.value.icon }} iconList"> </i>
-			{{ filha.value.no_categoria_despesa }}
+			{{ filha.value.no_categoria_receita }}
 		</div>
 	</div>
 </div>
@@ -105,7 +105,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel">
-					{{ categoriaSelecionada?.no_categoria_despesa }}
+					{{ categoriaSelecionada?.no_categoria_receita }}
 				</h5>
 				<button
 					class="close"
@@ -127,7 +127,7 @@
 								>
 									<input
 										class="form-control"
-										formControlName="no_categoria_despesa"
+										formControlName="no_categoria_receita"
 										placeholder=""
 									/>
 								</app-input-container>

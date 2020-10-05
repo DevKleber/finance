@@ -6,8 +6,8 @@ import {
 	FormGroup,
 } from "@angular/forms";
 import { NotificationService } from "../shared/messages/notification.service";
-import { CategoriaDespesa } from "./categoria-despesa.model";
-import { CategoriaDespesaService } from "./categoria-despesa.service";
+import { CategoriaReceita } from "./categoria-receita.model";
+import { CategoriaReceitaService } from "./categoria-receita.service";
 import { Helper } from "../helper";
 import { BreadcrumbService } from "../layout/breadcrumb/breadcrumb.service";
 import Swal from "sweetalert2";
@@ -16,12 +16,12 @@ import { hits } from "./../../assets/jsons/fontawesome.json";
 import { Observable } from "rxjs";
 
 @Component({
-	selector: "app-categoria-despesa",
-	templateUrl: "./categoria-despesa.component.html",
-	styleUrls: ["./categoria-despesa.component.css"],
+	selector: "app-categoria-receita",
+	templateUrl: "./categoria-receita.component.html",
+	styleUrls: ["./categoria-receita.component.css"],
 })
-export class CategoriaDespesaComponent implements OnInit {
-	categoriaDespesas: CategoriaDespesa[];
+export class CategoriaReceitaComponent implements OnInit {
+	categoriaReceitas: CategoriaReceita[];
 	form: FormGroup;
 	loader: boolean = true;
 	categoriaSelecionada: any = {};
@@ -33,7 +33,7 @@ export class CategoriaDespesaComponent implements OnInit {
 	@ViewChild("closeModalIcon") closeModalIcon: ElementRef;
 
 	constructor(
-		private categoriaDespesaService: CategoriaDespesaService,
+		private categoriaReceitaService: CategoriaReceitaService,
 		private formBuilder: FormBuilder,
 		private notificationService: NotificationService,
 		private helper: Helper,
@@ -41,7 +41,7 @@ export class CategoriaDespesaComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this.getCategoriaDespesas();
+		this.getCategoriaReceitas();
 		this.breadCrumb();
 		this.initializeFormEmpty();
 	}
@@ -53,38 +53,38 @@ export class CategoriaDespesaComponent implements OnInit {
 	}
 	initializeFormEmpty() {
 		this.form = this.formBuilder.group({
-			id_categoria_despesa_pai: this.formBuilder.control(""),
+			id_categoria_receita_pai: this.formBuilder.control(""),
 			icon: this.formBuilder.control(""),
-			no_categoria_despesa: this.formBuilder.control("", [
+			no_categoria_receita: this.formBuilder.control("", [
 				Validators.required,
 			]),
 		});
 	}
 	novaFilha(pai) {
 		this.categoriaSelecionada = pai;
-		this.form.controls["id_categoria_despesa_pai"].setValue(
-			pai.id_categoria_despesa
+		this.form.controls["id_categoria_receita_pai"].setValue(
+			pai.id_categoria_receita
 		);
 		console.log(pai);
 	}
 
 	save(form) {
-		this.categoriaDespesaService.save(form).subscribe((data) => {
+		this.categoriaReceitaService.save(form).subscribe((data) => {
 			this.notificationService.notifySweet("Registro inserido!");
-			this.getCategoriaDespesas();
+			this.getCategoriaReceitas();
 			this.iconeSelecionado = "";
 			this.form.controls["icon"].setValue("");
 			this.form.controls["no_categoria_receita"].setValue("");
 		});
 	}
 	savePai(form) {
-		delete form.id_categoria_despesa_pai;
+		delete form.id_categoria_receita_pai;
 		// this.form.controls[""].setValue("");
 		this.save(form);
 	}
 	removerCategoriaFilha(filha) {
 		Swal.fire({
-			title: `Remover ${filha.no_categoria_despesa}?`,
+			title: `Remover ${filha.no_categoria_receita}?`,
 			type: "info",
 			showCancelButton: true,
 			confirmButtonColor: "#3085d6",
@@ -92,27 +92,27 @@ export class CategoriaDespesaComponent implements OnInit {
 			confirmButtonText: `Sim, remover!`,
 		}).then((result) => {
 			if (result.value) {
-				this.categoriaDespesaService
-					.inativar(filha.id_categoria_despesa)
+				this.categoriaReceitaService
+					.inativar(filha.id_categoria_receita)
 					.subscribe((data) => {
 						this.notificationService.notifySweet(`Excluido!`);
-						this.getCategoriaDespesas();
+						this.getCategoriaReceitas();
 					});
 			}
 		});
 	}
 
-	getCategoriaDespesas() {
-		this.categoriaDespesaService
-			.getCategoriaDespesas()
-			.subscribe((CategoriaDespesa) => {
-				this.categoriaDespesas = CategoriaDespesa;
+	getCategoriaReceitas() {
+		this.categoriaReceitaService
+			.getCategoriaReceitas()
+			.subscribe((CategoriaReceita) => {
+				this.categoriaReceitas = CategoriaReceita;
 				this.loader = false;
 			});
 	}
 
 	update(form) {
-		this.categoriaDespesaService.update(form, form.id);
+		this.categoriaReceitaService.update(form, form.id);
 	}
 
 	menuIcon(menu) {

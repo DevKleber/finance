@@ -99,6 +99,15 @@ export const ROUTES: Routes = [
 		canLoad: [LoggedInGuard],
 		canActivate: [LoggedInGuard],
 	},
+	{
+		path: "categoria-receita",
+		loadChildren: () =>
+			import("./categoria-receita/categoria-receita.module").then(
+				(m) => m.CategoriaReceitaModule
+			),
+		canLoad: [LoggedInGuard],
+		canActivate: [LoggedInGuard],
+	},
 
 	{ path: "**", redirectTo: "not-found", pathMatch: "full" },
 ];
