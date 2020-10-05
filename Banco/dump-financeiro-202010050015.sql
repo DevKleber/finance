@@ -112,7 +112,7 @@ CREATE TABLE `tb_amigos` (
   KEY `fk_tb_amigos_tb_pessoa1_idx` (`id_pessoa`),
   CONSTRAINT `fk_tb_amigos_tb_pessoa1` FOREIGN KEY (`id_pessoa`) REFERENCES `tb_pessoa` (`id_pessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_tb_amigos_tb_usuario1` FOREIGN KEY (`id_usuario`) REFERENCES `tb_usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -121,7 +121,7 @@ CREATE TABLE `tb_amigos` (
 
 LOCK TABLES `tb_amigos` WRITE;
 /*!40000 ALTER TABLE `tb_amigos` DISABLE KEYS */;
-INSERT INTO `tb_amigos` VALUES (6,3,45,'2018-11-21 13:24:47','2020-10-02 17:40:31','r'),(15,12,50,'2020-10-02 19:51:24','2020-10-02 19:51:24','p'),(16,12,54,'2020-10-02 19:51:37','2020-10-02 19:51:37','p');
+INSERT INTO `tb_amigos` VALUES (6,3,45,'2018-11-21 13:24:47','2020-10-02 17:40:31','r'),(17,12,54,'2020-10-02 23:46:57','2020-10-02 23:47:21','a');
 /*!40000 ALTER TABLE `tb_amigos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,7 +149,7 @@ CREATE TABLE `tb_cartao_credito` (
   PRIMARY KEY (`id_cartao_credito`),
   KEY `fk_tb_cartao_credito_tb_usuario1_idx` (`tb_usuario_id_usuario`),
   CONSTRAINT `fk_tb_cartao_credito_tb_usuario1` FOREIGN KEY (`tb_usuario_id_usuario`) REFERENCES `tb_usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,7 +158,7 @@ CREATE TABLE `tb_cartao_credito` (
 
 LOCK TABLES `tb_cartao_credito` WRITE;
 /*!40000 ALTER TABLE `tb_cartao_credito` DISABLE KEYS */;
-INSERT INTO `tb_cartao_credito` VALUES (1,'Cartão Itaú',2550.00,9,'2018-09-12',30,'Klebim de Souza',12,'2018-11-19 21:14:01','2018-11-19 21:49:18',0,'0000000000000000',NULL),(2,'Bradesco',30000.00,9,'2018-09-12',30,'Thiago',14,'2018-11-19 21:52:48','2018-11-19 21:52:48',1,'0000000000000000',NULL),(3,'Cartão Bradesco alterado',30000.00,9,'2018-09-12',30,'Thiago',12,'2018-11-20 13:26:03','2020-09-30 13:50:17',0,'0000000000000000',NULL),(4,'novo teste',30000.00,9,'2018-12-09',30,'Teste',12,'2020-02-17 13:14:22','2020-09-30 13:51:04',0,'0000000000000000',NULL),(5,'Cartão de teste',30000.00,9,NULL,30,'Kleber de souza',12,'2020-09-29 22:39:30','2020-09-29 22:39:30',1,'6062825624254001','hipercard'),(6,'ItauCard',25000.00,9,NULL,30,'Joao paulo pereira',12,'2020-09-30 13:21:01','2020-09-30 13:21:01',1,'5555666677778884','mastercard');
+INSERT INTO `tb_cartao_credito` VALUES (1,'Cartão Itaú',2550.00,9,'2018-09-12',30,'Klebim de Souza',12,'2018-11-19 21:14:01','2018-11-19 21:49:18',0,'0000000000000000',NULL),(2,'Bradesco',30000.00,9,'2018-09-12',30,'Thiago',14,'2018-11-19 21:52:48','2018-11-19 21:52:48',1,'0000000000000000',NULL),(3,'Cartão Bradesco alterado',30000.00,9,'2018-09-12',30,'Thiago',12,'2018-11-20 13:26:03','2020-09-30 13:50:17',0,'0000000000000000',NULL),(4,'novo teste',30000.00,9,'2018-12-09',30,'Teste',12,'2020-02-17 13:14:22','2020-09-30 13:51:04',0,'0000000000000000',NULL),(5,'Cartão de teste',30000.00,9,NULL,30,'Kleber de souza',12,'2020-09-29 22:39:30','2020-09-29 22:39:30',1,'6062825624254001','hipercard'),(6,'ItauCard',25000.00,9,NULL,30,'Joao paulo pereira',12,'2020-09-30 13:21:01','2020-09-30 13:21:01',1,'5555666677778884','mastercard'),(7,'Itau',30000.00,20,NULL,11,'KLEBER S CHAGAS',12,'2020-10-02 23:44:56','2020-10-02 23:45:04',0,'542974008309','mastercard');
 /*!40000 ALTER TABLE `tb_cartao_credito` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -177,10 +177,11 @@ CREATE TABLE `tb_categoria_despesa` (
   `bo_ativo` tinyint(1) DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `icon` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id_categoria_despesa`),
   KEY `fk_tb_categoria_despesa_tb_usuario1_idx` (`id_usuario`),
   CONSTRAINT `fk_tb_categoria_despesa_tb_usuario1` FOREIGN KEY (`id_usuario`) REFERENCES `tb_usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -189,7 +190,7 @@ CREATE TABLE `tb_categoria_despesa` (
 
 LOCK TABLES `tb_categoria_despesa` WRITE;
 /*!40000 ALTER TABLE `tb_categoria_despesa` DISABLE KEYS */;
-INSERT INTO `tb_categoria_despesa` VALUES (1,1,'Energia',12,1,'2018-11-08 18:41:31','2019-03-27 21:09:33'),(2,1,'Internet',12,0,'2018-11-08 18:44:43','2019-03-28 13:04:30'),(3,2,'Mobile',12,0,'2018-11-08 18:46:23','2018-11-08 18:49:14'),(4,2,'Banda Larga',12,1,'2018-11-08 18:46:34','2018-11-08 18:47:17'),(5,2,'Banda Larga Teste',12,1,'2019-03-27 21:03:55','2019-03-27 21:03:55'),(6,1,'Teste',1,1,'2019-03-27 21:04:05','2019-03-28 12:40:22'),(7,2,'Energia',12,1,'2019-03-27 21:05:22','2019-03-27 21:05:22'),(8,2,'Energia',12,1,'2019-03-27 21:05:28','2019-03-27 21:05:28'),(9,1,'Energia',12,1,'2019-03-27 21:05:38','2019-03-27 21:05:38'),(10,1,'Energia',12,1,'2019-03-27 21:05:53','2019-03-27 21:05:53'),(11,2,'Energia',12,0,'2019-03-27 21:06:10','2019-03-28 13:04:36'),(12,2,'Energia new',12,0,'2019-03-27 21:06:26','2019-03-27 21:15:38'),(13,1,'Categoria teste',1,1,'2019-03-28 13:05:13','2019-03-28 13:05:13');
+INSERT INTO `tb_categoria_despesa` VALUES (3,1,'Mobile',12,1,'2018-11-08 18:46:23','2018-11-08 18:49:14',NULL),(30,NULL,'Moradia',12,1,'2020-10-04 16:58:06','2020-10-04 16:58:06',NULL),(31,NULL,'Alimentação',12,1,'2020-10-04 16:58:13','2020-10-04 16:58:13',NULL),(32,NULL,'Saúde',12,1,'2020-10-04 16:58:16','2020-10-04 16:58:16',NULL),(33,NULL,'Educação',12,1,'2020-10-04 16:58:21','2020-10-04 16:58:21','fa fa-chalkboard-teacher'),(34,NULL,'Despesas Pessoais',12,1,'2020-10-04 16:58:26','2020-10-04 16:58:26',NULL),(35,NULL,'Transporte',12,1,'2020-10-04 16:58:30','2020-10-04 16:58:30',NULL),(36,NULL,'Celular/TV/Internet',12,0,'2020-10-04 16:58:40','2020-10-04 17:06:12',NULL),(37,NULL,'Lazer',12,1,'2020-10-04 16:58:45','2020-10-04 16:58:45',NULL),(38,30,'Aluguel',12,1,'2020-10-04 16:59:10','2020-10-04 16:59:10','fa fa-cloud-moon-rain'),(39,30,'IPTU',12,1,'2020-10-04 16:59:43','2020-10-04 16:59:43','fa fa-skull-crossbones'),(40,30,'Energia',12,1,'2020-10-04 16:59:51','2020-10-04 16:59:51','fa fa-plug'),(41,30,'Agua',12,1,'2020-10-04 16:59:56','2020-10-04 16:59:56','fa fa-tint'),(42,30,'Internet',12,0,'2020-10-04 17:00:14','2020-10-04 17:05:51','fa fa-ethernet'),(43,31,'Mercado',12,1,'2020-10-04 17:00:38','2020-10-04 17:00:38','fa fa-store'),(44,31,'Lanches',12,1,'2020-10-04 17:00:47','2020-10-04 17:00:47','fa fa-hamburger'),(45,32,'Plano de Saúde',12,1,'2020-10-04 17:01:02','2020-10-04 17:01:02','fa fa-heart'),(46,32,'Farmácia',12,1,'2020-10-04 17:01:06','2020-10-04 17:01:06','fa fa-clinic-medical'),(47,33,'Curso Udemy',12,1,'2020-10-04 17:01:29','2020-10-04 17:01:29','fa fa-chalkboard'),(48,33,'Inglês',12,1,'2020-10-04 17:01:37','2020-10-04 17:01:37','fa fa-globe-americas'),(49,33,'Jornais/revistas',12,1,'2020-10-04 17:02:04','2020-10-04 17:02:04','fa fa-newspaper'),(50,33,'Livros',12,1,'2020-10-04 17:02:10','2020-10-04 17:02:10','fa fa-book'),(51,34,'Cuidados e higiene pessoal',12,1,'2020-10-04 17:02:21','2020-10-04 17:02:21','fa fa-soap'),(52,34,'Roupas e acessórios',12,1,'2020-10-04 17:02:39','2020-10-04 17:02:39','fa fa-tshirt'),(53,34,'Presentes',12,1,'2020-10-04 17:02:44','2020-10-04 17:02:44','fa fa-gift'),(54,35,'Combustível',12,1,'2020-10-04 17:02:57','2020-10-04 17:02:57','fa fa-gas-pump'),(55,35,'Manutenção',12,1,'2020-10-04 17:03:01','2020-10-04 17:03:01','fa fa-wrench'),(56,35,'IPVA',12,1,'2020-10-04 17:03:06','2020-10-04 17:03:06','fa fa-radiation'),(57,35,'Seguro',12,1,'2020-10-04 17:03:10','2020-10-04 17:03:10','fa fa-car-crash'),(58,35,'Estacionamento',12,1,'2020-10-04 17:03:15','2020-10-04 17:03:15','fa fa-sign'),(59,35,'Transporte público',12,0,'2020-10-04 17:03:21','2020-10-04 17:05:44','fa fa-bus'),(60,36,'Plano de celular',12,1,'2020-10-04 17:03:32','2020-10-04 17:03:32','fa fa-mobile'),(61,36,'Plano de TV por assinatura',12,1,'2020-10-04 17:03:37','2020-10-04 17:03:37','fa fa-tv'),(62,37,'Cinema',12,1,'2020-10-04 17:03:52','2020-10-04 17:03:52','fa fa-film'),(63,37,'Bares e restaurantes',12,1,'2020-10-04 17:03:58','2020-10-04 17:03:58','fa fa-utensils'),(64,37,'Passeios/parques/praia',12,1,'2020-10-04 17:04:03','2020-10-04 17:04:03','fa fa-route'),(65,37,'Viagens',12,1,'2020-10-04 17:04:08','2020-10-04 17:04:08','fa fa-route');
 /*!40000 ALTER TABLE `tb_categoria_despesa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -207,10 +208,12 @@ CREATE TABLE `tb_categoria_receita` (
   `id_usuario` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `bo_ativo` tinyint(1) DEFAULT '1',
+  `icon` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id_categoria_receita`),
   KEY `fk_tb_categoria_receita_tb_usuario1_idx` (`id_usuario`),
   CONSTRAINT `fk_tb_categoria_receita_tb_usuario1` FOREIGN KEY (`id_usuario`) REFERENCES `tb_usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -219,7 +222,7 @@ CREATE TABLE `tb_categoria_receita` (
 
 LOCK TABLES `tb_categoria_receita` WRITE;
 /*!40000 ALTER TABLE `tb_categoria_receita` DISABLE KEYS */;
-INSERT INTO `tb_categoria_receita` VALUES (1,NULL,'Banda Larga',12,'2018-11-13 16:39:14','2018-11-13 16:39:14'),(2,1,'OI',12,'2018-11-13 16:40:04','2018-11-13 16:40:04'),(3,1,'categoria',1,'2019-03-26 23:09:14','2019-03-26 23:09:14'),(4,1,'Teste',1,'2019-03-26 23:38:24','2019-03-26 23:38:24'),(5,1,'Teste 1',1,'2019-03-26 23:39:54','2019-03-26 23:39:54'),(6,1,'Teste 3',1,'2019-03-26 23:44:09','2019-03-26 23:44:09'),(7,1,'Teste 1 agora',1,'2019-03-26 23:44:16','2019-03-26 23:44:16'),(8,1,'teste alterada',1,'2019-03-28 13:17:08','2019-03-28 13:17:18');
+INSERT INTO `tb_categoria_receita` VALUES (1,NULL,'Serviços',12,'2018-11-13 16:39:14','2018-11-13 16:39:14',1,NULL),(2,1,'Salário',12,'2018-11-13 16:40:04','2018-11-13 16:40:04',1,NULL),(3,1,'categoria',12,'2019-03-26 23:09:14','2019-03-26 23:09:14',1,NULL),(4,1,'Teste',12,'2019-03-26 23:38:24','2019-03-26 23:38:24',1,NULL),(5,1,'Teste 1',12,'2019-03-26 23:39:54','2019-03-26 23:39:54',1,NULL),(6,1,'Teste 3',12,'2019-03-26 23:44:09','2019-03-26 23:44:09',1,NULL),(7,1,'Teste 1 agora',12,'2019-03-26 23:44:16','2019-03-26 23:44:16',1,NULL),(8,1,'teste alterada',12,'2019-03-28 13:17:08','2019-03-28 13:17:18',1,NULL),(9,NULL,'teste',12,'2020-10-05 00:15:06','2020-10-05 00:15:06',1,'fa fa-parking'),(10,9,'teste2',12,'2020-10-05 00:15:16','2020-10-05 00:15:16',1,'fa fa-rocket'),(11,9,'teste 22',12,'2020-10-05 00:16:01','2020-10-05 00:16:01',1,'fa fa-campground');
 /*!40000 ALTER TABLE `tb_categoria_receita` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -437,7 +440,7 @@ CREATE TABLE `tb_mudartexto` (
   PRIMARY KEY (`id_mudartexto`),
   KEY `fk_tb_mudartexto_tb_usuario1_idx` (`id_usuario`),
   CONSTRAINT `fk_tb_mudartexto_tb_usuario1` FOREIGN KEY (`id_usuario`) REFERENCES `tb_usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -446,7 +449,7 @@ CREATE TABLE `tb_mudartexto` (
 
 LOCK TABLES `tb_mudartexto` WRITE;
 /*!40000 ALTER TABLE `tb_mudartexto` DISABLE KEYS */;
-INSERT INTO `tb_mudartexto` VALUES (4,'Acho que vai mudar tudo','avt',3,'2018-10-23 15:43:43','2018-10-23 15:43:43'),(17,'Rua m11 quadra 10 lote 5 numero 5','meuendereco',12,'2019-02-04 12:16:58','2019-02-04 12:16:58'),(18,'Estou a caminho!','eac',12,'2019-02-04 13:33:57','2019-02-04 13:33:57'),(19,'Aeeee automação praticamente finalizada','hpy',1,'2019-03-27 21:20:30','2019-03-27 21:20:39'),(20,'Estou na porta!','enp',12,'2020-02-17 13:12:50','2020-02-17 13:12:50'),(21,'Kleber de souza','meunome',12,'2020-09-29 14:02:55','2020-09-29 14:02:55');
+INSERT INTO `tb_mudartexto` VALUES (4,'Acho que vai mudar tudo','avt',3,'2018-10-23 15:43:43','2018-10-23 15:43:43'),(17,'Rua m11 quadra 10 lote 5 numero 5','meuendereco',12,'2019-02-04 12:16:58','2019-02-04 12:16:58'),(18,'Estou a caminho!','eac',12,'2019-02-04 13:33:57','2019-02-04 13:33:57'),(19,'Aeeee automação praticamente finalizada','hpy',1,'2019-03-27 21:20:30','2019-03-27 21:20:39'),(20,'Estou na porta!','enp',12,'2020-02-17 13:12:50','2020-02-17 13:12:50'),(21,'Kleber de souza','meunome',12,'2020-09-29 14:02:55','2020-09-29 14:02:55'),(22,'Estou com fome.','fome',12,'2020-10-02 23:43:55','2020-10-02 23:43:55');
 /*!40000 ALTER TABLE `tb_mudartexto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -629,7 +632,7 @@ CREATE TABLE `tb_usuario` (
 
 LOCK TABLES `tb_usuario` WRITE;
 /*!40000 ALTER TABLE `tb_usuario` DISABLE KEYS */;
-INSERT INTO `tb_usuario` VALUES (1,'kleber','$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm',1,NULL,NULL),(3,'tt','$2y$10$8HaHCexOfgGMR/EpVmM/QuLLnhgTFvsmgv28TC71IapywgEHu54qO',2,'2018-10-23 15:42:15','2018-10-23 15:42:15'),(4,'login','$2y$10$.SnU09CIqU/uRq5anfnRROzTLcMzld0AquoChuafk4XLCP6qs.I0C',17,'2018-11-07 23:06:09','2018-11-07 23:06:09'),(5,'login','$2y$10$CFfoGaKoh6BVxfY9wRRTbOUDbYrtly/KfY2tJ0vzNq33XcnuD25oC',18,'2018-11-07 23:06:25','2018-11-07 23:06:25'),(6,'login','$2y$10$MUHA3xhhs6vpM0Bu7kZsi.r2ojoq67WzJDPoul4OJw6aYgEkujqaO',19,'2018-11-07 23:06:37','2018-11-07 23:06:37'),(7,'meuusuarioaqui','$2y$10$cwyTjARZEkpnNplsCHqDe.GPOsr0TqbMTyyyrcCyYVen8GnAlCl1G',20,'2018-11-07 23:08:40','2018-11-07 23:08:40'),(8,'meuusuarioaqui','$2y$10$ETI8aZWMld75e5CGpwACQuX7.STn85CtFulmNZFRsqodQaKN7HqfW',21,'2018-11-07 23:11:52','2018-11-07 23:11:52'),(9,'meuusuarioaquia','$2y$10$Fd8EXyXjxvtb6y43RKDDsO5av.JBo83P/ONwMG8YoKFVEnT3Hogyu',36,'2018-11-07 23:20:53','2018-11-07 23:20:53'),(10,'meuusuarioaquia','$2y$10$.Kai6wO4lEwBUscsk.oqk.CSjDAfpO/CWniG4WqiMA0SnmVioA792',37,'2018-11-07 23:20:58','2018-11-07 23:20:58'),(11,'meuusuarioaquib','$2y$10$/t7dhGG6xJURowut0dFyue6xOs6b3.mAkorzA2IczXPviV7Y2lhea',42,'2018-11-07 23:21:48','2018-11-07 23:21:48'),(12,'start107','$2y$10$CRcPFCxLP9U9HrSVsxSYhOXaEHq4qGUYZ3l/kwhIeSD.vi6G6yO.q',45,'2018-11-08 13:02:24','2018-11-08 12:47:05'),(13,'thyerre','\n$2y$12$Xlp6P.ipMYXAqmngA/oLT.Nreb4PAZBaDcUDkEIWlhcsJ59EbwUQa\n',50,'2018-11-12 19:36:10','2018-11-12 19:40:45'),(14,'joaopaulo','\n$2y$12$Xlp6P.ipMYXAqmngA/oLT.Nreb4PAZBaDcUDkEIWlhcsJ59EbwUQa\n',51,'2018-11-12 19:41:31','2018-11-12 19:41:31'),(15,'conta 1','$2y$10$0vkJP464c1NJ1.gK/SusiOZjdtZ6ZJpcPzPSod0mUqSbP/GSOo2.i',52,'2018-12-14 13:27:11','2018-12-14 13:27:11'),(16,'conta 2','$2y$10$haLLK9PHBE9FsvZb5QbF7eGcg1QxmsLxwvcalrm5twEQqohBGkcmK',53,'2018-12-14 13:27:24','2018-12-14 13:27:24'),(17,'annacarla','$2y$10$CRcPFCxLP9U9HrSVsxSYhOXaEHq4qGUYZ3l/kwhIeSD.vi6G6yO.q',54,'2018-12-31 15:52:08','2019-02-22 14:35:58');
+INSERT INTO `tb_usuario` VALUES (1,'kleber','$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm',1,NULL,NULL),(3,'tt','$2y$10$8HaHCexOfgGMR/EpVmM/QuLLnhgTFvsmgv28TC71IapywgEHu54qO',2,'2018-10-23 15:42:15','2018-10-23 15:42:15'),(4,'login','$2y$10$.SnU09CIqU/uRq5anfnRROzTLcMzld0AquoChuafk4XLCP6qs.I0C',17,'2018-11-07 23:06:09','2018-11-07 23:06:09'),(5,'login','$2y$10$CFfoGaKoh6BVxfY9wRRTbOUDbYrtly/KfY2tJ0vzNq33XcnuD25oC',18,'2018-11-07 23:06:25','2018-11-07 23:06:25'),(6,'login','$2y$10$MUHA3xhhs6vpM0Bu7kZsi.r2ojoq67WzJDPoul4OJw6aYgEkujqaO',19,'2018-11-07 23:06:37','2018-11-07 23:06:37'),(7,'meuusuarioaqui','$2y$10$cwyTjARZEkpnNplsCHqDe.GPOsr0TqbMTyyyrcCyYVen8GnAlCl1G',20,'2018-11-07 23:08:40','2018-11-07 23:08:40'),(8,'meuusuarioaqui','$2y$10$ETI8aZWMld75e5CGpwACQuX7.STn85CtFulmNZFRsqodQaKN7HqfW',21,'2018-11-07 23:11:52','2018-11-07 23:11:52'),(9,'meuusuarioaquia','$2y$10$Fd8EXyXjxvtb6y43RKDDsO5av.JBo83P/ONwMG8YoKFVEnT3Hogyu',36,'2018-11-07 23:20:53','2018-11-07 23:20:53'),(10,'meuusuarioaquia','$2y$10$.Kai6wO4lEwBUscsk.oqk.CSjDAfpO/CWniG4WqiMA0SnmVioA792',37,'2018-11-07 23:20:58','2018-11-07 23:20:58'),(11,'meuusuarioaquib','$2y$10$/t7dhGG6xJURowut0dFyue6xOs6b3.mAkorzA2IczXPviV7Y2lhea',42,'2018-11-07 23:21:48','2018-11-07 23:21:48'),(12,'start107','$2y$10$CRcPFCxLP9U9HrSVsxSYhOXaEHq4qGUYZ3l/kwhIeSD.vi6G6yO.q',45,'2018-11-08 13:02:24','2018-11-08 12:47:05'),(13,'thyerre','\n$2y$12$Xlp6P.ipMYXAqmngA/oLT.Nreb4PAZBaDcUDkEIWlhcsJ59EbwUQa\n',50,'2018-11-12 19:36:10','2018-11-12 19:40:45'),(14,'joaopaulo','\n$2y$12$Xlp6P.ipMYXAqmngA/oLT.Nreb4PAZBaDcUDkEIWlhcsJ59EbwUQa\n',51,'2018-11-12 19:41:31','2018-11-12 19:41:31'),(15,'conta 1','$2y$10$0vkJP464c1NJ1.gK/SusiOZjdtZ6ZJpcPzPSod0mUqSbP/GSOo2.i',52,'2018-12-14 13:27:11','2018-12-14 13:27:11'),(16,'conta 2','$2y$10$haLLK9PHBE9FsvZb5QbF7eGcg1QxmsLxwvcalrm5twEQqohBGkcmK',53,'2018-12-14 13:27:24','2018-12-14 13:27:24'),(17,'anna','$2y$10$uCSvJhs9nSw977WV1hQrqu2Og2VG6axEIA5MB3OvdmEfaV8v/LSii',54,'2018-12-31 15:52:08','2019-02-22 14:35:58');
 /*!40000 ALTER TABLE `tb_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -676,4 +679,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-02 19:19:12
+-- Dump completed on 2020-10-05  0:15:17
