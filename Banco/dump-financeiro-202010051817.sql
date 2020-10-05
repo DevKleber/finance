@@ -213,7 +213,7 @@ CREATE TABLE `tb_categoria_receita` (
   PRIMARY KEY (`id_categoria_receita`),
   KEY `fk_tb_categoria_receita_tb_usuario1_idx` (`id_usuario`),
   CONSTRAINT `fk_tb_categoria_receita_tb_usuario1` FOREIGN KEY (`id_usuario`) REFERENCES `tb_usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -222,7 +222,7 @@ CREATE TABLE `tb_categoria_receita` (
 
 LOCK TABLES `tb_categoria_receita` WRITE;
 /*!40000 ALTER TABLE `tb_categoria_receita` DISABLE KEYS */;
-INSERT INTO `tb_categoria_receita` VALUES (1,NULL,'Serviços',12,'2018-11-13 16:39:14','2018-11-13 16:39:14',1,NULL),(2,1,'Salário',12,'2018-11-13 16:40:04','2018-11-13 16:40:04',1,NULL),(3,1,'categoria',12,'2019-03-26 23:09:14','2019-03-26 23:09:14',1,NULL),(4,1,'Teste',12,'2019-03-26 23:38:24','2019-03-26 23:38:24',1,NULL),(5,1,'Teste 1',12,'2019-03-26 23:39:54','2019-03-26 23:39:54',1,NULL),(6,1,'Teste 3',12,'2019-03-26 23:44:09','2019-03-26 23:44:09',1,NULL),(7,1,'Teste 1 agora',12,'2019-03-26 23:44:16','2019-03-26 23:44:16',1,NULL),(8,1,'teste alterada',12,'2019-03-28 13:17:08','2019-03-28 13:17:18',1,NULL),(9,NULL,'teste',12,'2020-10-05 00:15:06','2020-10-05 00:15:06',1,'fa fa-parking'),(10,9,'teste2',12,'2020-10-05 00:15:16','2020-10-05 00:15:16',1,'fa fa-rocket'),(11,9,'teste 22',12,'2020-10-05 00:16:01','2020-10-05 00:16:01',1,'fa fa-campground');
+INSERT INTO `tb_categoria_receita` VALUES (12,NULL,'Serviço',12,'2020-10-05 12:33:52','2020-10-05 12:33:52',1,'fa fa-tools'),(13,12,'Salario',12,'2020-10-05 12:37:46','2020-10-05 12:37:46',1,'fa fa-hand-holding-usd'),(14,NULL,'Investimentos',12,'2020-10-05 12:42:03','2020-10-05 12:42:03',1,'fa fa-landmark'),(15,14,'Juros poupança',12,'2020-10-05 12:43:18','2020-10-05 12:43:18',1,'fa fa-percentage'),(16,14,'Juros CDB',12,'2020-10-05 12:44:51','2020-10-05 12:44:51',1,'fa fa-percentage'),(17,14,'Dividendo',12,'2020-10-05 12:45:30','2020-10-05 12:45:30',1,'fa fa-hand-holding-usd'),(18,14,'Juros sobre capital próprio',12,'2020-10-05 12:45:56','2020-10-05 12:45:56',1,'fa fa-hand-holding-usd');
 /*!40000 ALTER TABLE `tb_categoria_receita` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -510,7 +510,7 @@ CREATE TABLE `tb_receita` (
   KEY `fk_tb_receita_tb_usuario1_idx` (`id_usuario`),
   CONSTRAINT `fk_tb_receita_tb_categoria_receita1` FOREIGN KEY (`id_categoria_receita`) REFERENCES `tb_categoria_receita` (`id_categoria_receita`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_tb_receita_tb_usuario1` FOREIGN KEY (`id_usuario`) REFERENCES `tb_usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -519,7 +519,6 @@ CREATE TABLE `tb_receita` (
 
 LOCK TABLES `tb_receita` WRITE;
 /*!40000 ALTER TABLE `tb_receita` DISABLE KEYS */;
-INSERT INTO `tb_receita` VALUES (1,'Salário',30000.00,'1970-01-01','2018-12-31','2018-09-11',NULL,1,1,12,'2018-11-27 12:57:07','2018-11-27 12:59:25'),(2,'Salário',30000.00,'2018-11-27',NULL,'2018-09-11',NULL,0,1,12,'2018-11-27 13:30:07','2018-11-27 13:32:51'),(3,'Formatação pc',250.00,'2018-12-03',NULL,'2018-12-15',NULL,0,1,12,'2018-12-03 12:05:20','2018-12-03 12:06:38');
 /*!40000 ALTER TABLE `tb_receita` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -602,7 +601,7 @@ CREATE TABLE `tb_tipo_despesa` (
 
 LOCK TABLES `tb_tipo_despesa` WRITE;
 /*!40000 ALTER TABLE `tb_tipo_despesa` DISABLE KEYS */;
-INSERT INTO `tb_tipo_despesa` VALUES (1,'unica','2018-10-04 21:42:43','2018-10-05 20:10:39'),(2,'parcelada','2018-10-04 21:42:45','2018-10-04 21:42:45'),(3,'fixa','2018-10-04 21:42:50','2018-10-04 21:42:50');
+INSERT INTO `tb_tipo_despesa` VALUES (1,'Única','2018-10-04 21:42:43','2018-10-05 20:10:39'),(2,'Parcelada','2018-10-04 21:42:45','2018-10-04 21:42:45'),(3,'Fixa','2018-10-04 21:42:50','2018-10-04 21:42:50');
 /*!40000 ALTER TABLE `tb_tipo_despesa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -679,4 +678,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-05  0:15:17
+-- Dump completed on 2020-10-05 18:17:31
