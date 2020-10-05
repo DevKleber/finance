@@ -1,0 +1,27 @@
+input {
+	padding: 25px;
+	font-size: 1.6em;
+}
+.despesa{
+	margin-top: 25px;
+	padding: 25px;
+}
+
+
+/* cartao de credito */
+.text-center {
+	text-align: center;
+}
+.card {
+	padding: 15px;
+	margin: 15px;
+}
+.bodyCard {
+	margin-top: 15px;
+}
+.removeItem {
+	position: absolute;
+	top: 0;
+	right: 0;
+	color: #e44c45;
+}

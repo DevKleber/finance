@@ -1,0 +1,308 @@
+<div class="menu">
+
+	<div class="row">
+		<!-- <div class="col-md-12">
+			Larçar
+		</div> -->
+		<div class="col-md-4 text-center compartilhada">
+			<div class=" padding-15 cursor-pointer card shadow"
+				[ngClass]="{'bg-gradient-primary text-white': despesaCompartilhada}"
+				(click)="oqueLancar('Despesa compartilhada','dc')">
+				Despesa compartilhada
+			</div>
+		</div>
+		<div class="col-md-4 text-center cartao">
+			<div class=" padding-15 cursor-pointer card shadow"
+				[ngClass]="{'bg-gradient-primary text-white': despesaCartaoCredito}"
+				(click)="oqueLancar('Despesa em cartão de crédito','dcc')">
+				Despesa em cartão de crédito
+			</div>
+		</div>
+		<div class="col-md-4 text-center conta">
+			<div class=" padding-15 cursor-pointer card shadow"
+				[ngClass]="{'bg-gradient-primary text-white': despesaConta}"
+				(click)="oqueLancar('Despesa em conta','dct')">
+				Despesa em conta
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class='row despesa card shadow' *ngIf="despesaCompartilhada">
+	<form [formGroup]='form' novalidate>
+		<div class='box-body'>
+
+			<div class='form-group is-empty col-md-4'>
+				<app-input-container errorMessage='Campo obrigatório' label='vl_despesac'>
+					<input class='form-control' formControlName='vl_despesac' placeholder=''>
+				</app-input-container>
+			</div>
+
+			<div class='form-group is-empty col-md-4'>
+				<app-input-container errorMessage='Campo obrigatório' label='dt_despesa'>
+					<input class='form-control' formControlName='dt_despesa' placeholder=''>
+				</app-input-container>
+			</div>
+
+			<div class='form-group is-empty col-md-4'>
+				<app-input-container errorMessage='Campo obrigatório' label='ds_despesa'>
+					<input class='form-control' formControlName='ds_despesa' placeholder=''>
+				</app-input-container>
+			</div>
+
+			<div class='form-group is-empty col-md-4'>
+				<app-input-container errorMessage='Campo obrigatório' label='bo_dividir_amigos'>
+					<input class='form-control' formControlName='bo_dividir_amigos' placeholder=''>
+				</app-input-container>
+			</div>
+
+			<div class='form-group is-empty col-md-4'>
+				<app-input-container errorMessage='Campo obrigatório' label='id_tipo_despesa'>
+					<input class='form-control' formControlName='id_tipo_despesa' placeholder=''>
+				</app-input-container>
+			</div>
+
+			<div class='form-group is-empty col-md-4'>
+				<app-input-container errorMessage='Campo obrigatório' label='id_categoria_despesa'>
+					<input class='form-control' formControlName='id_categoria_despesa' placeholder=''>
+				</app-input-container>
+			</div>
+
+			<div class='form-group is-empty col-md-4'>
+				<app-input-container errorMessage='Campo obrigatório' label='id_usuario'>
+					<input class='form-control' formControlName='id_usuario' placeholder=''>
+				</app-input-container>
+			</div>
+
+		</div>
+		<!-- /.box-body -->
+
+		<div class='box-footer col-md-12'>
+			<button (click)='save(form.value)' [disabled]='!form.valid' class='btn btn-primary'>Salvar</button>
+		</div>
+	</form>
+</div>
+<div class="row">
+	<div class="col-md-3"></div>
+	<div class=' despesa card shadow col-md-6 ' *ngIf="despesaCartaoCredito">
+		<form [formGroup]='formCartaoCredito' novalidate>
+
+			<div class='row'>
+				<div class='form-group is-empty col-md-4'>
+					<app-input-container errorMessage='Campo obrigatório' label='Cartão de crédito'>
+						<ng-select [items]="cartoes" bindLabel="no_cartao_credito" bindValue="id_cartao_credito"
+							formControlName='id_cartao_credito'>
+						</ng-select>
+					</app-input-container>
+
+				</div>
+				<div class='form-group is-empty col-md-8'>
+
+				</div>
+				<div class='form-group is-empty col-md-12'>
+					<app-input-container errorMessage='Campo obrigatório' label='Despesa'>
+						<input class='form-control' formControlName='ds_despesa' placeholder=''>
+					</app-input-container>
+				</div>
+
+				<div class='form-group is-empty col-md-4'>
+					<app-input-container errorMessage='Campo obrigatório' label='Valor'>
+						<input class='form-control' formControlName='vl_despesac' placeholder=''>
+					</app-input-container>
+				</div>
+
+				<div class='form-group is-empty col-md-4'>
+					<app-input-container errorMessage='Campo obrigatório' label='Data da compra'>
+						<input class='form-control' formControlName='dt_despesa' placeholder=''>
+					</app-input-container>
+				</div>
+
+				<div class='form-group is-empty col-md-4 selectDespesa'>
+					<app-input-container errorMessage='Campo obrigatório' label='Categoria'>
+						<ng-select [items]="categorias" bindLabel="no_categoria_despesa"
+							bindValue="id_categoria_despesa" groupBy="pai" formControlName='id_categoria_despesa'>
+							<ng-template ng-optgroup-tmp let-item="item">
+								{{item.pai}}
+							</ng-template>
+							<ng-template ng-label-tmp let-item="item">
+								<i class="{{item.icon}}"></i>
+								{{item.no_categoria_despesa}}
+							</ng-template>
+
+							<ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+								<i class="{{item.icon}}"></i>
+								{{item.no_categoria_despesa}}
+							</ng-template>
+						</ng-select>
+
+					</app-input-container>
+				</div>
+
+
+				<div class='form-group is-empty col-md-4'>
+					<app-input-container errorMessage='Campo obrigatório' label='Tipo'>
+						<ng-select [items]="tiposDespesa" bindLabel="no_tipo_despesa" bindValue="id_tipo_despesa"
+							formControlName='id_tipo_despesa'>
+						</ng-select>
+					</app-input-container>
+				</div>
+
+				<div class='form-group is-empty col-md-3' *ngIf="formCartaoCredito.value.id_tipo_despesa == 2">
+					<app-input-container errorMessage='Campo obrigatório' label='Quantas vezes'>
+						<input type="number" class='form-control' formControlName='qtd_parcelas' placeholder=''>
+					</app-input-container>
+				</div>
+			</div>
+
+			<hr>
+
+			<div class="row">
+				<div class='form-group is-empty col-md-12' >
+					<app-input-container errorMessage='Campo obrigatório' label='Dividir com amigo'>
+						<div class="onoffswitch">
+							<input type="checkbox" formControlName='bo_dividir_amigos'
+								class="onoffswitch-checkbox" id="myonoffswitch2" checked>
+							<label class="onoffswitch-label" for="myonoffswitch2"></label>
+						</div>
+					</app-input-container>
+				</div>
+			</div>
+
+
+			<!-- escolher amigo para dividir -->
+			<div class="row" *ngIf="formCartaoCredito.value.bo_dividir_amigos">
+				<div class="col-md-3"></div>
+				<div class="input-group col-md-6">
+					<input
+						type="text"
+						class="form-control bg-light border-0 small"
+						placeholder="Nome"
+						aria-label="Search"
+						aria-describedby="basic-addon2"
+						formControlName="nomePessoaSearch"
+					/>
+					<div class="input-group-append">
+						<button
+							class="btn btn-primary"
+							type="button"
+							(click)="procurarPessoa()"
+						>
+							<i class="fas fa-search fa-sm"></i>
+						</button>
+					</div>
+				</div>
+				<div class="resultados padding-bottom-15 margin-top-15">
+					<h3 *ngIf="pessoas?.length">
+						Resultados
+						<a href="#" class="btn btn-primary btn-circle btn-sm">
+							{{ pessoas?.length }}
+						</a>
+					</h3>
+					<div *ngIf="fimCarregamentoProcurarPessoa">
+						{{ fimCarregamentoProcurarPessoa }}:
+						<b>{{ nomePessoaModel }}</b>
+					</div>
+					<div class="row">
+						<div
+							class="col-md-12"
+							style="padding-bottom: 1.5rem"
+							*ngFor="let item of pessoas"
+						>
+							<div class="card shadow padding-15">
+								<!-- <pre>{{ item | json }}</pre> -->
+								<div class="row">
+									<div class="col-md-3">
+										<div class="imgPerfil">
+											<img
+												src="/assets/img/profile-photos/{{
+													item | helpers: 'random'
+												}}.png"
+												alt=""
+												srcset=""
+											/>
+										</div>
+									</div>
+									<div class="col-md-6">
+										{{ item.no_pessoa }} <br />
+										{{ item.email }} <br />
+										Amigo desde {{ item.created_at }}
+									</div>
+									<div class="col-md-3">
+										<button
+											class="btn h-100 border"
+											(click)="solicitarAmizade(item)"
+										>
+											Dividir conta com amigo
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- fim escolher amigo para dividir -->
+
+			<div class='box-footer col-md-12 margin-top-15'>
+				<button (click)='save(formCartaoCredito.value)' [disabled]='!formCartaoCredito.valid'
+					class='btn btn-primary'>Salvar</button>
+			</div>
+		</form>
+
+	</div>
+</div>
+
+<div class='row despesa card shadow' *ngIf="despesaConta">
+	<form [formGroup]='form' novalidate>
+		<div class='box-body'>
+
+			<div class='form-group is-empty col-md-4'>
+				<app-input-container errorMessage='Campo obrigatório' label='vl_despesac'>
+					<input class='form-control' formControlName='vl_despesac' placeholder=''>
+				</app-input-container>
+			</div>
+
+			<div class='form-group is-empty col-md-4'>
+				<app-input-container errorMessage='Campo obrigatório' label='dt_despesa'>
+					<input class='form-control' formControlName='dt_despesa' placeholder=''>
+				</app-input-container>
+			</div>
+
+			<div class='form-group is-empty col-md-4'>
+				<app-input-container errorMessage='Campo obrigatório' label='ds_despesa'>
+					<input class='form-control' formControlName='ds_despesa' placeholder=''>
+				</app-input-container>
+			</div>
+
+			<div class='form-group is-empty col-md-4'>
+				<app-input-container errorMessage='Campo obrigatório' label='bo_dividir_amigos'>
+					<input class='form-control' formControlName='bo_dividir_amigos' placeholder=''>
+				</app-input-container>
+			</div>
+
+			<div class='form-group is-empty col-md-4'>
+				<app-input-container errorMessage='Campo obrigatório' label='id_tipo_despesa'>
+					<input class='form-control' formControlName='id_tipo_despesa' placeholder=''>
+				</app-input-container>
+			</div>
+
+			<div class='form-group is-empty col-md-4'>
+				<app-input-container errorMessage='Campo obrigatório' label='id_categoria_despesa'>
+					<input class='form-control' formControlName='id_categoria_despesa' placeholder=''>
+				</app-input-container>
+			</div>
+
+			<div class='form-group is-empty col-md-4'>
+				<app-input-container errorMessage='Campo obrigatório' label='id_usuario'>
+					<input class='form-control' formControlName='id_usuario' placeholder=''>
+				</app-input-container>
+			</div>
+
+		</div>
+		<!-- /.box-body -->
+
+		<div class='box-footer col-md-12'>
+			<button (click)='save(form.value)' [disabled]='!form.valid' class='btn btn-primary'>Salvar</button>
+		</div>
+	</form>
+</div>

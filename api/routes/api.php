@@ -29,6 +29,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::resource('user', 'PessoaController');
     Route::resource('conta', 'ContaController');
     Route::resource('categoria-despesa', 'CategoriaDespesaController');
+    Route::get('categoria-despesaSelect', 'CategoriaDespesaController@getCategoriasAtivas');
     Route::resource('categoria-receita', 'CategoriaReceitaController');
     Route::resource('cartao-credito', 'CartaoCreditoController');
     Route::resource('amigo', 'AmigoController');

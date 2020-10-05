@@ -31,6 +31,7 @@
 							"src/assets/theme/css/sb-admin-2.min.css",
 							"./node_modules/@fortawesome/fontawesome-free/css/all.css",
 							"src/assets/css/helpers.css",
+							"src/assets/css/checkbox.css",
 							"src/styles.css"
 						],
 						"scripts": [

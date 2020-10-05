@@ -19,6 +19,11 @@ export class CategoriaDespesaService {
 		private router: Router
 	) {}
 
+	getCategoriaDespesasSelect(): Observable<CategoriaDespesa[]> {
+		return this.http.get<CategoriaDespesa[]>(
+			`${API}/categoria-despesaSelect`
+		);
+	}
 	getCategoriaDespesas(search?: string): Observable<CategoriaDespesa[]> {
 		return this.http.get<CategoriaDespesa[]>(`${API}/categoria-despesa`);
 	}

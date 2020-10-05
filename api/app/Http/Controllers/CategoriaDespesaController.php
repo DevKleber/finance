@@ -42,6 +42,30 @@ class CategoriaDespesaController extends Controller
         return $branch;
     }
 
+    public function getCategoriasAtivas()
+    {
+        $categoriaDespesas = \App\CategoriaDespesa::Join(
+            'categoria_despesa as tcd2',
+            'categoria_despesa.id_categoria_despesa',
+            '=',
+            'tcd2.id_categoria_despesa_pai'
+        )
+            ->where('categoria_despesa.id_usuario', $this->token['id_usuario'])
+            ->where('categoria_despesa.bo_ativo', true)
+            ->select(
+                'tcd2.*',
+                'categoria_despesa.no_categoria_despesa as pai'
+            )
+            ->get()
+        ;
+
+        if (!$categoriaDespesas) {
+            return response(['response' => 'Não existe Categoria Despesas Ativas'], 400);
+        }
+
+        return response($categoriaDespesas);
+    }
+
     public function store(Request $request)
     {
         $request['id_usuario'] = $this->token['id_usuario'];
