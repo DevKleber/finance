@@ -2,11 +2,10 @@ input {
 	padding: 25px;
 	font-size: 1.6em;
 }
-.despesa{
+.despesa {
 	margin-top: 25px;
 	padding: 25px;
 }
-
 
 /* cartao de credito */
 .text-center {
@@ -24,4 +23,16 @@ input {
 	top: 0;
 	right: 0;
 	color: #e44c45;
+}
+.valorAPagar {
+	text-align: center;
+	font-size: 1.5em;
+}
+.btnEscolherAmigo{
+	height: 60px;
+
+}
+
+.classOk{
+	border: 1px solid chartreuse;
 }
