@@ -112,7 +112,7 @@ CREATE TABLE `tb_amigos` (
   KEY `fk_tb_amigos_tb_pessoa1_idx` (`id_pessoa`),
   CONSTRAINT `fk_tb_amigos_tb_pessoa1` FOREIGN KEY (`id_pessoa`) REFERENCES `tb_pessoa` (`id_pessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_tb_amigos_tb_usuario1` FOREIGN KEY (`id_usuario`) REFERENCES `tb_usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -121,7 +121,7 @@ CREATE TABLE `tb_amigos` (
 
 LOCK TABLES `tb_amigos` WRITE;
 /*!40000 ALTER TABLE `tb_amigos` DISABLE KEYS */;
-INSERT INTO `tb_amigos` VALUES (6,3,45,'2018-11-21 13:24:47','2020-10-02 17:40:31','r'),(17,12,54,'2020-10-02 23:46:57','2020-10-02 23:47:21','a');
+INSERT INTO `tb_amigos` VALUES (6,3,45,'2018-11-21 13:24:47','2020-10-02 17:40:31','r'),(17,12,54,'2020-10-02 23:46:57','2020-10-02 23:47:21','a'),(18,12,50,'2020-10-07 12:17:39','2020-10-07 12:19:23','a');
 /*!40000 ALTER TABLE `tb_amigos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,7 +149,7 @@ CREATE TABLE `tb_cartao_credito` (
   PRIMARY KEY (`id_cartao_credito`),
   KEY `fk_tb_cartao_credito_tb_usuario1_idx` (`tb_usuario_id_usuario`),
   CONSTRAINT `fk_tb_cartao_credito_tb_usuario1` FOREIGN KEY (`tb_usuario_id_usuario`) REFERENCES `tb_usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,7 +158,7 @@ CREATE TABLE `tb_cartao_credito` (
 
 LOCK TABLES `tb_cartao_credito` WRITE;
 /*!40000 ALTER TABLE `tb_cartao_credito` DISABLE KEYS */;
-INSERT INTO `tb_cartao_credito` VALUES (1,'Cartão Itaú',2550.00,9,'2018-09-12',30,'Klebim de Souza',12,'2018-11-19 21:14:01','2018-11-19 21:49:18',0,'0000000000000000',NULL),(2,'Bradesco',30000.00,9,'2018-09-12',30,'Thiago',14,'2018-11-19 21:52:48','2018-11-19 21:52:48',1,'0000000000000000',NULL),(3,'Cartão Bradesco alterado',30000.00,9,'2018-09-12',30,'Thiago',12,'2018-11-20 13:26:03','2020-09-30 13:50:17',0,'0000000000000000',NULL),(4,'novo teste',30000.00,9,'2018-12-09',30,'Teste',12,'2020-02-17 13:14:22','2020-09-30 13:51:04',0,'0000000000000000',NULL),(5,'Cartão de teste',30000.00,9,NULL,30,'Kleber de souza',12,'2020-09-29 22:39:30','2020-09-29 22:39:30',1,'6062825624254001','hipercard'),(6,'ItauCard',25000.00,9,NULL,30,'Joao paulo pereira',12,'2020-09-30 13:21:01','2020-09-30 13:21:01',1,'5555666677778884','mastercard'),(7,'Itau',30000.00,20,NULL,11,'KLEBER S CHAGAS',12,'2020-10-02 23:44:56','2020-10-02 23:45:04',0,'542974008309','mastercard');
+INSERT INTO `tb_cartao_credito` VALUES (1,'Cartão Itaú',2550.00,9,'2018-09-12',30,'Klebim de Souza',12,'2018-11-19 21:14:01','2018-11-19 21:49:18',0,'0000000000000000',NULL),(2,'Bradesco',30000.00,9,'2018-09-12',30,'Thiago',14,'2018-11-19 21:52:48','2018-11-19 21:52:48',1,'0000000000000000',NULL),(3,'Cartão Bradesco alterado',30000.00,9,'2018-09-12',30,'Thiago',12,'2018-11-20 13:26:03','2020-09-30 13:50:17',0,'0000000000000000',NULL),(4,'novo teste',30000.00,9,'2018-12-09',30,'Teste',12,'2020-02-17 13:14:22','2020-09-30 13:51:04',0,'0000000000000000',NULL),(5,'Cartão de teste',30000.00,9,NULL,30,'Kleber de souza',12,'2020-09-29 22:39:30','2020-09-29 22:39:30',1,'6062825624254001','hipercard'),(6,'ItauCard',25000.00,9,NULL,30,'Joao paulo pereira',12,'2020-09-30 13:21:01','2020-09-30 13:21:01',1,'5555666677778884','mastercard'),(7,'Itau',30000.00,20,NULL,11,'KLEBER S CHAGAS',12,'2020-10-02 23:44:56','2020-10-02 23:45:04',0,'542974008309','mastercard'),(8,'nuBank',1000.00,9,NULL,15,'Kleber S Chagas',12,'2020-10-07 12:16:28','2020-10-07 12:16:28',1,'5562825624254001','mastercard');
 /*!40000 ALTER TABLE `tb_cartao_credito` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -631,7 +631,7 @@ CREATE TABLE `tb_usuario` (
 
 LOCK TABLES `tb_usuario` WRITE;
 /*!40000 ALTER TABLE `tb_usuario` DISABLE KEYS */;
-INSERT INTO `tb_usuario` VALUES (1,'kleber','$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm',1,NULL,NULL),(3,'tt','$2y$10$8HaHCexOfgGMR/EpVmM/QuLLnhgTFvsmgv28TC71IapywgEHu54qO',2,'2018-10-23 15:42:15','2018-10-23 15:42:15'),(4,'login','$2y$10$.SnU09CIqU/uRq5anfnRROzTLcMzld0AquoChuafk4XLCP6qs.I0C',17,'2018-11-07 23:06:09','2018-11-07 23:06:09'),(5,'login','$2y$10$CFfoGaKoh6BVxfY9wRRTbOUDbYrtly/KfY2tJ0vzNq33XcnuD25oC',18,'2018-11-07 23:06:25','2018-11-07 23:06:25'),(6,'login','$2y$10$MUHA3xhhs6vpM0Bu7kZsi.r2ojoq67WzJDPoul4OJw6aYgEkujqaO',19,'2018-11-07 23:06:37','2018-11-07 23:06:37'),(7,'meuusuarioaqui','$2y$10$cwyTjARZEkpnNplsCHqDe.GPOsr0TqbMTyyyrcCyYVen8GnAlCl1G',20,'2018-11-07 23:08:40','2018-11-07 23:08:40'),(8,'meuusuarioaqui','$2y$10$ETI8aZWMld75e5CGpwACQuX7.STn85CtFulmNZFRsqodQaKN7HqfW',21,'2018-11-07 23:11:52','2018-11-07 23:11:52'),(9,'meuusuarioaquia','$2y$10$Fd8EXyXjxvtb6y43RKDDsO5av.JBo83P/ONwMG8YoKFVEnT3Hogyu',36,'2018-11-07 23:20:53','2018-11-07 23:20:53'),(10,'meuusuarioaquia','$2y$10$.Kai6wO4lEwBUscsk.oqk.CSjDAfpO/CWniG4WqiMA0SnmVioA792',37,'2018-11-07 23:20:58','2018-11-07 23:20:58'),(11,'meuusuarioaquib','$2y$10$/t7dhGG6xJURowut0dFyue6xOs6b3.mAkorzA2IczXPviV7Y2lhea',42,'2018-11-07 23:21:48','2018-11-07 23:21:48'),(12,'start107','$2y$10$CRcPFCxLP9U9HrSVsxSYhOXaEHq4qGUYZ3l/kwhIeSD.vi6G6yO.q',45,'2018-11-08 13:02:24','2018-11-08 12:47:05'),(13,'thyerre','\n$2y$12$Xlp6P.ipMYXAqmngA/oLT.Nreb4PAZBaDcUDkEIWlhcsJ59EbwUQa\n',50,'2018-11-12 19:36:10','2018-11-12 19:40:45'),(14,'joaopaulo','\n$2y$12$Xlp6P.ipMYXAqmngA/oLT.Nreb4PAZBaDcUDkEIWlhcsJ59EbwUQa\n',51,'2018-11-12 19:41:31','2018-11-12 19:41:31'),(15,'conta 1','$2y$10$0vkJP464c1NJ1.gK/SusiOZjdtZ6ZJpcPzPSod0mUqSbP/GSOo2.i',52,'2018-12-14 13:27:11','2018-12-14 13:27:11'),(16,'conta 2','$2y$10$haLLK9PHBE9FsvZb5QbF7eGcg1QxmsLxwvcalrm5twEQqohBGkcmK',53,'2018-12-14 13:27:24','2018-12-14 13:27:24'),(17,'anna','$2y$10$uCSvJhs9nSw977WV1hQrqu2Og2VG6axEIA5MB3OvdmEfaV8v/LSii',54,'2018-12-31 15:52:08','2019-02-22 14:35:58');
+INSERT INTO `tb_usuario` VALUES (1,'kleber','$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm',1,NULL,NULL),(3,'tt','$2y$10$8HaHCexOfgGMR/EpVmM/QuLLnhgTFvsmgv28TC71IapywgEHu54qO',2,'2018-10-23 15:42:15','2018-10-23 15:42:15'),(4,'login','$2y$10$.SnU09CIqU/uRq5anfnRROzTLcMzld0AquoChuafk4XLCP6qs.I0C',17,'2018-11-07 23:06:09','2018-11-07 23:06:09'),(5,'login','$2y$10$CFfoGaKoh6BVxfY9wRRTbOUDbYrtly/KfY2tJ0vzNq33XcnuD25oC',18,'2018-11-07 23:06:25','2018-11-07 23:06:25'),(6,'login','$2y$10$MUHA3xhhs6vpM0Bu7kZsi.r2ojoq67WzJDPoul4OJw6aYgEkujqaO',19,'2018-11-07 23:06:37','2018-11-07 23:06:37'),(7,'meuusuarioaqui','$2y$10$cwyTjARZEkpnNplsCHqDe.GPOsr0TqbMTyyyrcCyYVen8GnAlCl1G',20,'2018-11-07 23:08:40','2018-11-07 23:08:40'),(8,'meuusuarioaqui','$2y$10$ETI8aZWMld75e5CGpwACQuX7.STn85CtFulmNZFRsqodQaKN7HqfW',21,'2018-11-07 23:11:52','2018-11-07 23:11:52'),(9,'meuusuarioaquia','$2y$10$Fd8EXyXjxvtb6y43RKDDsO5av.JBo83P/ONwMG8YoKFVEnT3Hogyu',36,'2018-11-07 23:20:53','2018-11-07 23:20:53'),(10,'meuusuarioaquia','$2y$10$.Kai6wO4lEwBUscsk.oqk.CSjDAfpO/CWniG4WqiMA0SnmVioA792',37,'2018-11-07 23:20:58','2018-11-07 23:20:58'),(11,'meuusuarioaquib','$2y$10$/t7dhGG6xJURowut0dFyue6xOs6b3.mAkorzA2IczXPviV7Y2lhea',42,'2018-11-07 23:21:48','2018-11-07 23:21:48'),(12,'start107','$2y$10$CRcPFCxLP9U9HrSVsxSYhOXaEHq4qGUYZ3l/kwhIeSD.vi6G6yO.q',45,'2018-11-08 13:02:24','2018-11-08 12:47:05'),(13,'thyerre','$2y$10$egIUuQ.BFCRDkVWKlz.ItuKFERJVuezcnr.Mg66B7GmmbZC7xuOcG',50,'2018-11-12 19:36:10','2018-11-12 19:40:45'),(14,'joaopaulo','\n$2y$12$Xlp6P.ipMYXAqmngA/oLT.Nreb4PAZBaDcUDkEIWlhcsJ59EbwUQa\n',51,'2018-11-12 19:41:31','2018-11-12 19:41:31'),(15,'conta 1','$2y$10$0vkJP464c1NJ1.gK/SusiOZjdtZ6ZJpcPzPSod0mUqSbP/GSOo2.i',52,'2018-12-14 13:27:11','2018-12-14 13:27:11'),(16,'conta 2','$2y$10$haLLK9PHBE9FsvZb5QbF7eGcg1QxmsLxwvcalrm5twEQqohBGkcmK',53,'2018-12-14 13:27:24','2018-12-14 13:27:24'),(17,'anna','$2y$10$uCSvJhs9nSw977WV1hQrqu2Og2VG6axEIA5MB3OvdmEfaV8v/LSii',54,'2018-12-31 15:52:08','2019-02-22 14:35:58');
 /*!40000 ALTER TABLE `tb_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -678,4 +678,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-05 18:17:31
+-- Dump completed on 2020-10-07 18:15:11

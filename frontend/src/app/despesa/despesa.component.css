@@ -28,11 +28,19 @@ input {
 	text-align: center;
 	font-size: 1.5em;
 }
-.btnEscolherAmigo{
+.btnEscolherAmigo {
 	height: 60px;
-
 }
 
-.classOk{
+.classOk {
 	border: 1px solid chartreuse;
+}
+
+.acoesEscolherAmigo {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	align-items: center;
+	align-content: center;
+	align-self: center;
 }

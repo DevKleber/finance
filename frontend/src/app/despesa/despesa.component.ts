@@ -35,6 +35,7 @@ export class DespesaComponent implements OnInit {
 	tiposDespesa: any[] = [];
 	categorias: any[] = [];
 	amigos: any[] = [];
+	amigosFiltrado: any[] = [];
 	pessoas: any[] = [];
 	amigosParaDividir: any[] = [];
 
@@ -88,18 +89,33 @@ export class DespesaComponent implements OnInit {
 			});
 	}
 	procurarPessoa() {
-		if (!this.nomePessoaModel.length) return false;
-		// if (!this.formCartaoCredito.value.nomePessoaSearch.length) return false;
+		if (!this.nomePessoaModel.length) {
+			this.amigosFiltrado = this.amigos;
+			return false;
+		}
 
-		this.amigosService
-			.procurarPessoa(this.nomePessoaModel)
-			.subscribe((res) => {
-				this.pessoas = res;
-			});
+		let search = this.amigos.filter((el) => {
+			// whereLike
+			if (
+				el.no_pessoa
+					.toUpperCase()
+					.indexOf(this.nomePessoaModel.toUpperCase()) > -1
+			) {
+				return el;
+			}
+		});
+
+		this.amigosFiltrado = search;
+		// this.amigosService
+		// 	.procurarPessoa(this.nomePessoaModel)
+		// 	.subscribe((res) => {
+		// 		this.pessoas = res;
+		// 	});
 	}
 	getAmigos() {
 		this.amigosService.getAmigos().subscribe((res) => {
 			this.amigos = res["tudo"];
+			this.amigosFiltrado = this.amigos;
 			this.loader = false;
 		});
 	}
@@ -110,7 +126,7 @@ export class DespesaComponent implements OnInit {
 			vl_despesac: this.formBuilder.control("", [Validators.required]),
 			ds_despesa: this.formBuilder.control("", [Validators.required]),
 			dt_despesa: this.formBuilder.control("", [Validators.required]),
-			bo_dividir_amigos: this.formBuilder.control(true),
+			bo_dividir_amigos: this.formBuilder.control(false),
 			id_tipo_despesa: this.formBuilder.control("", [
 				Validators.required,
 			]),
@@ -216,9 +232,10 @@ export class DespesaComponent implements OnInit {
 		this.breadCrumb(frase);
 	}
 	dividirComAmigo(amigo) {
-		this.amigosParaDividir.push(amigo);
+		// this.amigosParaDividir.push(amigo);
 		this.notificationService.notifySweet("Adicionado");
-		this.pessoas.splice(this.pessoas.indexOf(amigo), 1);
+		this.amigosFiltrado.splice(this.amigosFiltrado.indexOf(amigo), 1);
+		this.amigos.splice(this.amigos.indexOf(amigo), 1);
 		this.addPessoas(amigo);
 	}
 }

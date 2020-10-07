@@ -158,11 +158,15 @@
 
 			<div class="row">
 				<div class='form-group is-empty col-md-12'>
+
 					<app-input-container errorMessage='Campo obrigatório' label='Dividir com amigo'>
 						<div class="onoffswitch">
 							<input type="checkbox" formControlName='bo_dividir_amigos' class="onoffswitch-checkbox"
 								id="myonoffswitch2" checked>
 							<label class="onoffswitch-label" for="myonoffswitch2"></label>
+						</div>
+						<div class="" *ngIf="formCartaoCredito.value.bo_dividir_amigos" >
+							Valor remanescente: {{valorRemanescente}}
 						</div>
 					</app-input-container>
 
@@ -211,13 +215,12 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-3">
-								<button class="btn btnEscolherAmigo border" data-toggle="modal"
+							<div class="col-md-3 acoesEscolherAmigo">
+								<button class="btn btnEscolherAmigo border w-100" data-toggle="modal"
 									data-target="#escolherAmigosDividirModal">Escolher amigo</button>
+								<button class="btn btnEscolherAmigo border w-100 margin-top-5" data-toggle="modal"
+									data-target="#escolherAmigosDividirModal">Pessoa fora do sistema</button>
 
-							</div>
-							<div class="col-md-12">
-								Valor remanescente: {{valorRemanescente}}
 							</div>
 						</ng-container>
 					</div>
@@ -316,7 +319,6 @@
 					</div>
 
 					<div class="col-md-12 margin-top-15">
-
 						<h3 *ngIf="pessoas?.length">
 							Resultados
 							<a href="#" class="btn btn-primary btn-circle btn-sm">
@@ -330,8 +332,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-3" style="padding-bottom: 1.5rem" *ngFor="let item of pessoas">
-
+					<div class="col-md-3" style="padding-bottom: 1.5rem" *ngFor="let item of amigosFiltrado">
 						<div class="card-1">
 							<img src="/assets/img/profile-photos/{{ item | helpers: 'random' }}.png" alt="Avatar"
 								style="width:100%;border-radius: 50%;">
