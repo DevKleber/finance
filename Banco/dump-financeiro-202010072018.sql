@@ -467,12 +467,13 @@ CREATE TABLE `tb_pessoa` (
   `dt_nascimento` date DEFAULT NULL,
   `no_email` text COLLATE utf8mb4_unicode_ci,
   `nu_cpfcnpj` text COLLATE utf8mb4_unicode_ci,
-  `bo_ativo` tinyint(1) DEFAULT NULL,
+  `bo_ativo` tinyint(1) DEFAULT '1',
   `img_perfil` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `id_usuario_meuamigoforasistema` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_pessoa`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -481,7 +482,7 @@ CREATE TABLE `tb_pessoa` (
 
 LOCK TABLES `tb_pessoa` WRITE;
 /*!40000 ALTER TABLE `tb_pessoa` DISABLE KEYS */;
-INSERT INTO `tb_pessoa` VALUES (1,'klÉber','m',NULL,'kleber107@gmail.com',NULL,1,NULL,NULL,NULL),(2,'Thyerre Thiago','m',NULL,'tt@gmail.com',NULL,1,NULL,NULL,NULL),(17,'Roberto','m','2018-11-03','email@gmail.com','04074511546',1,'img.png','2018-11-07 23:06:09','2018-11-07 23:06:09'),(18,'Roberto','m','2018-11-03','email@gmail.com','04074511546',1,'img.png','2018-11-07 23:06:25','2018-11-07 23:06:25'),(19,'Roberto','m','2018-11-03','email@gmail.com','04074511546',1,'img.png','2018-11-07 23:06:37','2018-11-07 23:06:37'),(20,'Roberto','m','2018-11-03','email@gmail.com','04074511546',1,'img.png','2018-11-07 23:08:40','2018-11-07 23:08:40'),(21,'Roberto','m','2018-11-03','email@gmail.com','04074511546',1,'img.png','2018-11-07 23:11:51','2018-11-07 23:11:51'),(36,'Roberto','m','2018-11-03','email@gmail.com','04074511546',1,'img.png','2018-11-07 23:20:53','2018-11-07 23:20:53'),(37,'Roberto','m','2018-11-03','email@gmail.com','04074511546',1,'img.png','2018-11-07 23:20:58','2018-11-07 23:20:58'),(42,'Roberto','m','2018-11-03','email@gmail.com','04074511546',1,'img.png','2018-11-07 23:21:48','2018-11-07 23:21:48'),(45,'Kleber de souza','m','1990-11-03','klebim107@gmail.com','01201201201',1,'img.png','2018-11-08 13:02:24','2018-11-08 12:47:05'),(50,'Thyerre','m','1990-11-03','klebim107@gmail.com','01201201201',1,'img.png','2018-11-12 19:36:10','2018-11-12 19:40:45'),(51,'Thiago','m','2018-11-03','thiago@gmail.com','01201201201',1,'img.png','2018-11-12 19:41:31','2018-11-12 19:41:31'),(52,'conta 1','m','2018-11-03','thiago@gmail.com','01201201201',1,'img.png','2018-12-14 13:27:11','2018-12-14 13:27:11'),(53,'conta 1','m','2018-11-03','thiago@gmail.com','01201201201',1,'img.png','2018-12-14 13:27:24','2018-12-14 13:27:24'),(54,'anna carla','f','1990-03-11','klebim107@gmail.com','01201201201',1,'img.png','2018-12-31 15:52:08','2019-02-22 14:35:58');
+INSERT INTO `tb_pessoa` VALUES (1,'klÉber','m',NULL,'kleber107@gmail.com',NULL,1,NULL,NULL,NULL,NULL),(2,'Thyerre Thiago','m',NULL,'tt@gmail.com',NULL,1,NULL,NULL,NULL,NULL),(17,'Roberto','m','2018-11-03','email@gmail.com','04074511546',1,'img.png','2018-11-07 23:06:09','2018-11-07 23:06:09',NULL),(18,'Roberto','m','2018-11-03','email@gmail.com','04074511546',1,'img.png','2018-11-07 23:06:25','2018-11-07 23:06:25',NULL),(19,'Roberto','m','2018-11-03','email@gmail.com','04074511546',1,'img.png','2018-11-07 23:06:37','2018-11-07 23:06:37',NULL),(20,'Roberto','m','2018-11-03','email@gmail.com','04074511546',1,'img.png','2018-11-07 23:08:40','2018-11-07 23:08:40',NULL),(21,'Roberto','m','2018-11-03','email@gmail.com','04074511546',1,'img.png','2018-11-07 23:11:51','2018-11-07 23:11:51',NULL),(36,'Roberto','m','2018-11-03','email@gmail.com','04074511546',1,'img.png','2018-11-07 23:20:53','2018-11-07 23:20:53',NULL),(37,'Roberto','m','2018-11-03','email@gmail.com','04074511546',1,'img.png','2018-11-07 23:20:58','2018-11-07 23:20:58',NULL),(42,'Roberto','m','2018-11-03','email@gmail.com','04074511546',1,'img.png','2018-11-07 23:21:48','2018-11-07 23:21:48',NULL),(45,'Kleber de souza','m','1990-11-03','klebim107@gmail.com','01201201201',1,'img.png','2018-11-08 13:02:24','2018-11-08 12:47:05',NULL),(50,'Thyerre','m','1990-11-03','klebim107@gmail.com','01201201201',1,'img.png','2018-11-12 19:36:10','2018-11-12 19:40:45',NULL),(51,'Thiago','m','2018-11-03','thiago@gmail.com','01201201201',1,'img.png','2018-11-12 19:41:31','2018-11-12 19:41:31',NULL),(52,'conta 1','m','2018-11-03','thiago@gmail.com','01201201201',1,'img.png','2018-12-14 13:27:11','2018-12-14 13:27:11',NULL),(53,'conta 1','m','2018-11-03','thiago@gmail.com','01201201201',1,'img.png','2018-12-14 13:27:24','2018-12-14 13:27:24',NULL),(54,'anna carla','f','1990-03-11','klebim107@gmail.com','01201201201',1,'img.png','2018-12-31 15:52:08','2019-02-22 14:35:58',NULL),(55,'Fabio','m',NULL,'','',1,'',NULL,NULL,12),(59,'Altair',NULL,NULL,NULL,NULL,1,NULL,'2020-10-07 23:09:12','2020-10-07 23:09:12',12),(60,'Pessoa teste',NULL,NULL,NULL,NULL,1,NULL,'2020-10-07 23:12:52','2020-10-07 23:12:52',12);
 /*!40000 ALTER TABLE `tb_pessoa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -678,4 +679,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-07 18:15:11
+-- Dump completed on 2020-10-07 20:18:59

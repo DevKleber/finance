@@ -14,6 +14,22 @@ class AmigoController extends Controller
         $this->token = JWTAuth::parseToken()->authenticate();
     }
 
+    public function getAmigosForaSistema()
+    {
+        return \App\Pessoa::where('id_usuario_meuamigoforasistema', $this->token['id_usuario'])
+            ->where('bo_ativo', true)
+            ->get()
+        ;
+    }
+
+    public function salvarAmigoForaSistema(Request $request)
+    {
+        $request['bo_ativo'] = true;
+        $request['id_usuario_meuamigoforasistema'] = $this->token['id_usuario'];
+
+        return \App\Pessoa::create($request->all());
+    }
+
     public function index()
     {
         $euSouAmigo = \App\Amigo::where('id_usuario', $this->token['id_usuario'])->where('amigos.situacao', '<>', 'r')

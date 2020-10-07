@@ -30,10 +30,12 @@ export class DespesaComponent implements OnInit {
 	items: FormArray;
 
 	nomePessoaModel: string = "";
+	novaPessoaModel: string = "";
 
 	cartoes: any[] = [];
 	tiposDespesa: any[] = [];
 	categorias: any[] = [];
+	amigosForaSistema: any[] = [];
 	amigos: any[] = [];
 	amigosFiltrado: any[] = [];
 	pessoas: any[] = [];
@@ -63,6 +65,7 @@ export class DespesaComponent implements OnInit {
 		this.getTipoDespesas();
 		this.getCategorias();
 		this.getAmigos();
+		this.getAmigosForaSistema();
 		this.breadCrumb();
 	}
 	breadCrumb(nome = "Despesas") {
@@ -111,6 +114,11 @@ export class DespesaComponent implements OnInit {
 		// 	.subscribe((res) => {
 		// 		this.pessoas = res;
 		// 	});
+	}
+	getAmigosForaSistema() {
+		this.amigosService.getAmigosForaSistema().subscribe((res) => {
+			this.amigosForaSistema = res;
+		});
 	}
 	getAmigos() {
 		this.amigosService.getAmigos().subscribe((res) => {
@@ -209,6 +217,17 @@ export class DespesaComponent implements OnInit {
 	// 	const control = <FormArray>this.form.controls["telefones"];
 	// 	control.removeAt(i);
 	// }
+
+	cadastrarNovaPessoaForaAmigo() {
+		if (!this.novaPessoaModel.length) return;
+		this.amigosService
+			.salvarAmigosForaSistema(this.novaPessoaModel)
+			.subscribe((res) => {
+				this.getAmigosForaSistema();
+				this.dividirComAmigo(res);
+			});
+	}
+
 	save(form) {
 		this.despesaService.save(form);
 	}

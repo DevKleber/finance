@@ -19,6 +19,13 @@ export class AmigosService {
 		private router: Router
 	) {}
 
+	getAmigosForaSistema(): Observable<any[]> {
+		return this.http.get<any[]>(`${API}/amigo-fora`);
+	}
+	salvarAmigosForaSistema(nome) {
+		return this.http.post<any>(`${API}/amigo-fora`, { no_pessoa: nome });
+	}
+
 	getAmigos(search?: string): Observable<Amigos[]> {
 		return this.http.get<Amigos[]>(`${API}/amigo`);
 	}
