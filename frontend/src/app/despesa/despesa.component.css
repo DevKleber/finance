@@ -44,3 +44,20 @@ input {
 	align-content: center;
 	align-self: center;
 }
+.dayMais {
+	position: absolute;
+	right: 13px;
+	top: 44%;
+	padding: 0;
+	margin: 0;
+	font-size: 1.3em;
+}
+.dayMenos {
+	cursor: pointer;
+	position: absolute;
+	left: 13px;
+	top: 44%;
+	padding: 0;
+	margin: 0;
+	font-size: 1.3em;
+}

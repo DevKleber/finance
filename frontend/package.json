@@ -38,7 +38,7 @@
     "angular2-wizard": "^0.4.0",
     "core-js": "^2.6.5",
     "mapbox-gl": "^1.7.0",
-    "ngx-mask": "^9.1.2",
+    "ngx-mask": "^9.1.4",
     "ngx-perfect-scrollbar": "^7.2.1",
     "ol": "^6.1.1",
     "rxjs": "^6.6.2",

@@ -27,19 +27,11 @@ export class DespesaService {
 		return this.http.get<Despesa>(`${API}//${id}`);
 	}
 
-	save(form) {
-		return this.http.post<any>(`${API}/`, form).subscribe(
-			(data) => {
-				if (data["dados"]) {
-					this.notify("Registro Inserido Com Sucesso!");
-					this.router.navigate(["/"]);
-				}
-				console.log(data);
-			},
-			(error) => {
-				this.notify(`Error: ${error}`);
-			}
-		);
+	salvarCartaoCredito(form) {
+		return this.http.post<any>(`${API}/despesa_cartao`, form);
+	}
+	salvarConta(form) {
+		return this.http.post<any>(`${API}/despesa_conta`, form);
 	}
 
 	update(form, id) {

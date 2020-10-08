@@ -42,7 +42,6 @@ export class DespesaComponent implements OnInit {
 	amigosParaDividir: any[] = [];
 
 	despesaConta: boolean = false;
-	despesaCompartilhada: boolean = false;
 	despesaCartaoCredito: boolean = false;
 
 	valorRemanescente = 0;
@@ -127,13 +126,52 @@ export class DespesaComponent implements OnInit {
 			this.loader = false;
 		});
 	}
+	configureDia(maisOuMenos) {
+		let dt_despesa = this.formCartaoCredito.get("dt_despesa").value;
+		var dt_despesaArray = dt_despesa.split("/");
+
+		var dateObj = new Date(
+			parseInt(dt_despesaArray[2]),
+			parseInt(dt_despesaArray[1]),
+			parseInt(dt_despesaArray[0])
+		);
+
+		var MyDateString;
+		if (maisOuMenos == "+") {
+			dateObj.setDate(dateObj.getDate() + 1);
+		} else {
+			dateObj.setDate(dateObj.getDate() - 1);
+		}
+
+		MyDateString =
+			("0" + dateObj.getDate()).slice(-2) +
+			"/" +
+			("0" + dateObj.getMonth()).slice(-2) +
+			"/" +
+			dateObj.getFullYear();
+
+		this.formCartaoCredito.controls["dt_despesa"].setValue(MyDateString);
+	}
+	getDate() {
+		var dateObj = new Date();
+		var month = dateObj.getUTCMonth() + 1; //months from 1-12
+		var day = dateObj.getUTCDate();
+		var year = dateObj.getUTCFullYear();
+
+		let date =
+			("0" + day).slice(-2) + "/" + ("0" + month).slice(-2) + "/" + year;
+
+		return date;
+	}
 
 	initializeFormEmpty() {
 		this.formCartaoCredito = this.formBuilder.group({
 			nomePessoaSearch: this.formBuilder.control(""),
 			vl_despesac: this.formBuilder.control("", [Validators.required]),
 			ds_despesa: this.formBuilder.control("", [Validators.required]),
-			dt_despesa: this.formBuilder.control("", [Validators.required]),
+			dt_despesa: this.formBuilder.control(this.getDate(), [
+				Validators.required,
+			]),
 			bo_dividir_amigos: this.formBuilder.control(false),
 			id_tipo_despesa: this.formBuilder.control("", [
 				Validators.required,
@@ -228,19 +266,22 @@ export class DespesaComponent implements OnInit {
 			});
 	}
 
-	save(form) {
-		this.despesaService.save(form);
+	salvarCartaoCredito(form) {
+		this.despesaService.salvarCartaoCredito(form).subscribe((res) => {
+			console.log(res);
+		});
+	}
+	salvarConta(form) {
+		this.despesaService.salvarConta(form).subscribe((res) => {
+			console.log(res);
+		});
 	}
 
 	oqueLancar(frase, qualLancar) {
-		this.despesaCompartilhada = false;
 		this.despesaCartaoCredito = false;
 		this.despesaConta = false;
 
 		switch (qualLancar) {
-			case "dc":
-				this.despesaCompartilhada = true;
-				break;
 			case "dcc":
 				this.despesaCartaoCredito = true;
 				break;
