@@ -53,3 +53,6 @@ body {
 div.ng-select-container {
 	padding: 25px 0 25px 0 !important;
 }
+div#wrapper app-menu {
+	background-color: #234bbf;
+}

@@ -40,8 +40,15 @@ class DespesaCartaoController extends Controller
             if (!$despesaCartao) {
                 return response(['resposne' => 'Erro ao salvar despesa', 400]);
             }
-            \DB::roolback();
-            // \DB::commit();
+            if ($request['bo_dividir_amigos']) {
+                $foiSalva = \App\DespesaCompartilhada::salvar($request->all());
+                if (!$foiSalva) {
+                    // \DB::rollback();
+                    return response(['resposne' => 'Erro ao salvar despesa', 400]);
+                }
+            }
+            \DB::commit();
+
             return $ar;
         }
 

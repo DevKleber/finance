@@ -209,14 +209,19 @@ export class DespesaComponent implements OnInit {
 			this.setValorRemanescente(total);
 
 			if (this.valorRemanescente < -0) {
-				total -= parseFloat(element.valor);
+				total = total - parseFloat(element.valor);
 				this.setValorRemanescente(total);
+				let valorRem = this.valorRemanescente;
 				const formPessoa = (<FormArray>(
 					this.formCartaoCredito.get("dividirPessoas")
 				)).at(indexPessoa);
 				formPessoa.patchValue({
 					valor: this.valorRemanescente,
 				});
+				// zerando valor remanescente
+				this.setValorRemanescente(
+					this.formCartaoCredito.get("vl_despesac").value
+				);
 			}
 		});
 	}
@@ -268,7 +273,7 @@ export class DespesaComponent implements OnInit {
 
 	salvarCartaoCredito(form) {
 		this.despesaService.salvarCartaoCredito(form).subscribe((res) => {
-			console.log(res);
+			this.notificationService.notifySweet("Salvo com sucesso!");
 		});
 	}
 	salvarConta(form) {

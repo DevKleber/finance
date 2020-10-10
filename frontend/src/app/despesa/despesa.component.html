@@ -5,16 +5,22 @@
 		</div> -->
 
 		<div class="col-md-6 text-center cartao">
-			<div class="padding-15 cursor-pointer card shadow" [ngClass]="{
+			<div
+				class="padding-15 cursor-pointer card shadow"
+				[ngClass]="{
 					'bg-gradient-primary text-white': despesaCartaoCredito
-				}" (click)="oqueLancar('Despesa em cartão de crédito', 'dcc')">
+				}"
+				(click)="oqueLancar('Despesa em cartão de crédito', 'dcc')"
+			>
 				Despesa em cartão de crédito
 			</div>
 		</div>
 		<div class="col-md-6 text-center conta">
-			<div class="padding-15 cursor-pointer card shadow"
+			<div
+				class="padding-15 cursor-pointer card shadow"
 				[ngClass]="{ 'bg-gradient-primary text-white': despesaConta }"
-				(click)="oqueLancar('Despesa em conta', 'dct')">
+				(click)="oqueLancar('Despesa em conta', 'dct')"
+			>
 				Despesa em conta
 			</div>
 		</div>
@@ -27,67 +33,134 @@
 		<form [formGroup]="formCartaoCredito" novalidate>
 			<div class="row">
 				<div class="form-group is-empty col-md-4">
-					<app-input-container errorMessage="Campo obrigatório" label="Cartão de crédito">
-						<ng-select [items]="cartoes" bindLabel="no_cartao_credito" bindValue="id_cartao_credito"
-							formControlName="id_cartao_credito">
+					<app-input-container
+						errorMessage="Campo obrigatório"
+						label="Cartão de crédito"
+					>
+						<ng-select
+							[items]="cartoes"
+							bindLabel="no_cartao_credito"
+							bindValue="id_cartao_credito"
+							formControlName="id_cartao_credito"
+						>
 						</ng-select>
 					</app-input-container>
 				</div>
 				<div class="form-group is-empty col-md-8"></div>
 				<div class="form-group is-empty col-md-12">
-					<app-input-container errorMessage="Campo obrigatório" label="Despesa">
-						<input class="form-control" formControlName="ds_despesa" placeholder="" />
+					<app-input-container
+						errorMessage="Campo obrigatório"
+						label="Despesa"
+					>
+						<input
+							class="form-control"
+							formControlName="ds_despesa"
+							placeholder=""
+						/>
 					</app-input-container>
 				</div>
 
 				<div class="form-group is-empty col-md-4">
-					<app-input-container errorMessage="Campo obrigatório" label="Valor">
-						<input class="form-control" formControlName="vl_despesac" placeholder=""
-							(change)="setValorRemanescente(0)" mask="separator.2" [thousandSeparator]="'.'"
-							[decimalMarker]="','" prefix="R$ " />
+					<app-input-container
+						errorMessage="Campo obrigatório"
+						label="Valor"
+					>
+						<input
+							class="form-control"
+							formControlName="vl_despesac"
+							placeholder=""
+							(change)="setValorRemanescente(0)"
+							mask="separator.2"
+							[thousandSeparator]="'.'"
+							[decimalMarker]="','"
+							prefix="R$ "
+						/>
 					</app-input-container>
 				</div>
 
 				<div class="form-group is-empty col-md-4">
-					<button class="btn dayMenos" (click)="configureDia('-')"><i class="fa fa-minus"></i> </button>
-					<button class="btn dayMais" (click)="configureDia('+')"><i class="fa fa-plus"></i></button>
+					<button class="btn dayMenos" (click)="configureDia('-')">
+						<i class="fa fa-minus"></i>
+					</button>
+					<button class="btn dayMais" (click)="configureDia('+')">
+						<i class="fa fa-plus"></i>
+					</button>
 
-					<app-input-container errorMessage="Campo obrigatório" label='Data da compra'>
-						<input class="form-control" formControlName="dt_despesa" placeholder="" mask="dX/M0/0000">
+					<app-input-container
+						errorMessage="Campo obrigatório"
+						label="Data da compra"
+					>
+						<input
+							class="form-control"
+							formControlName="dt_despesa"
+							placeholder=""
+							mask="dX/M0/0000"
+						/>
 					</app-input-container>
 				</div>
 
-				<div class=" form-group is-empty col-md-4 selectDespesa">
-						<app-input-container errorMessage="Campo obrigatório" label="Categoria">
-							<ng-select [items]="categorias" bindLabel="no_categoria_despesa"
-								bindValue="id_categoria_despesa" groupBy="pai" formControlName="id_categoria_despesa">
-								<ng-template ng-optgroup-tmp let-item="item">
-									{{ item.pai }}
-								</ng-template>
-								<ng-template ng-label-tmp let-item="item">
-									<i class="{{ item.icon }}"></i>
-									{{ item.no_categoria_despesa }}
-								</ng-template>
+				<div class="form-group is-empty col-md-4 selectDespesa">
+					<app-input-container
+						errorMessage="Campo obrigatório"
+						label="Categoria"
+					>
+						<ng-select
+							[items]="categorias"
+							bindLabel="no_categoria_despesa"
+							bindValue="id_categoria_despesa"
+							groupBy="pai"
+							formControlName="id_categoria_despesa"
+						>
+							<ng-template ng-optgroup-tmp let-item="item">
+								{{ item.pai }}
+							</ng-template>
+							<ng-template ng-label-tmp let-item="item">
+								<i class="{{ item.icon }}"></i>
+								{{ item.no_categoria_despesa }}
+							</ng-template>
 
-								<ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-									<i class="{{ item.icon }}"></i>
-									{{ item.no_categoria_despesa }}
-								</ng-template>
-							</ng-select>
-						</app-input-container>
-				</div>
-
-				<div class="form-group is-empty col-md-4">
-					<app-input-container errorMessage="Campo obrigatório" label="Tipo">
-						<ng-select [items]="tiposDespesa" bindLabel="no_tipo_despesa" bindValue="id_tipo_despesa"
-							formControlName="id_tipo_despesa">
+							<ng-template
+								ng-option-tmp
+								let-item="item"
+								let-index="index"
+								let-search="searchTerm"
+							>
+								<i class="{{ item.icon }}"></i>
+								{{ item.no_categoria_despesa }}
+							</ng-template>
 						</ng-select>
 					</app-input-container>
 				</div>
 
-				<div class="form-group is-empty col-md-3" *ngIf="formCartaoCredito.value.id_tipo_despesa == 2">
-					<app-input-container errorMessage="Campo obrigatório" label="Quantas vezes">
-						<input type="number" class="form-control" formControlName="qtd_parcelas" placeholder="" />
+				<div class="form-group is-empty col-md-4">
+					<app-input-container
+						errorMessage="Campo obrigatório"
+						label="Tipo"
+					>
+						<ng-select
+							[items]="tiposDespesa"
+							bindLabel="no_tipo_despesa"
+							bindValue="id_tipo_despesa"
+							formControlName="id_tipo_despesa"
+						>
+						</ng-select>
+					</app-input-container>
+				</div>
+
+				<div
+					class="form-group is-empty col-md-3"
+					*ngIf="formCartaoCredito.value.id_tipo_despesa == 2"
+				>
+					<app-input-container
+						errorMessage="Campo obrigatório"
+						label="Quantas vezes"
+					>
+						<input
+							type="number"
+							class="form-control"
+							formControlName="qtd_parcelas"
+							placeholder=""
+						/>
 					</app-input-container>
 				</div>
 			</div>
@@ -96,13 +169,27 @@
 
 			<div class="row">
 				<div class="form-group is-empty col-md-12">
-					<app-input-container errorMessage="Campo obrigatório" label="Dividir com amigo">
+					<app-input-container
+						errorMessage="Campo obrigatório"
+						label="Dividir com amigo"
+					>
 						<div class="onoffswitch">
-							<input type="checkbox" formControlName="bo_dividir_amigos" class="onoffswitch-checkbox"
-								id="myonoffswitch2" checked />
-							<label class="onoffswitch-label" for="myonoffswitch2"></label>
+							<input
+								type="checkbox"
+								formControlName="bo_dividir_amigos"
+								class="onoffswitch-checkbox"
+								id="myonoffswitch2"
+								checked
+							/>
+							<label
+								class="onoffswitch-label"
+								for="myonoffswitch2"
+							></label>
 						</div>
-						<div class="" *ngIf="formCartaoCredito.value.bo_dividir_amigos">
+						<div
+							class=""
+							*ngIf="formCartaoCredito.value.bo_dividir_amigos"
+						>
 							Valor remanescente: {{ valorRemanescente }}
 						</div>
 					</app-input-container>
@@ -128,21 +215,31 @@
 								</div>
 							</div>
 						</div> -->
-						<ng-container *ngIf="formCartaoCredito.value.bo_dividir_amigos">
-							<div class="col-md-3" style="padding-bottom: 1.5rem" *ngFor="
+						<ng-container
+							*ngIf="formCartaoCredito.value.bo_dividir_amigos"
+						>
+							<div
+								class="col-md-3"
+								style="padding-bottom: 1.5rem"
+								*ngFor="
 									let itemDividir of formCartaoCredito.get(
 										'dividirPessoas'
 									).controls;
 									let j = index
-								">
+								"
+							>
 								<div [formGroup]="itemDividir">
 									<div class="card-1">
-										<img src="/assets/img/profile-photos/{{
+										<img
+											src="/assets/img/profile-photos/{{
 												itemDividir | helpers: 'random'
-											}}.png" alt="Avatar" style="
+											}}.png"
+											alt="Avatar"
+											style="
 												width: 100%;
 												border-radius: 50%;
-											" />
+											"
+										/>
 										<div class="">
 											<h5 class="text-center">
 												<b>{{
@@ -151,17 +248,28 @@
 											</h5>
 											<p>{{ itemDividir.value.email }}</p>
 											<div class="form-group">
-												<label for="formControlRange">Valor à pagar</label>
-												<input type="range" class="form-control-range" formControlName="valor"
+												<label for="formControlRange"
+													>Valor à pagar</label
+												>
+												<input
+													type="range"
+													class="form-control-range"
+													formControlName="valor"
 													(change)="
 														mudandoValorParaCada(
 															itemDividir,
 															j
 														)
-													" placeholder="" min="0" max="{{
+													"
+													placeholder=""
+													min="0"
+													max="{{
 														formCartaoCredito.value
 															.vl_despesac
-													}}" style="padding: 0" value="0" />
+													}}"
+													style="padding: 0"
+													value="0"
+												/>
 											</div>
 											<div class="valorAPagar">
 												R$ {{ itemDividir.value.valor }}
@@ -171,12 +279,18 @@
 								</div>
 							</div>
 							<div class="col-md-3 acoesEscolherAmigo">
-								<button class="btn btnEscolherAmigo border w-100" data-toggle="modal"
-									data-target="#escolherAmigosDividirModal">
+								<button
+									class="btn btnEscolherAmigo border w-100"
+									data-toggle="modal"
+									data-target="#escolherAmigosDividirModal"
+								>
 									Escolher amigo
 								</button>
-								<button class="btn btnEscolherAmigo border w-100 margin-top-5" data-toggle="modal"
-									data-target="#escolherAmigosForaDividirModal">
+								<button
+									class="btn btnEscolherAmigo border w-100 margin-top-5"
+									data-toggle="modal"
+									data-target="#escolherAmigosForaDividirModal"
+								>
 									Pessoa fora do sistema
 								</button>
 							</div>
@@ -185,8 +299,11 @@
 				</div>
 			</div>
 			<div class="box-footer col-md-12">
-				<button (click)="save(formCartaoCredito.value)" [disabled]="!formCartaoCredito.valid"
-					class="btn btn-primary">
+				<button
+					(click)="salvarCartaoCredito(formCartaoCredito.value)"
+					[disabled]="!formCartaoCredito.valid"
+					class="btn btn-primary"
+				>
 					Salvar
 				</button>
 			</div>
@@ -198,29 +315,53 @@
 	<h1 class="text-center">Despesa em conta</h1>
 </div>
 
-<div class="modal fade" id="escolherAmigosDividirModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-	aria-hidden="true">
+<div
+	class="modal fade"
+	id="escolherAmigosDividirModal"
+	tabindex="-1"
+	role="dialog"
+	aria-labelledby="exampleModalLabel"
+	aria-hidden="true"
+>
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel">
 					Escolha amigos para dividir a conta
 				</h5>
-				<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+				<button
+					class="close"
+					type="button"
+					data-dismiss="modal"
+					aria-label="Close"
+				>
 					<span aria-hidden="true">×</span>
 				</button>
 			</div>
 			<div class="modal-body">
 				<!-- MODAL ESCOLHER AMIGO PARA DIVIDIR A CONTA -->
 				<!-- escolher amigo para dividir -->
-				<div class="row" *ngIf="formCartaoCredito.value.bo_dividir_amigos">
+				<div
+					class="row"
+					*ngIf="formCartaoCredito.value.bo_dividir_amigos"
+				>
 					<!-- input -->
 					<div class="col-md-3"></div>
 					<div class="input-group col-md-6">
-						<input type="text" class="form-control bg-light border-0 small" placeholder="Nome"
-							aria-label="Search" aria-describedby="basic-addon2" [(ngModel)]="nomePessoaModel" />
+						<input
+							type="text"
+							class="form-control bg-light border-0 small"
+							placeholder="Nome"
+							aria-label="Search"
+							aria-describedby="basic-addon2"
+							[(ngModel)]="nomePessoaModel"
+						/>
 						<div class="input-group-append">
-							<button class="btn btn-primary" type="button" (click)="procurarPessoa()">
+							<button
+								class="btn btn-primary"
+								type="button"
+								(click)="procurarPessoa()"
+							>
 								<i class="fas fa-search fa-sm"></i>
 							</button>
 						</div>
@@ -230,7 +371,10 @@
 					<div class="col-md-12 margin-top-15">
 						<h3 *ngIf="pessoas?.length">
 							Resultados
-							<a href="#" class="btn btn-primary btn-circle btn-sm">
+							<a
+								href="#"
+								class="btn btn-primary btn-circle btn-sm"
+							>
 								{{ pessoas?.length }}
 							</a>
 						</h3>
@@ -241,17 +385,28 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-3" style="padding-bottom: 1.5rem" *ngFor="let item of amigosFiltrado">
+					<div
+						class="col-md-3"
+						style="padding-bottom: 1.5rem"
+						*ngFor="let item of amigosFiltrado"
+					>
 						<div class="card-1">
-							<img src="/assets/img/profile-photos/{{
+							<img
+								src="/assets/img/profile-photos/{{
 									item | helpers: 'random'
-								}}.png" alt="Avatar" style="width: 100%; border-radius: 50%" />
+								}}.png"
+								alt="Avatar"
+								style="width: 100%; border-radius: 50%"
+							/>
 							<div class="">
 								<h5 class="text-center">
 									<b>{{ item.no_pessoa }}</b>
 								</h5>
 								<p>{{ item.email }}</p>
-								<button class="btn w-100 border" (click)="dividirComAmigo(item)">
+								<button
+									class="btn w-100 border"
+									(click)="dividirComAmigo(item)"
+								>
 									Dividir conta com amigo
 								</button>
 							</div>
@@ -265,8 +420,14 @@
 	</div>
 </div>
 
-<div class="modal fade" id="escolherAmigosForaDividirModal" tabindex="-1" role="dialog"
-	aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div
+	class="modal fade"
+	id="escolherAmigosForaDividirModal"
+	tabindex="-1"
+	role="dialog"
+	aria-labelledby="exampleModalLabel"
+	aria-hidden="true"
+>
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -274,18 +435,29 @@
 					Escolha pessoa fora da sua lista de amigos para dividir a
 					conta
 				</h5>
-				<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+				<button
+					class="close"
+					type="button"
+					data-dismiss="modal"
+					aria-label="Close"
+				>
 					<span aria-hidden="true">×</span>
 				</button>
 			</div>
 			<div class="modal-body">
 				<!-- MODAL ESCOLHER AMIGO PARA DIVIDIR A CONTA -->
 				<!-- escolher amigo para dividir -->
-				<div class="row" *ngIf="formCartaoCredito.value.bo_dividir_amigos">
+				<div
+					class="row"
+					*ngIf="formCartaoCredito.value.bo_dividir_amigos"
+				>
 					<div class="col-md-12 margin-top-15">
 						<h3 *ngIf="pessoas?.length">
 							Resultados
-							<a href="#" class="btn btn-primary btn-circle btn-sm">
+							<a
+								href="#"
+								class="btn btn-primary btn-circle btn-sm"
+							>
 								{{ pessoas?.length }}
 							</a>
 						</h3>
@@ -300,30 +472,52 @@
 					<div class="col-md-3" style="padding-bottom: 1.5rem">
 						<div class="card-1">
 							<div>
-								<app-input-container errorMessage="Campo obrigatório" label="Cadastrar nova pessoa">
-									<input style="
+								<app-input-container
+									errorMessage="Campo obrigatório"
+									label="Cadastrar nova pessoa"
+								>
+									<input
+										style="
 											font-size: 1em !important;
 											padding: 25px 7px 25px 7px;
-										" class="form-control" [(ngModel)]="novaPessoaModel" placeholder="" />
+										"
+										class="form-control"
+										[(ngModel)]="novaPessoaModel"
+										placeholder=""
+									/>
 								</app-input-container>
-								<button class="btn w-100 border" (click)="cadastrarNovaPessoaForaAmigo()">
+								<button
+									class="btn w-100 border"
+									(click)="cadastrarNovaPessoaForaAmigo()"
+								>
 									Cadastrar e dividir conta com amigo
 								</button>
 							</div>
 						</div>
 					</div>
 					<!-- fim cadastrar novo "amigo" -->
-					<div class="col-md-3" style="padding-bottom: 1.5rem" *ngFor="let item of amigosForaSistema">
+					<div
+						class="col-md-3"
+						style="padding-bottom: 1.5rem"
+						*ngFor="let item of amigosForaSistema"
+					>
 						<div class="card-1">
-							<img src="/assets/img/profile-photos/{{
+							<img
+								src="/assets/img/profile-photos/{{
 									item | helpers: 'random'
-								}}.png" alt="Avatar" style="width: 100%; border-radius: 50%" />
+								}}.png"
+								alt="Avatar"
+								style="width: 100%; border-radius: 50%"
+							/>
 							<div class="">
 								<h5 class="text-center">
 									<b>{{ item.no_pessoa }}</b>
 								</h5>
 								<p>{{ item.email }}</p>
-								<button class="btn w-100 border" (click)="dividirComAmigo(item)">
+								<button
+									class="btn w-100 border"
+									(click)="dividirComAmigo(item)"
+								>
 									Dividir conta com amigo
 								</button>
 							</div>
