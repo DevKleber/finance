@@ -1,38 +1,50 @@
-<div class="menu">
-	<div class="row">
-		<!-- <div class="col-md-12">
-			Larçar
-		</div> -->
-
-		<div class="col-md-6 text-center cartao">
-			<div
-				class="padding-15 cursor-pointer card shadow"
-				[ngClass]="{
-					'bg-gradient-primary text-white': despesaCartaoCredito
-				}"
-				(click)="oqueLancar('Despesa em cartão de crédito', 'dcc')"
-			>
-				Despesa em cartão de crédito
-			</div>
-		</div>
-		<div class="col-md-6 text-center conta">
-			<div
-				class="padding-15 cursor-pointer card shadow"
-				[ngClass]="{ 'bg-gradient-primary text-white': despesaConta }"
-				(click)="oqueLancar('Despesa em conta', 'dct')"
-			>
-				Despesa em conta
-			</div>
-		</div>
-	</div>
-</div>
-
 <div class="row">
-	<div class="col-md-3"></div>
-	<div class="despesa card shadow col-md-6" *ngIf="despesaCartaoCredito">
-		<form [formGroup]="formCartaoCredito" novalidate>
+	<div class="col-md-2"></div>
+	<div class="despesa card shadow col-md-8">
+		<div class="menu">
+			<!-- menu cartão ou conta -->
 			<div class="row">
-				<div class="form-group is-empty col-md-4">
+				<!-- <div class="col-md-12">
+					Larçar
+				</div> -->
+
+				<div class="col-md-6 text-center cartao">
+					<div
+						class="padding-15 cursor-pointer card shadow"
+						[ngClass]="{
+							'bg-gradient-primary text-white': despesaCartaoCredito
+						}"
+						(click)="
+							oqueLancar('Despesa em cartão de crédito', 'dcc')
+						"
+					>
+						Despesa em cartão de crédito
+					</div>
+				</div>
+				<div class="col-md-6 text-center conta">
+					<div
+						class="padding-15 cursor-pointer card shadow"
+						[ngClass]="{
+							'bg-gradient-primary text-white': despesaConta
+						}"
+						(click)="oqueLancar('Despesa em conta', 'dct')"
+					>
+						Despesa em conta
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<form
+			[formGroup]="formCartaoCredito"
+			novalidate
+			*ngIf="despesaCartaoCredito || despesaConta"
+		>
+			<div class="row">
+				<div
+					class="form-group is-empty col-md-4"
+					*ngIf="despesaCartaoCredito"
+				>
 					<app-input-container
 						errorMessage="Campo obrigatório"
 						label="Cartão de crédito"
@@ -91,8 +103,35 @@
 						label="Data da compra"
 					>
 						<input
-							class="form-control"
+							class="form-control text-center"
 							formControlName="dt_despesa"
+							placeholder=""
+							mask="dX/M0/0000"
+						/>
+					</app-input-container>
+				</div>
+
+				<div class="form-group is-empty col-md-4" *ngIf="despesaConta">
+					<button
+						class="btn dayMenos"
+						(click)="configureDiaVencimento('-')"
+					>
+						<i class="fa fa-minus"></i>
+					</button>
+					<button
+						class="btn dayMais"
+						(click)="configureDiaVencimento('+')"
+					>
+						<i class="fa fa-plus"></i>
+					</button>
+
+					<app-input-container
+						errorMessage="Campo obrigatório"
+						label="Data de vencimento"
+					>
+						<input
+							class="form-control text-center"
+							formControlName="dt_vencimento"
 							placeholder=""
 							mask="dX/M0/0000"
 						/>
@@ -133,18 +172,36 @@
 				</div>
 
 				<div class="form-group is-empty col-md-4">
-					<app-input-container
-						errorMessage="Campo obrigatório"
-						label="Tipo"
+					<ng-container
+						*ngIf="despesaCartaoCredito; else elseTemplate"
 					>
-						<ng-select
-							[items]="tiposDespesa"
-							bindLabel="no_tipo_despesa"
-							bindValue="id_tipo_despesa"
-							formControlName="id_tipo_despesa"
+						<app-input-container
+							errorMessage="Campo obrigatório"
+							label="Tipo"
 						>
-						</ng-select>
-					</app-input-container>
+							<ng-select
+								[items]="tiposCartao"
+								bindLabel="no_tipo_despesa"
+								bindValue="id_tipo_despesa"
+								formControlName="id_tipo_despesa"
+							>
+							</ng-select>
+						</app-input-container>
+					</ng-container>
+					<ng-template #elseTemplate>
+						<app-input-container
+							errorMessage="Campo obrigatório"
+							label="Tipo"
+						>
+							<ng-select
+								[items]="tiposConta"
+								bindLabel="no_tipo_despesa"
+								bindValue="id_tipo_despesa"
+								formControlName="id_tipo_despesa"
+							>
+							</ng-select>
+						</app-input-container>
+					</ng-template>
 				</div>
 
 				<div
@@ -195,26 +252,6 @@
 					</app-input-container>
 
 					<div class="row">
-						<!-- voce -->
-						<!-- <pre>{{ formCartaoCredito.value | json }}</pre> -->
-						<!-- <div class="col-md-3" style="padding-bottom: 1.5rem"
-							*ngIf="formCartaoCredito.value.bo_dividir_amigos">
-							<div class="card-1">
-								<img src="/assets/img/profile-photos/{{ item | helpers: 'random' }}.png" alt="Avatar"
-									style="width:100%;border-radius: 50%;">
-								<div class="">
-									<h5 class="text-center"><b>VOCÊ</b></h5>
-									<div class="form-group">
-										<label for="formControlRange">Valor à pagar</label>
-										<input type="range" class="form-control-range" id="formControlRange" min="0"
-											max="100" style="padding: 0;" value="100">
-									</div>
-									<div class="valorAPagar">
-										R$ {{formCartaoCredito.value.vl_despesac}}
-									</div>
-								</div>
-							</div>
-						</div> -->
 						<ng-container
 							*ngIf="formCartaoCredito.value.bo_dividir_amigos"
 						>
@@ -299,20 +336,29 @@
 				</div>
 			</div>
 			<div class="box-footer col-md-12">
-				<button
-					(click)="salvarCartaoCredito(formCartaoCredito.value)"
-					[disabled]="!formCartaoCredito.valid"
-					class="btn btn-primary"
+				<ng-container
+					*ngIf="despesaCartaoCredito; else elseTemplateSalvarConta"
 				>
-					Salvar
-				</button>
+					<button
+						(click)="salvarCartaoCredito(formCartaoCredito.value)"
+						[disabled]="!formCartaoCredito.valid"
+						class="btn btn-primary"
+					>
+						Salvar
+					</button>
+				</ng-container>
+				<ng-template #elseTemplateSalvarConta>
+					<button
+						(click)="salvarConta(formCartaoCredito.value)"
+						[disabled]="!formCartaoCredito.valid"
+						class="btn btn-primary"
+					>
+						Salvar
+					</button>
+				</ng-template>
 			</div>
 		</form>
 	</div>
-</div>
-
-<div class="row despesa card shadow" *ngIf="despesaConta">
-	<h1 class="text-center">Despesa em conta</h1>
 </div>
 
 <div
@@ -472,20 +518,16 @@
 					<div class="col-md-3" style="padding-bottom: 1.5rem">
 						<div class="card-1">
 							<div>
-								<app-input-container
-									errorMessage="Campo obrigatório"
-									label="Cadastrar nova pessoa"
-								>
-									<input
-										style="
-											font-size: 1em !important;
-											padding: 25px 7px 25px 7px;
-										"
-										class="form-control"
-										[(ngModel)]="novaPessoaModel"
-										placeholder=""
-									/>
-								</app-input-container>
+								<label for="">Cadastrar nova pessoa</label>
+								<input
+									style="
+										font-size: 1em !important;
+										padding: 25px 7px 25px 7px;
+									"
+									class="form-control"
+									[(ngModel)]="novaPessoaModel"
+									placeholder=""
+								/>
 								<button
 									class="btn w-100 border"
 									(click)="cadastrarNovaPessoaForaAmigo()"
@@ -524,7 +566,6 @@
 						</div>
 					</div>
 				</div>
-
 				<!-- fim escolher amigo para dividir -->
 			</div>
 		</div>

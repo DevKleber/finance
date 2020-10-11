@@ -34,6 +34,8 @@ export class DespesaComponent implements OnInit {
 
 	cartoes: any[] = [];
 	tiposDespesa: any[] = [];
+	tiposCartao: any[] = [];
+	tiposConta: any[] = [];
 	categorias: any[] = [];
 	amigosForaSistema: any[] = [];
 	amigos: any[] = [];
@@ -81,6 +83,18 @@ export class DespesaComponent implements OnInit {
 	getTipoDespesas() {
 		this.tipoDespesaService.getTipoDespesas().subscribe((res) => {
 			this.tiposDespesa = res;
+			this.separandoTiposDespesa(this.tiposDespesa);
+		});
+	}
+
+	separandoTiposDespesa(tipos) {
+		tipos.forEach((element) => {
+			if (element.id_tipo_despesa == 1 || element.id_tipo_despesa == 2) {
+				this.tiposCartao.push(element);
+			}
+			if (element.id_tipo_despesa == 1 || element.id_tipo_despesa == 2) {
+				this.tiposConta.push(element);
+			}
 		});
 	}
 	getCategorias() {
@@ -152,6 +166,34 @@ export class DespesaComponent implements OnInit {
 
 		this.formCartaoCredito.controls["dt_despesa"].setValue(MyDateString);
 	}
+
+	configureDiaVencimento(maisOuMenos) {
+		let dt_despesaVencimento = this.formCartaoCredito.get("dt_vencimento")
+			.value;
+		var dt_despesaVencimentoArray = dt_despesaVencimento.split("/");
+
+		var dateObj = new Date(
+			parseInt(dt_despesaVencimentoArray[2]),
+			parseInt(dt_despesaVencimentoArray[1]),
+			parseInt(dt_despesaVencimentoArray[0])
+		);
+
+		var MyDateString;
+		if (maisOuMenos == "+") {
+			dateObj.setDate(dateObj.getDate() + 1);
+		} else {
+			dateObj.setDate(dateObj.getDate() - 1);
+		}
+
+		MyDateString =
+			("0" + dateObj.getDate()).slice(-2) +
+			"/" +
+			("0" + dateObj.getMonth()).slice(-2) +
+			"/" +
+			dateObj.getFullYear();
+
+		this.formCartaoCredito.controls["dt_vencimento"].setValue(MyDateString);
+	}
 	getDate() {
 		var dateObj = new Date();
 		var month = dateObj.getUTCMonth() + 1; //months from 1-12
@@ -179,10 +221,9 @@ export class DespesaComponent implements OnInit {
 			id_categoria_despesa: this.formBuilder.control("", [
 				Validators.required,
 			]),
-			id_cartao_credito: this.formBuilder.control("", [
-				Validators.required,
-			]),
+			id_cartao_credito: this.formBuilder.control(""),
 			qtd_parcelas: this.formBuilder.control("1"),
+			dt_vencimento: this.formBuilder.control(this.getDate()),
 			dividirPessoas: this.formBuilder.array([
 				this.pessoaItem("1", "VOCÊ"),
 			]),
@@ -247,7 +288,6 @@ export class DespesaComponent implements OnInit {
 	}
 
 	addPessoas(pessoa) {
-		console.log(pessoa);
 		this.items = this.formCartaoCredito.get("dividirPessoas") as FormArray;
 		this.items.push(
 			this.pessoaItem(pessoa.id_pessoa, pessoa.no_pessoa, pessoa.email)
