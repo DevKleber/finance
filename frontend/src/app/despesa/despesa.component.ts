@@ -318,7 +318,7 @@ export class DespesaComponent implements OnInit {
 	}
 	salvarConta(form) {
 		this.despesaService.salvarConta(form).subscribe((res) => {
-			console.log(res);
+			this.notificationService.notifySweet("Salvo com sucesso!");
 		});
 	}
 
