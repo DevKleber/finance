@@ -16,19 +16,22 @@ class DespesaItem extends Model
     {
         $errors = 0;
         $qtParcelas = $request['qtd_parcelas'];
-        $cartaoCredito = \App\CartaoCredito::getVencimentoByCartao($request['id_cartao_credito']);
-        $cartaoCredito->dia_vencimento = str_pad($cartaoCredito->dia_vencimento, 2, '0', STR_PAD_LEFT);
-
-        $diaAtual = date('Y-m-d');
-        $dtVencimento = date("Y-m-{$cartaoCredito->dia_vencimento}");
-        if ($cartaoCredito->dia_fechamento_fatura >= date('d')) {
-            $dtVencimento = date('Y-m-d', strtotime('+1 month', strtotime($diaAtual)));
+        if($request['id_cartao_credito']!=null){
+            $cartaoCredito = \App\CartaoCredito::getVencimentoByCartao($request['id_cartao_credito']);
+            $cartaoCredito->dia_vencimento = str_pad($cartaoCredito->dia_vencimento, 2, '0', STR_PAD_LEFT);
+            $diaAtual = date('Y-m-d');
+            $dtVencimento = date("Y-m-{$cartaoCredito->dia_vencimento}");
+            if ($cartaoCredito->dia_fechamento_fatura >= date('d')) {
+                $dtVencimento = date('Y-m-d', strtotime('+1 month', strtotime($diaAtual)));
+            }
+        }else{
+            $dtVencimento = Helpers::convertdateBr2DB(date($request['dt_vencimento']));
         }
+
         // Hoje 09
         // dia_fechamento_fatura:25
         // dia_vencimento:9
 
-        // $dtVencimento = Helpers::convertdateBr2DB(date($request['dt_vencimento']));
         for ($i = 0; $i < $qtParcelas; ++$i) {
             $nu_parcela = ($i + 1);
             $request['vl_despesa'] = ($request['vl_despesac'] / $qtParcelas);
