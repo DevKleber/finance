@@ -124,6 +124,15 @@ export const ROUTES: Routes = [
 		canLoad: [LoggedInGuard],
 		canActivate: [LoggedInGuard],
 	},
+	{
+		path: "cartao-credito/faturas/:id",
+		loadChildren: () =>
+			import("./cartao-credito/faturas/faturas.module").then(
+				(m) => m.FaturasModule
+			),
+		canLoad: [LoggedInGuard],
+		canActivate: [LoggedInGuard],
+	},
 
 	{ path: "**", redirectTo: "not-found", pathMatch: "full" },
 ];
