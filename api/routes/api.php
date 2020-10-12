@@ -60,4 +60,6 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::post('amigo/novo', 'AmigoController@semUsuario');
     Route::put('conta/ativar/{id}', 'ContaController@ativar');
     Route::get('auth/me', 'AuthController@me');
+
+    Route::get('movimentacoes', 'MovimentacoesController@index');
 });
