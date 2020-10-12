@@ -23,8 +23,6 @@
 						"assets": [
 							"src/favicon.ico",
 							"src/favicon.png",
-							"src/favicon",
-							"src/favicon",
 							"src/assets"
 						],
 						"styles": [
