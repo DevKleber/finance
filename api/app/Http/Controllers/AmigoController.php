@@ -42,7 +42,8 @@ class AmigoController extends Controller
                 'pessoa.nu_cpfcnpj',
                 'pessoa.bo_ativo',
                 'pessoa.img_perfil',
-                'amigos.*'
+                'amigos.*',
+                'amigos.id_pessoa as id_pessoa_amigo'
             )
             ->get()
         ;
@@ -61,7 +62,8 @@ class AmigoController extends Controller
                 'pessoa.nu_cpfcnpj',
                 'pessoa.bo_ativo',
                 'pessoa.img_perfil',
-                'amigos.*'
+                'amigos.*',
+                'pessoa.id_pessoa as id_pessoa_amigo'
             )
             ->get()
         ;
