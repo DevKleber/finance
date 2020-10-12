@@ -10,7 +10,7 @@ class DespesaController extends Controller
 {
     private $token;
 
-    public function __construct() 
+    public function __construct()
     {
         $this->token = JWTAuth::parseToken()->authenticate();
     }
@@ -26,8 +26,8 @@ class DespesaController extends Controller
 
     public function store(Request $request,$bo_amigos = false)
     {
-       
-        
+
+
     }
 
     public function show($id)
@@ -39,7 +39,7 @@ class DespesaController extends Controller
         return $despesa;
     }
 
-    
+
     public function update(Request $request, $id)
     {
         //para alterar o valor da despesa compartilhada vou ter que alterar apenas o valor na coluna vl_conta_compartilhada_porcentagem da tabela tb_conta_compartilhada_valor
@@ -59,16 +59,16 @@ class DespesaController extends Controller
         }
     }
     public function updateItem(Request $request,$id){
-        
+
         $despesa = $this->updateDespesa($request,$id);
         if($despesa['naoexiste']){
             return response(['resposne'=>'Despesa não encontrado']);
         }
-        
+
         if($despesa){
             $despesaItem = new \App\DespesaItem();
             $itens = $despesaItem->updateItem($request,$id);
-            
+
             if($itens){
                 return response([$despesa]);
             }
@@ -83,12 +83,12 @@ class DespesaController extends Controller
         }
         $despesa =  \App\Despesa::find($despesaItem->id_despesa);
         $despesa = Helpers::processar($despesa,$request->all());
-        
+
         unset($despesa['dt_vencimento']);
         unset($despesa['qtd_parcelas']);
         unset($despesa['bo_alterartodasFuturas']);
         unset($despesa['bo_compartilhada']);
-        
+
 
         if(!$despesa->save()){
             return false;
@@ -99,14 +99,14 @@ class DespesaController extends Controller
         $despesaItem = new \App\DespesaItem();
         if(!empty($request['id_despesa_item'])){
             return response(['response'=>"Vamos alterar pelo formulario id_despesa_item podendo passar mais de um item"]);
-        }else{   
+        }else{
             $update = $despesaItem->pagarDespesa($request,$id);
             if($update){
                 return response([$update]);
             }
             return response(["reponse"=>"erro"],400);
         }
-        
+
     }
 
     public function destroy($id)
@@ -124,6 +124,7 @@ class DespesaController extends Controller
         }
         return response(['response'=>'Deletado com sucesso']);
     }
+
     public function changeBoRepetir(Request $request, $id){
         $despesa =  \App\Despesa::find($id);
         if($despesa){
@@ -131,7 +132,7 @@ class DespesaController extends Controller
                 return response(['error'=>"Não tem permissão para alterar esse Despesa"],400);
             }
             $despesa->bo_repetir = ($request->bo_repetir==='true')?true:false;
-            
+
             $despesa->dt_fim_intervalo = Helpers::convertdateBr2DB($request['dt_fim_intervalo']);
             if(!$despesa->update()){
                 return response(["response"=>"Despesa não foi atualizado"],400);
@@ -141,5 +142,5 @@ class DespesaController extends Controller
             return response(['response'=>"Despesa não encontrado"]);
         }
     }
-    
+
 }
