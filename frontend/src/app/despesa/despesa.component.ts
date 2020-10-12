@@ -17,6 +17,7 @@ import { CategoriaDespesaService } from "../categoria-despesa/categoria-despesa.
 import { AmigosService } from "../amigos/amigos.service";
 
 import { Observable } from "rxjs";
+import { LoginService } from "../security/login/login.service";
 
 @Component({
 	selector: "app-despesa",
@@ -28,6 +29,7 @@ export class DespesaComponent implements OnInit {
 	loader: boolean = true;
 	formCartaoCredito: FormGroup;
 	items: FormArray;
+	usuarioLogado: any = {};
 
 	nomePessoaModel: string = "";
 	novaPessoaModel: string = "";
@@ -56,11 +58,13 @@ export class DespesaComponent implements OnInit {
 		private tipoDespesaService: TipoDespesaService,
 		private categoriaDespesaService: CategoriaDespesaService,
 		private amigosService: AmigosService,
+		private loginService: LoginService,
 		private helper: Helper,
 		private breadcrumbService: BreadcrumbService
 	) {}
 
 	ngOnInit() {
+		this.usuarioLogado = this.loginService.getUser();
 		this.initializeFormEmpty();
 		this.getCartoes();
 		this.getTipoDespesas();
@@ -225,7 +229,7 @@ export class DespesaComponent implements OnInit {
 			qtd_parcelas: this.formBuilder.control("1"),
 			dt_vencimento: this.formBuilder.control(this.getDate()),
 			dividirPessoas: this.formBuilder.array([
-				this.pessoaItem("1", "VOCÊ"),
+				this.pessoaItem(this.usuarioLogado.id_pessoa, "VOCÊ"),
 			]),
 
 			// vl_despesac
@@ -290,7 +294,11 @@ export class DespesaComponent implements OnInit {
 	addPessoas(pessoa) {
 		this.items = this.formCartaoCredito.get("dividirPessoas") as FormArray;
 		this.items.push(
-			this.pessoaItem(pessoa.id_pessoa, pessoa.no_pessoa, pessoa.email)
+			this.pessoaItem(
+				pessoa.id_pessoa_amigo ?? pessoa.id_pessoa,
+				pessoa.no_pessoa,
+				pessoa.email
+			)
 		);
 		// this.closeBtn.nativeElement.click();
 		// this.nu_telefone='';
@@ -337,6 +345,7 @@ export class DespesaComponent implements OnInit {
 		this.breadCrumb(frase);
 	}
 	dividirComAmigo(amigo) {
+		console.log(amigo);
 		// this.amigosParaDividir.push(amigo);
 		this.notificationService.notifySweet("Adicionado");
 		this.amigosFiltrado.splice(this.amigosFiltrado.indexOf(amigo), 1);
