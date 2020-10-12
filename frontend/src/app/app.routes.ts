@@ -115,6 +115,15 @@ export const ROUTES: Routes = [
 		canLoad: [LoggedInGuard],
 		canActivate: [LoggedInGuard],
 	},
+	{
+		path: "movimentacoes",
+		loadChildren: () =>
+			import("./movimentacoes/movimentacoes.module").then(
+				(m) => m.MovimentacoesModule
+			),
+		canLoad: [LoggedInGuard],
+		canActivate: [LoggedInGuard],
+	},
 
 	{ path: "**", redirectTo: "not-found", pathMatch: "full" },
 ];
