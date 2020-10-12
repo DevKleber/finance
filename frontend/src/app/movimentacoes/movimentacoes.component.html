@@ -1,0 +1,161 @@
+<div class="row">
+	<div class="col-md-8">
+		<div class="card shadow padding-15">
+			<div class="row margin-bottom-15">
+				<div class="data">Outubro 2020</div>
+			</div>
+			<div class="row margin-top-15">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th scope="col">Vencimento</th>
+							<th scope="col">Descrição</th>
+							<th scope="col">Categoria</th>
+							<th scope="col">Valor compra</th>
+							<th scope="col">Parcelas</th>
+							<th scope="col">Valor a pagar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let movimentacao of movimentacoes">
+							<td>
+								{{
+									movimentacao.dt_vencimento
+										| date: "dd/MM/yyyy"
+								}}
+							</td>
+							<td>
+								{{ movimentacao.ds_despesa }}
+								<i
+									*ngIf="movimentacao.bo_cartao"
+									style="margin-left: 5px; color: #cbccce"
+									class="fa fa-credit-card"
+								></i>
+								<i
+									*ngIf="movimentacao.bo_amigo"
+									style="margin-left: 5px; color: #cbccce"
+									class="fa fa-users"
+								></i>
+								<span style="font-size: 0.5em">
+									{{ movimentacao.responsavel }}
+								</span>
+							</td>
+							<td>{{ movimentacao.id_categoria_despesa }}</td>
+							<!-- <td>
+								{{
+									movimentacao.vl_despesac
+										| currency: "BRL":true
+								}}
+							</td> -->
+							<td>
+								{{
+									movimentacao.vl_total_minha_parte
+										| currency: "BRL":true
+								}}
+							</td>
+							<td>{{ movimentacao.parcelas }}</td>
+							<td>
+								{{
+									movimentacao.vl_despesa
+										| currency: "BRL":true
+								}}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<!-- <pre>{{ amigosPagar | json }}</pre> -->
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div
+			class="card shadow border-left-primary padding-15 margin-bottom-20"
+		>
+			<i class="iconResumo fa fa-credit-card text-primary"></i>
+
+			<span class="text text-primary">Despesas no meu cartão</span>
+			<p class="valorResumo">
+				{{
+					resumo?.minhasDespesasComCartao +
+						resumo?.despesasCompartilhadasComAmigosMeuCartao
+						| currency: "BRL":true
+				}}
+			</p>
+		</div>
+		<!-- <div class="card shadow padding-15 margin-bottom-20">
+			<i class="iconResumo fa fa-credit text-primary-card"></i>
+			<span class="text-primary">Meu cartão compartilhado com amigos</span>
+			<p class="valorResumo">
+				{{
+					resumo?.despesasCompartilhadasComAmigosMeuCartao
+						| currency: "BRL":true
+				}}
+			</p>
+		</div> -->
+		<div
+			class="card shadow border-left-success padding-15 margin-bottom-20"
+		>
+			<i class="iconResumo fa fa-credit-card text-success"></i>
+			<i
+				class="iconResumo2 fa fa-users text-success"
+				style="opacity: 0.2"
+			></i>
+			<i class="iconShared fa fa-share-square"></i>
+			<span class="text-success">Despesas no cartão do amigo</span>
+			<p class="valorResumo">
+				{{
+					resumo?.despesasCompartilhadasComAmigosCartaoDoAmigo
+						| currency: "BRL":true
+				}}
+			</p>
+		</div>
+		<div class="card shadow border-left-info padding-15 margin-bottom-20">
+			<i class="iconResumo fa fa-wallet text-info"></i>
+			<span class="text-info">Despesas em conta</span>
+			<p class="valorResumo">
+				{{
+					resumo?.minhasDespesasEmConta +
+						resumo?.despesasCompartilhadasComAmigosNaMinhaConta
+						| currency: "BRL":true
+				}}
+			</p>
+		</div>
+		<!-- <div class="card shadow padding-15 margin-bottom-20">
+			<i class="iconResumo fa fa-users"></i>
+			Compartilhado na minha conta
+			<p class="valorResumo">
+				{{
+					resumo?.despesasCompartilhadasComAmigosNaMinhaConta
+						| currency: "BRL":true
+				}}
+			</p>
+		</div> -->
+		<div
+			class="card shadow border-left-warning padding-15 margin-bottom-20"
+		>
+			<i class="iconResumo fa fa-wallet text-warning"></i>
+			<i
+				class="iconResumo2 fa fa-users text-warning"
+				style="opacity: 0.2"
+			></i>
+			<i class="iconShared fa fa-share-square"></i>
+			<span class="text-warning">Despesas na conta do amigo</span>
+			<p class="valorResumo">
+				{{
+					resumo?.despesasCompartilhadasComAmigosNaContaDoAmigo
+						| currency: "BRL":true
+				}}
+			</p>
+		</div>
+		<div
+			class="card shadow border-left-secondary padding-15 margin-bottom-20"
+		>
+			<i class="iconResumo fa fa-money-bill-wave text-Secondary"></i>
+			<span class="text-Secondary">Pagar amigos</span>
+			<p class="" *ngFor="let item of amigosPagar | keyvalue">
+				{{ item.key }}:
+				{{ item.value | currency: "BRL":true }}
+			</p>
+		</div>
+	</div>
+</div>
