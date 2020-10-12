@@ -322,12 +322,24 @@ export class DespesaComponent implements OnInit {
 	salvarCartaoCredito(form) {
 		this.despesaService.salvarCartaoCredito(form).subscribe((res) => {
 			this.notificationService.notifySweet("Salvo com sucesso!");
+			this.limparCamposAoSalvar();
 		});
 	}
 	salvarConta(form) {
 		this.despesaService.salvarConta(form).subscribe((res) => {
 			this.notificationService.notifySweet("Salvo com sucesso!");
+			this.limparCamposAoSalvar();
 		});
+	}
+	limparCamposAoSalvar() {
+		this.formCartaoCredito.controls["nomePessoaSearch"].setValue("");
+		this.formCartaoCredito.controls["vl_despesac"].setValue("");
+		this.formCartaoCredito.controls["ds_despesa"].setValue("");
+		this.formCartaoCredito.controls["bo_dividir_amigos"].setValue(false);
+		this.formCartaoCredito.controls["id_tipo_despesa"].setValue("");
+		this.formCartaoCredito.controls["id_categoria_despesa"].setValue("");
+		this.formCartaoCredito.controls["qtd_parcelas"].setValue("1");
+		this.formCartaoCredito.controls["dt_vencimento"].setValue("");
 	}
 
 	oqueLancar(frase, qualLancar) {

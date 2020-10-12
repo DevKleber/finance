@@ -106,7 +106,13 @@
 				class="credCard card-1 bg-gradient-dark text-white"
 				style="margin: 15px"
 			>
-				<div class="displayFlexColumn">
+				<div
+					class="displayFlexColumn cursor-pointer"
+					[routerLink]="[
+						'/cartao-credito/faturas',
+						item?.id_cartao_credito
+					]"
+				>
 					<div class="removeItem btn btn-sm" (click)="inativar(item)">
 						<i class="fas fa-minus-circle"></i>
 					</div>
