@@ -32,7 +32,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('categoria-despesaSelect', 'CategoriaDespesaController@getCategoriasAtivas');
     Route::resource('categoria-receita', 'CategoriaReceitaController');
     Route::resource('cartao-credito', 'CartaoCreditoController');
-    Route::get('cartao-credito/fatura/{id}', 'CartaoCreditoController@getFaturas');
+    Route::post('cartao-credito/fatura', 'CartaoCreditoController@getFaturas');
     Route::resource('amigo', 'AmigoController');
 
     Route::get('amigo-fora', 'AmigoController@getAmigosForaSistema');
@@ -62,5 +62,5 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::put('conta/ativar/{id}', 'ContaController@ativar');
     Route::get('auth/me', 'AuthController@me');
 
-    Route::get('movimentacoes', 'MovimentacoesController@index');
+    Route::post('movimentacoes', 'MovimentacoesController@index');
 });
