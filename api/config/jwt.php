@@ -10,7 +10,6 @@
  */
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | JWT Authentication Secret
@@ -33,7 +32,7 @@ return [
     |
     */
 
-    'ttl' => 120,
+    'ttl' => 1440,
     // 'ttl' => 1,
 
     /*
@@ -125,7 +124,6 @@ return [
     */
 
     'providers' => [
-
         /*
         |--------------------------------------------------------------------------
         | User Provider
@@ -170,7 +168,5 @@ return [
         */
 
         'storage' => 'Tymon\JWTAuth\Providers\Storage\IlluminateCacheAdapter',
-
     ],
-
 ];
