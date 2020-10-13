@@ -27,8 +27,22 @@ export class FaturasComponent implements OnInit {
 	urlImgBin: string = "/assets/img/card/bin";
 	bandeira: string = "";
 
-	order: any = {};
-	columns: any;
+	dataFiltro: any = {};
+	dateObj = new Date();
+	months = [
+		"Janeiro",
+		"Fevereiro",
+		"Março",
+		"Abril",
+		"Maio",
+		"Junho",
+		"Julho",
+		"Agosto",
+		"Setembro",
+		"Outubro",
+		"Novembro",
+		"Dezembro",
+	];
 
 	constructor(
 		private cartaoCreditoService: CartaoCreditoService,
@@ -41,6 +55,7 @@ export class FaturasComponent implements OnInit {
 
 	ngOnInit() {
 		// this.breadCrumb();
+		this.configureDate("");
 		this.getFatura();
 	}
 
@@ -56,7 +71,7 @@ export class FaturasComponent implements OnInit {
 	}
 	getFatura() {
 		this.cartaoCreditoService
-			.getFatura(this.router.snapshot.params["id"])
+			.getFatura(this.dataFiltro)
 			.subscribe((res) => {
 				this.cartoes = res["cartao"];
 				this.minhasDespesasComCartao = res["tudo"];
@@ -65,5 +80,21 @@ export class FaturasComponent implements OnInit {
 				this.dividaAmigos = res["dividaAmigos"];
 				this.loader = false;
 			});
+	}
+	configureDate(maisOuMenos) {
+		if (maisOuMenos == "+") {
+			this.dateObj.setMonth(this.dateObj.getMonth() + 1);
+		} else if (maisOuMenos == "-") {
+			this.dateObj.setMonth(this.dateObj.getMonth() - 1);
+		}
+
+		var month = this.dateObj.getUTCMonth() + 1; //months from 1-12
+		var year = this.dateObj.getUTCFullYear();
+
+		this.dataFiltro.mes = month;
+		this.dataFiltro.mesNome = this.months[month - 1];
+		this.dataFiltro.ano = year;
+		this.dataFiltro.id = this.router.snapshot.params["id"];
+		this.getFatura();
 	}
 }

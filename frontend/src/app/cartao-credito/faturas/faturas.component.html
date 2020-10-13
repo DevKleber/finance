@@ -2,7 +2,11 @@
 	<div class="col-md-8">
 		<div class="card shadow padding-15">
 			<div class="row margin-bottom-15">
-				<div class="data">Outubro 2020</div>
+				<div class="data">
+					<span class="cursor-pointer iconSubMonth" (click)="configureDate('-')"> <i class="fas fa-minus-circle"></i> </span>
+					{{dataFiltro?.mesNome}} {{dataFiltro?.ano}}
+					<span class="cursor-pointer iconAddMonth" (click)="configureDate('+')"> <i class="fas fa-plus-circle"></i> </span>
+				</div>
 			</div>
 			<div class="row margin-top-15">
 				<table class="table table-hover">

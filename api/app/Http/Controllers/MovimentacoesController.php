@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use JWTAuth;
 
 class MovimentacoesController extends Controller
@@ -13,17 +14,17 @@ class MovimentacoesController extends Controller
         $this->token = JWTAuth::parseToken()->authenticate();
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $pessoa = new \App\Pessoa();
         $usuarioLogado = $pessoa->getUsuarioPessoa();
 
-        $minhasDespesasComCartao = $this->minhasDespesasComCartao($usuarioLogado);
-        $despesasCompartilhadasComAmigosMeuCartao = $this->despesasCompartilhadasComAmigosMeuCartao($usuarioLogado);
-        $despesasCompartilhadasComAmigosCartaoDoAmigo = $this->despesasCompartilhadasComAmigosCartaoDoAmigo($usuarioLogado);
-        $minhasDespesasEmConta = $this->minhasDespesasEmConta($usuarioLogado);
-        $despesasCompartilhadasComAmigosNaMinhaConta = $this->despesasCompartilhadasComAmigosNaMinhaConta($usuarioLogado);
-        $despesasCompartilhadasComAmigosNaContaDoAmigo = $this->despesasCompartilhadasComAmigosNaContaDoAmigo($usuarioLogado);
+        $minhasDespesasComCartao = $this->minhasDespesasComCartao($usuarioLogado, $request);
+        $despesasCompartilhadasComAmigosMeuCartao = $this->despesasCompartilhadasComAmigosMeuCartao($usuarioLogado, $request);
+        $despesasCompartilhadasComAmigosCartaoDoAmigo = $this->despesasCompartilhadasComAmigosCartaoDoAmigo($usuarioLogado, $request);
+        $minhasDespesasEmConta = $this->minhasDespesasEmConta($usuarioLogado, $request);
+        $despesasCompartilhadasComAmigosNaMinhaConta = $this->despesasCompartilhadasComAmigosNaMinhaConta($usuarioLogado, $request);
+        $despesasCompartilhadasComAmigosNaContaDoAmigo = $this->despesasCompartilhadasComAmigosNaContaDoAmigo($usuarioLogado, $request);
 
         $tudo = [];
         $amigosPagar = [];
@@ -206,17 +207,17 @@ class MovimentacoesController extends Controller
         ];
     }
 
-    public function minhasDespesasComCartao($usuarioLogado)
+    public function minhasDespesasComCartao($usuarioLogado, $data)
     {
         return \App\DespesaCartao::Join('despesa', 'despesa.id_despesa', '=', 'despesa_cartao.id_despesa')
             ->Join('cartao_credito', 'cartao_credito.id_cartao_credito', '=', 'despesa_cartao.id_cartao_credito')
             ->Join('despesa_item', 'despesa_item.id_despesa', '=', 'despesa_cartao.id_despesa')
-            ->whereRaw('YEAR(dt_vencimento)=2020 AND MONTH(dt_vencimento) = 11 and bo_dividir_amigos = false and tb_despesa.id_usuario = '.$usuarioLogado->id_usuario)
+            ->whereRaw('YEAR(dt_vencimento)='.$data['ano'].' AND MONTH(dt_vencimento) = '.$data['mes'].' and bo_dividir_amigos = false and tb_despesa.id_usuario = '.$usuarioLogado->id_usuario)
             ->get()
         ;
     }
 
-    public function despesasCompartilhadasComAmigosMeuCartao($usuarioLogado)
+    public function despesasCompartilhadasComAmigosMeuCartao($usuarioLogado, $data)
     {
         return \App\DespesaCartao::Join('despesa', 'despesa.id_despesa', '=', 'despesa_cartao.id_despesa')
             ->Join('cartao_credito', 'cartao_credito.id_cartao_credito', '=', 'despesa_cartao.id_cartao_credito')
@@ -225,12 +226,12 @@ class MovimentacoesController extends Controller
 
             ->Join('usuario', 'usuario.id_usuario', '=', 'despesa.id_usuario')
             ->Join('pessoa', 'pessoa.id_pessoa', '=', 'usuario.id_pessoa')
-            ->whereRaw('YEAR(dt_vencimento)=2020 AND MONTH(dt_vencimento) = 11 and bo_dividir_amigos = true and tb_conta_compartilhada_valor.id_pessoa = '.$usuarioLogado->id_pessoa.' and tb_cartao_credito.tb_usuario_id_usuario = '.$usuarioLogado->id_usuario)
+            ->whereRaw('YEAR(dt_vencimento)='.$data['ano'].' AND MONTH(dt_vencimento) = '.$data['mes'].' and bo_dividir_amigos = true and tb_conta_compartilhada_valor.id_pessoa = '.$usuarioLogado->id_pessoa.' and tb_cartao_credito.tb_usuario_id_usuario = '.$usuarioLogado->id_usuario)
             ->get()
         ;
     }
 
-    public function despesasCompartilhadasComAmigosCartaoDoAmigo($usuarioLogado)
+    public function despesasCompartilhadasComAmigosCartaoDoAmigo($usuarioLogado, $data)
     {
         return \App\DespesaCartao::Join('despesa', 'despesa.id_despesa', '=', 'despesa_cartao.id_despesa')
             ->Join('cartao_credito', 'cartao_credito.id_cartao_credito', '=', 'despesa_cartao.id_cartao_credito')
@@ -238,39 +239,39 @@ class MovimentacoesController extends Controller
             ->Join('despesa_item', 'despesa_item.id_despesa', '=', 'despesa_cartao.id_despesa')
             ->Join('usuario', 'usuario.id_usuario', '=', 'despesa.id_usuario')
             ->Join('pessoa', 'pessoa.id_pessoa', '=', 'usuario.id_pessoa')
-            ->whereRaw('YEAR(dt_vencimento)=2020 AND MONTH(dt_vencimento) = 11 and bo_dividir_amigos = true and tb_conta_compartilhada_valor.id_pessoa = '.$usuarioLogado->id_pessoa.' and tb_cartao_credito.tb_usuario_id_usuario <> '.$usuarioLogado->id_usuario)
+            ->whereRaw('YEAR(dt_vencimento)='.$data['ano'].' AND MONTH(dt_vencimento) = '.$data['mes'].' and bo_dividir_amigos = true and tb_conta_compartilhada_valor.id_pessoa = '.$usuarioLogado->id_pessoa.' and tb_cartao_credito.tb_usuario_id_usuario <> '.$usuarioLogado->id_usuario)
             ->get()
         ;
     }
 
-    public function minhasDespesasEmConta($usuarioLogado)
+    public function minhasDespesasEmConta($usuarioLogado, $data)
     {
         return \App\DespesaConta::Join('despesa', 'despesa.id_despesa', '=', 'despesa_conta.id_despesa')
             ->Join('despesa_item', 'despesa_item.id_despesa', '=', 'despesa_conta.id_despesa')
-            ->whereRaw('YEAR(dt_vencimento)=2020 AND MONTH(dt_vencimento) = 11 and bo_dividir_amigos = false and tb_despesa.id_usuario = '.$usuarioLogado->id_usuario)
+            ->whereRaw('YEAR(dt_vencimento)='.$data['ano'].' AND MONTH(dt_vencimento) = '.$data['mes'].' and bo_dividir_amigos = false and tb_despesa.id_usuario = '.$usuarioLogado->id_usuario)
             ->get()
         ;
     }
 
-    public function despesasCompartilhadasComAmigosNaMinhaConta($usuarioLogado)
+    public function despesasCompartilhadasComAmigosNaMinhaConta($usuarioLogado, $data)
     {
         // where  and id_pessoa = 45 and td.id_usuario =12;
         return \App\DespesaConta::Join('despesa', 'despesa.id_despesa', '=', 'despesa_conta.id_despesa')
             ->Join('conta_compartilhada_valor', 'conta_compartilhada_valor.id_despesa', '=', 'despesa_conta.id_despesa')
             ->Join('despesa_item', 'despesa_item.id_despesa', '=', 'despesa_conta.id_despesa')
-            ->whereRaw('YEAR(dt_vencimento)=2020 AND MONTH(dt_vencimento) = 11 and bo_dividir_amigos = true and id_pessoa = '.$usuarioLogado->id_pessoa.' and tb_despesa.id_usuario = '.$usuarioLogado->id_usuario)
+            ->whereRaw('YEAR(dt_vencimento)='.$data['ano'].' AND MONTH(dt_vencimento) = '.$data['mes'].' and bo_dividir_amigos = true and id_pessoa = '.$usuarioLogado->id_pessoa.' and tb_despesa.id_usuario = '.$usuarioLogado->id_usuario)
             ->get()
         ;
     }
 
-    public function despesasCompartilhadasComAmigosNaContaDoAmigo($usuarioLogado)
+    public function despesasCompartilhadasComAmigosNaContaDoAmigo($usuarioLogado, $data)
     {
         return \App\DespesaConta::Join('despesa', 'despesa.id_despesa', '=', 'despesa_conta.id_despesa')
             ->Join('conta_compartilhada_valor', 'conta_compartilhada_valor.id_despesa', '=', 'despesa_conta.id_despesa')
             ->Join('despesa_item', 'despesa_item.id_despesa', '=', 'despesa_conta.id_despesa')
             ->Join('usuario', 'usuario.id_usuario', '=', 'despesa.id_usuario')
             ->Join('pessoa', 'pessoa.id_pessoa', '=', 'usuario.id_pessoa')
-            ->whereRaw('YEAR(dt_vencimento)=2020 AND MONTH(dt_vencimento) = 11 and bo_dividir_amigos = true and tb_conta_compartilhada_valor.id_pessoa = '.$usuarioLogado->id_pessoa.' and tb_despesa.id_usuario <> '.$usuarioLogado->id_usuario)
+            ->whereRaw('YEAR(dt_vencimento)='.$data['ano'].' AND MONTH(dt_vencimento) = '.$data['mes'].' and bo_dividir_amigos = true and tb_conta_compartilhada_valor.id_pessoa = '.$usuarioLogado->id_pessoa.' and tb_despesa.id_usuario <> '.$usuarioLogado->id_usuario)
             ->get()
         ;
     }

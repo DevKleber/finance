@@ -34,9 +34,9 @@ class CartaoCreditoController extends Controller
         return \App\CartaoCredito::create($request->all());
     }
 
-    public function getFaturas($id)
+    public function getFaturas(Request $request)
     {
-        $cartaoCredito = \App\CartaoCredito::where('id_cartao_credito', $id)->where('tb_usuario_id_usuario', $this->token['id_usuario'])->first();
+        $cartaoCredito = \App\CartaoCredito::where('id_cartao_credito', $request['id'])->where('tb_usuario_id_usuario', $this->token['id_usuario'])->first();
         if (!$cartaoCredito) {
             return response(['response' => 'Cartão de Crédito não encontrada'], 400);
         }
@@ -44,7 +44,7 @@ class CartaoCreditoController extends Controller
         $pessoa = new \App\Pessoa();
         $usuarioLogado = $pessoa->getUsuarioPessoa();
 
-        $getFaturasCartao = $this->getFaturasCartao($usuarioLogado, $id);
+        $getFaturasCartao = $this->getFaturasCartao($usuarioLogado, $request['id'], $request->all());
 
         $resumo = [
             'totalAPagarCartao' => 0,
@@ -86,14 +86,14 @@ class CartaoCreditoController extends Controller
         ];
     }
 
-    public function getFaturasCartao($usuarioLogado, $id_cartao_credito)
+    public function getFaturasCartao($usuarioLogado, $id_cartao_credito, $data)
     {
         return \App\DespesaCartao:: join('despesa', 'despesa.id_despesa', '=', 'despesa_cartao.id_despesa')
             ->join('despesa_item', 'despesa_item.id_despesa', '=', 'despesa_cartao.id_despesa')
             ->Join('cartao_credito', 'cartao_credito.id_cartao_credito', '=', 'despesa_cartao.id_cartao_credito')
             ->where('despesa_cartao.id_cartao_credito', $id_cartao_credito)
             ->where('cartao_credito.tb_usuario_id_usuario', $usuarioLogado->id_usuario)
-            ->whereRaw('YEAR(dt_vencimento)=2020 AND MONTH(dt_vencimento) = 11')
+            ->whereRaw('YEAR(dt_vencimento)='.$data['ano'].' AND MONTH(dt_vencimento) = '.$data['mes'])
             ->get()
         ;
     }

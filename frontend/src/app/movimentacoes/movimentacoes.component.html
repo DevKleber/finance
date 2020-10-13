@@ -1,8 +1,13 @@
+<pre>{{ mes | json }}</pre>
 <div class="row">
 	<div class="col-md-8">
 		<div class="card shadow padding-15">
 			<div class="row margin-bottom-15">
-				<div class="data">Outubro 2020</div>
+				<div class="data">
+					<span class="cursor-pointer iconSubMonth" (click)="configureDate('-')"> <i class="fas fa-minus-circle"></i> </span>
+					{{dataFiltro?.mesNome}} {{dataFiltro?.ano}}
+					<span class="cursor-pointer iconAddMonth" (click)="configureDate('+')"> <i class="fas fa-plus-circle"></i> </span>
+				</div>
 			</div>
 			<div class="row margin-top-15">
 				<table class="table table-hover">
@@ -26,16 +31,10 @@
 							</td>
 							<td>
 								{{ movimentacao.ds_despesa }}
-								<i
-									*ngIf="movimentacao.bo_cartao"
-									style="margin-left: 5px; color: #cbccce"
-									class="fa fa-credit-card"
-								></i>
-								<i
-									*ngIf="movimentacao.bo_amigo"
-									style="margin-left: 5px; color: #cbccce"
-									class="fa fa-users"
-								></i>
+								<i *ngIf="movimentacao.bo_cartao" style="margin-left: 5px; color: #cbccce"
+									class="fa fa-credit-card"></i>
+								<i *ngIf="movimentacao.bo_amigo" style="margin-left: 5px; color: #cbccce"
+									class="fa fa-users"></i>
 								<span style="font-size: 0.5em">
 									{{ movimentacao.responsavel }}
 								</span>
@@ -68,9 +67,7 @@
 		</div>
 	</div>
 	<div class="col-md-4">
-		<div
-			class="card shadow border-left-primary padding-15 margin-bottom-20"
-		>
+		<div class="card shadow border-left-primary padding-15 margin-bottom-20">
 			<i class="iconResumo fa fa-credit-card text-primary"></i>
 
 			<span class="text text-primary">Despesas no meu cartão</span>
@@ -92,14 +89,9 @@
 				}}
 			</p>
 		</div> -->
-		<div
-			class="card shadow border-left-success padding-15 margin-bottom-20"
-		>
+		<div class="card shadow border-left-success padding-15 margin-bottom-20">
 			<i class="iconResumo fa fa-credit-card text-success"></i>
-			<i
-				class="iconResumo2 fa fa-users text-success"
-				style="opacity: 0.2"
-			></i>
+			<i class="iconResumo2 fa fa-users text-success" style="opacity: 0.2"></i>
 			<i class="iconShared fa fa-share-square"></i>
 			<span class="text-success">Despesas no cartão do amigo</span>
 			<p class="valorResumo">
@@ -130,14 +122,9 @@
 				}}
 			</p>
 		</div> -->
-		<div
-			class="card shadow border-left-warning padding-15 margin-bottom-20"
-		>
+		<div class="card shadow border-left-warning padding-15 margin-bottom-20">
 			<i class="iconResumo fa fa-wallet text-warning"></i>
-			<i
-				class="iconResumo2 fa fa-users text-warning"
-				style="opacity: 0.2"
-			></i>
+			<i class="iconResumo2 fa fa-users text-warning" style="opacity: 0.2"></i>
 			<i class="iconShared fa fa-share-square"></i>
 			<span class="text-warning">Despesas na conta do amigo</span>
 			<p class="valorResumo">
@@ -147,9 +134,7 @@
 				}}
 			</p>
 		</div>
-		<div
-			class="card shadow border-left-secondary padding-15 margin-bottom-20"
-		>
+		<div class="card shadow border-left-secondary padding-15 margin-bottom-20">
 			<i class="iconResumo fa fa-money-bill-wave text-Secondary"></i>
 			<span class="text-Secondary">Pagar amigos</span>
 			<p class="" *ngFor="let item of amigosPagar | keyvalue">

@@ -17,7 +17,10 @@ export class MovimentacoesService {
 		private router: Router
 	) {}
 
-	getMovimentacoes(search?: string): Observable<any[]> {
+	getMovimentacoes(form): Observable<any[]> {
+		return this.http.post<any[]>(`${API}/movimentacoes`, form);
+	}
+	getMovimentacoesOr(search?: string): Observable<any[]> {
 		return this.http.get<any[]>(`${API}/movimentacoes`);
 	}
 

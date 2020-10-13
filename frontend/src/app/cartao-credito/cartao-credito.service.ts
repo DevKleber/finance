@@ -19,7 +19,10 @@ export class CartaoCreditoService {
 		private router: Router
 	) {}
 
-	getFatura(id): Observable<any[]> {
+	getFatura(form): Observable<any[]> {
+		return this.http.post<any[]>(`${API}/cartao-credito/fatura`, form);
+	}
+	getFaturaOri(id): Observable<any[]> {
 		return this.http.get<any[]>(`${API}/cartao-credito/fatura/${id}`);
 	}
 	getCartoes(search?: string): Observable<CartaoCredito[]> {
