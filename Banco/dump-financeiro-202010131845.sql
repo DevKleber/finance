@@ -577,7 +577,7 @@ CREATE TABLE `tb_sistema_rotina` (
 
 LOCK TABLES `tb_sistema_rotina` WRITE;
 /*!40000 ALTER TABLE `tb_sistema_rotina` DISABLE KEYS */;
-INSERT INTO `tb_sistema_rotina` VALUES (2,2,'Mudar Texto','Mudar Texto','','mudar-texto','exchange-alt',5),(3,2,'Cartão de crédito','Cartão de crédito','','cartao-credito','credit-card',3),(4,2,'Receita','Receita','','receita','hand-holding-usd',10),(5,2,'Lançar despesa','Despesa','','despesas','wallet',1),(7,2,'Despesa em Cartão','Despesa em Cartão','','despesas-cartao','wallet',10),(8,2,'Movimentações','Faturas para pagamento','','movimentacoes','shopping-basket',2),(9,2,'Amigos','Amigos','','amigos','users',4),(11,2,'Categoria Despesa','Categoria Despesa','','categoria-despesa','receipt',6),(12,2,'Categoria Receita','Categoria Receita','','categoria-receita','receipt',7);
+INSERT INTO `tb_sistema_rotina` VALUES (2,2,'Substituição de texto','Mudar Texto','','mudar-texto','exchange-alt',5),(3,2,'Cartão de crédito','Cartão de crédito','','cartao-credito','credit-card',3),(5,2,'Lançar despesa','Despesa','','despesas','wallet',1),(8,2,'Movimentações','Faturas para pagamento','','movimentacoes','shopping-basket',2),(9,2,'Amigos','Amigos','','amigos','users',4),(11,2,'Categoria Despesa','Categoria Despesa','','categoria-despesa','receipt',6),(12,2,'Categoria Receita','Categoria Receita','','categoria-receita','receipt',7);
 /*!40000 ALTER TABLE `tb_sistema_rotina` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -680,4 +680,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-12 18:48:27
+-- Dump completed on 2020-10-13 18:45:00
