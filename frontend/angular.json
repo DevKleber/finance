@@ -33,7 +33,6 @@
 							"src/styles.css"
 						],
 						"scripts": [
-							"src/assets/theme/js/jquery.min.js",
 							"src/assets/theme/js/bootstrap.bundle.min.js",
 							"src/assets/theme/js/sb-admin-2.min.js"
 						]
