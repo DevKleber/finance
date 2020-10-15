@@ -22,6 +22,12 @@ export class DespesaService {
 	getDespesas(search?: string): Observable<Despesa[]> {
 		return this.http.get<Despesa[]>(`${API}/`);
 	}
+	getDespesasAguardandoAprovacao(): Observable<any[]> {
+		return this.http.get<any[]>(`${API}/despesas_aguardando`);
+	}
+	despesasAguardandoAprovacao(form) {
+		return this.http.post<any>(`${API}/despesas_aguardando`, form);
+	}
 
 	getdespesaById(id: string): Observable<Despesa> {
 		return this.http.get<Despesa>(`${API}//${id}`);
