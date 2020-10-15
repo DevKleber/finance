@@ -63,4 +63,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('auth/me', 'AuthController@me');
 
     Route::post('movimentacoes', 'MovimentacoesController@index');
+
+    Route::get('despesas_aguardando', 'AguardandoAprovacaoController@index');
+    Route::post('despesas_aguardando', 'AguardandoAprovacaoController@despesasAguardandoAprovacao');
 });
