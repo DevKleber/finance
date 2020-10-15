@@ -3,12 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use JWTAuth;
 
 class DespesaCompartilhada extends Model
 {
     protected $table = 'conta_compartilhada_valor';
     protected $primaryKey = 'id_conta_compartilhada';
-    protected $fillable = ['vl_conta_compartilhada_porcentagem', 'id_despesa', 'id_pessoa', 'created_at', 'updated_at'];
+    protected $fillable = ['vl_conta_compartilhada_porcentagem', 'id_despesa', 'id_pessoa', 'created_at', 'updated_at', 'bo_aprovado'];
 
     public static function salvar($request)
     {
@@ -20,10 +21,13 @@ class DespesaCompartilhada extends Model
         // $arPessoas[] = ['id_pessoa' => $request['id_pessoa'], 'vl_conta_compartilhada_porcentagem' => $request['vl_conta_compartilhada_porcentagem']];
 
         $errors = 0;
+        $token = JWTAuth::parseToken()->authenticate();
         foreach ($request['dividirPessoas'] as $key => $value) {
             $valorDaCompra = $request['vl_despesac'];
             $porcentagem = (($value['valor'] * 100) / $valorDaCompra);
-
+            if ($value['id_pessoa'] != $token->id_pessoa) {
+                $request['bo_aprovado'] = null;
+            }
             $request['id_pessoa'] = $value['id_pessoa'];
             $request['vl_conta_compartilhada_porcentagem'] = $porcentagem;
             $despesaCompartilhada = \App\DespesaCompartilhada::create($request);
