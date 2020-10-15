@@ -226,7 +226,7 @@ class MovimentacoesController extends Controller
 
             ->Join('usuario', 'usuario.id_usuario', '=', 'despesa.id_usuario')
             ->Join('pessoa', 'pessoa.id_pessoa', '=', 'usuario.id_pessoa')
-            ->whereRaw('YEAR(dt_vencimento)='.$data['ano'].' AND MONTH(dt_vencimento) = '.$data['mes'].' and bo_dividir_amigos = true and tb_conta_compartilhada_valor.id_pessoa = '.$usuarioLogado->id_pessoa.' and tb_cartao_credito.tb_usuario_id_usuario = '.$usuarioLogado->id_usuario)
+            ->whereRaw('YEAR(dt_vencimento)='.$data['ano'].' AND MONTH(dt_vencimento) = '.$data['mes'].' and bo_dividir_amigos = true and tb_conta_compartilhada_valor.bo_aprovado = true and tb_conta_compartilhada_valor.id_pessoa = '.$usuarioLogado->id_pessoa.' and tb_cartao_credito.tb_usuario_id_usuario = '.$usuarioLogado->id_usuario)
             ->get()
         ;
     }
@@ -239,7 +239,7 @@ class MovimentacoesController extends Controller
             ->Join('despesa_item', 'despesa_item.id_despesa', '=', 'despesa_cartao.id_despesa')
             ->Join('usuario', 'usuario.id_usuario', '=', 'despesa.id_usuario')
             ->Join('pessoa', 'pessoa.id_pessoa', '=', 'usuario.id_pessoa')
-            ->whereRaw('YEAR(dt_vencimento)='.$data['ano'].' AND MONTH(dt_vencimento) = '.$data['mes'].' and bo_dividir_amigos = true and tb_conta_compartilhada_valor.id_pessoa = '.$usuarioLogado->id_pessoa.' and tb_cartao_credito.tb_usuario_id_usuario <> '.$usuarioLogado->id_usuario)
+            ->whereRaw('YEAR(dt_vencimento)='.$data['ano'].' AND MONTH(dt_vencimento) = '.$data['mes'].' and bo_dividir_amigos = true and tb_conta_compartilhada_valor.bo_aprovado = true and tb_conta_compartilhada_valor.id_pessoa = '.$usuarioLogado->id_pessoa.' and tb_cartao_credito.tb_usuario_id_usuario <> '.$usuarioLogado->id_usuario)
             ->get()
         ;
     }
@@ -259,7 +259,7 @@ class MovimentacoesController extends Controller
         return \App\DespesaConta::Join('despesa', 'despesa.id_despesa', '=', 'despesa_conta.id_despesa')
             ->Join('conta_compartilhada_valor', 'conta_compartilhada_valor.id_despesa', '=', 'despesa_conta.id_despesa')
             ->Join('despesa_item', 'despesa_item.id_despesa', '=', 'despesa_conta.id_despesa')
-            ->whereRaw('YEAR(dt_vencimento)='.$data['ano'].' AND MONTH(dt_vencimento) = '.$data['mes'].' and bo_dividir_amigos = true and id_pessoa = '.$usuarioLogado->id_pessoa.' and tb_despesa.id_usuario = '.$usuarioLogado->id_usuario)
+            ->whereRaw('YEAR(dt_vencimento)='.$data['ano'].' AND MONTH(dt_vencimento) = '.$data['mes'].' and bo_dividir_amigos = true and tb_conta_compartilhada_valor.bo_aprovado = true and id_pessoa = '.$usuarioLogado->id_pessoa.' and tb_despesa.id_usuario = '.$usuarioLogado->id_usuario)
             ->get()
         ;
     }
@@ -271,7 +271,7 @@ class MovimentacoesController extends Controller
             ->Join('despesa_item', 'despesa_item.id_despesa', '=', 'despesa_conta.id_despesa')
             ->Join('usuario', 'usuario.id_usuario', '=', 'despesa.id_usuario')
             ->Join('pessoa', 'pessoa.id_pessoa', '=', 'usuario.id_pessoa')
-            ->whereRaw('YEAR(dt_vencimento)='.$data['ano'].' AND MONTH(dt_vencimento) = '.$data['mes'].' and bo_dividir_amigos = true and tb_conta_compartilhada_valor.id_pessoa = '.$usuarioLogado->id_pessoa.' and tb_despesa.id_usuario <> '.$usuarioLogado->id_usuario)
+            ->whereRaw('YEAR(dt_vencimento)='.$data['ano'].' AND MONTH(dt_vencimento) = '.$data['mes'].' and bo_dividir_amigos = true and tb_conta_compartilhada_valor.bo_aprovado = true and tb_conta_compartilhada_valor.id_pessoa = '.$usuarioLogado->id_pessoa.' and tb_despesa.id_usuario <> '.$usuarioLogado->id_usuario)
             ->get()
         ;
     }

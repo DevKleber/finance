@@ -59,7 +59,7 @@ class CartaoCreditoController extends Controller
         $dividaAmigos = [];
         foreach ($getFaturasCartao as $key => $value) {
             $faturas[$key] = $value;
-            $faturas[$key]['pessoas'] = \App\DespesaCompartilhada::where('id_despesa', $value->id_despesa)->join('pessoa', 'pessoa.id_pessoa', '=', 'conta_compartilhada_valor.id_pessoa')->get();
+            $faturas[$key]['pessoas'] = \App\DespesaCompartilhada::where('id_despesa', $value->id_despesa)->join('pessoa', 'pessoa.id_pessoa', '=', 'conta_compartilhada_valor.id_pessoa')->where('bo_aprovado', true)->get();
             $resumo['totalAPagarCartao'] += $value->vl_despesa;
             if ($faturas[$key]['pessoas']->count() > 0) {
                 foreach ($faturas[$key]['pessoas'] as $keyAmigo => $valueAmigo) {
