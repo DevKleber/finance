@@ -47,10 +47,16 @@ export class HelpersPipe implements PipeTransform {
 		return texto;
 	}
 	random(value, arg) {
-		const max = 10;
+		const max = 5;
 		const min = 1;
-
-		return Math.floor(Math.random() * (max - min + 1) + min);
+		let img = "undefined";
+		if (value.sexo != undefined) {
+			img =
+				value.sexo +
+				"-" +
+				Math.floor(Math.random() * (max - min + 1) + min);
+		}
+		return img;
 	}
 	statusMeusAmigos(value, palavra) {
 		switch (value) {
