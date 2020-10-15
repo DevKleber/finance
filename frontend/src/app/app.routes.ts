@@ -133,6 +133,15 @@ export const ROUTES: Routes = [
 		canLoad: [LoggedInGuard],
 		canActivate: [LoggedInGuard],
 	},
+	{
+		path: "aprovar-despesas",
+		loadChildren: () =>
+			import("./despesa/aprovar/aprovar.module").then(
+				(m) => m.AprovarModule
+			),
+		canLoad: [LoggedInGuard],
+		canActivate: [LoggedInGuard],
+	},
 
 	{ path: "**", redirectTo: "not-found", pathMatch: "full" },
 ];
