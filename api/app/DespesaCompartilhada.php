@@ -36,6 +36,10 @@ class DespesaCompartilhada extends Model
             }
         }
         if (0 == $errors) {
+            \App\Email::despesaCompartilhada($request);
+
+            // return false;
+
             return true;
         }
 
