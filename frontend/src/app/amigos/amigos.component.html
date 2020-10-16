@@ -35,9 +35,7 @@
 				<div class="col-md-3">
 					<div class="imgPerfil">
 						<img
-							src="/assets/img/profile-photos/{{
-								item | helpers: 'random'
-							}}.png"
+							src="{{PATHAPI}}/{{item?.img_perfil}}"
 							alt=""
 							srcset=""
 						/>
@@ -45,8 +43,8 @@
 				</div>
 				<div class="col-md-6">
 					{{ item.no_pessoa }} <br />
-					{{ item.email }} <br />
-					Amigo desde {{ item.created_at }}
+					{{ item.no_email }} <br />
+					Amigo desde {{ item.created_at | date: "dd/MM/yyyy" }}
 				</div>
 				<div class="col-md-3">
 					<button
@@ -147,9 +145,7 @@
 									<div class="col-md-3">
 										<div class="imgPerfil">
 											<img
-												src="/assets/img/profile-photos/{{
-													item | helpers: 'random'
-												}}.png"
+												src="{{PATHAPI}}/{{item?.img_perfil}}"
 												alt=""
 												srcset=""
 											/>
@@ -157,8 +153,8 @@
 									</div>
 									<div class="col-md-6">
 										{{ item.no_pessoa }} <br />
-										{{ item.email }} <br />
-										Amigo desde {{ item.created_at }}
+										{{ item.no_email }} <br />
+										<!-- Amigo desde {{ item.created_at }} -->
 									</div>
 									<div class="col-md-3">
 										<button
@@ -231,9 +227,7 @@
 									<div class="col-md-3">
 										<div class="imgPerfil">
 											<img
-												src="/assets/img/profile-photos/{{
-													item | helpers: 'random'
-												}}.png"
+											src="{{PATHAPI}}/{{item?.img_perfil}}"
 												alt=""
 												srcset=""
 											/>
@@ -243,7 +237,7 @@
 										<span style="font-size: 1.4em">{{
 											item.no_pessoa
 										}}</span>
-										{{ item.email }} <br />
+										{{ item.no_email }} <br />
 										Solicitado em {{ item.created_at }}
 										<div class="row">
 											<div class="col-md-6">

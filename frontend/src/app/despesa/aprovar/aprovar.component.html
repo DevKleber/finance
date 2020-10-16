@@ -1,12 +1,10 @@
 <div class="row">
-	<div class="col-md-4" *ngFor="let item of despesas">
+	<div class="col-md-4 padding-bottom-20" *ngFor="let item of despesas">
 		<div class="card-1" style="background-color: #fff">
 			<img
 				class="avatar margin-right-15"
 				style="float: left"
-				src="/assets/img/profile-photos/{{
-					[] | helpers: 'random'
-				}}.png"
+				src="{{PATHAPI}}/{{item?.img_perfil}}"
 				alt="Avatar"
 			/>
 			<div class="container">

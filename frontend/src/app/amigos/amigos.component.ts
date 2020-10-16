@@ -5,6 +5,7 @@ import { Amigos } from "./amigos.model";
 import { AmigosService } from "./amigos.service";
 import { Helper } from "../helper";
 import { BreadcrumbService } from "../layout/breadcrumb/breadcrumb.service";
+import { APIDominio } from "../app.api";
 
 import { Observable } from "rxjs";
 
@@ -23,6 +24,7 @@ export class AmigosComponent implements OnInit {
 	itensPorPagina = 10;
 	order: any = {};
 	columns: any;
+	PATHAPI = APIDominio;
 
 	// loaders
 	fimCarregamentoProcurarPessoa: string = null;

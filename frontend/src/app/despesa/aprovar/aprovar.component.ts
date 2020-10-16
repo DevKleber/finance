@@ -10,6 +10,7 @@ import {
 import { NotificationService } from "../../shared/messages/notification.service";
 import { Despesa } from "./../despesa.model";
 import { DespesaService } from "./../despesa.service";
+import { APIDominio } from "./../../app.api";
 
 import { Observable } from "rxjs";
 
@@ -22,6 +23,7 @@ export class AprovarComponent implements OnInit {
 	despesas: any[] = [];
 	loader: boolean = true;
 	form: FormGroup;
+	PATHAPI = APIDominio;
 
 	constructor(
 		private despesaService: DespesaService,

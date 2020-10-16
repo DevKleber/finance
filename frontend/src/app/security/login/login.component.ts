@@ -68,6 +68,10 @@ export class LoginComponent implements OnInit, AfterContentInit {
 		this.helper.findAndRemoveClassByName("card");
 		this.helper.findAndRemoveClassByName("bg-white");
 	}
+	criarconta() {
+		// window.location.href = "/#/novaconta";
+		// location.replace("/#" + "novaconta");
+	}
 
 	login() {
 		this.loginService

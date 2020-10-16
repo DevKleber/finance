@@ -23,6 +23,7 @@ import { SharedModule } from "./shared/shared.module";
 import { ApplicationErrorHandler } from "./app.error-handler";
 import { ErrorHandler } from "@angular/core";
 import { LoginComponent } from "./security/login/login.component";
+import { NovaContaComponent } from "./security/nova-conta/nova-conta.component";
 
 import { AgmCoreModule } from "@agm/core";
 
@@ -36,6 +37,7 @@ import { AgmCoreModule } from "@agm/core";
 		ConfigComponent,
 		LoaderComponent,
 		LoginComponent,
+		NovaContaComponent,
 		CommemorationsComponent,
 	],
 	imports: [

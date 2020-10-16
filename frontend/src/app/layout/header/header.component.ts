@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { LoginService } from "../../security/login/login.service";
-import { API_PATH_IMG } from "src/app/app.api";
+import { APIDominio } from "src/app/app.api";
 
 @Component({
 	selector: "app-header",
@@ -10,10 +10,11 @@ import { API_PATH_IMG } from "src/app/app.api";
 export class HeaderComponent implements OnInit {
 	logo: any = "";
 	pessoa: any;
+	PATHAPI = APIDominio;
 
 	constructor(private loginService: LoginService) {}
 	ngOnInit() {
-		this.logo = `${API_PATH_IMG}/sagesc/logo.png`;
+		this.logo = `${APIDominio}/sagesc/logo.png`;
 		this.userLogado();
 	}
 

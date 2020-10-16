@@ -15,6 +15,7 @@ import { CartaoCreditoService } from "../cartao-credito/cartao-credito.service";
 import { TipoDespesaService } from "../tipo-despesa/tipo-despesa.service";
 import { CategoriaDespesaService } from "../categoria-despesa/categoria-despesa.service";
 import { AmigosService } from "../amigos/amigos.service";
+import { APIDominio } from "../app.api";
 
 import { Observable } from "rxjs";
 import { LoginService } from "../security/login/login.service";
@@ -30,6 +31,10 @@ export class DespesaComponent implements OnInit {
 	formCartaoCredito: FormGroup;
 	items: FormArray;
 	usuarioLogado: any = {};
+	cartaoEscolhidoParaLancamento: any = {};
+	PATHAPI = APIDominio;
+
+	vencimento: any = "";
 
 	nomePessoaModel: string = "";
 	novaPessoaModel: string = "";
@@ -47,6 +52,20 @@ export class DespesaComponent implements OnInit {
 
 	despesaConta: boolean = false;
 	despesaCartaoCredito: boolean = false;
+	months = [
+		"Janeiro",
+		"Fevereiro",
+		"Março",
+		"Abril",
+		"Maio",
+		"Junho",
+		"Julho",
+		"Agosto",
+		"Setembro",
+		"Outubro",
+		"Novembro",
+		"Dezembro",
+	];
 
 	valorRemanescente = 0;
 
@@ -78,6 +97,33 @@ export class DespesaComponent implements OnInit {
 			{ no_rotina: nome, ds_url: "categoria", active: "" },
 			{ no_rotina: "Inserir", ds_url: "mudar-texto", active: "active" },
 		]);
+	}
+	cartaoEscolhido() {
+		const id_cartao = this.formCartaoCredito.value.id_cartao_credito;
+		let cartao = this.cartoes.filter((item) => {
+			if (item.id_cartao_credito == id_cartao) return item;
+		});
+		let meuCartao = cartao[0];
+		this.cartaoEscolhidoParaLancamento = meuCartao;
+
+		let dt_despesa = this.formCartaoCredito.get("dt_despesa").value;
+		var dt_despesaArray = dt_despesa.split("/");
+
+		var dateObj = new Date(
+			parseInt(dt_despesaArray[2]),
+			parseInt(dt_despesaArray[1]),
+			parseInt(dt_despesaArray[0])
+		);
+
+		var currentDate = new Date();
+		if (dateObj.getDate() >= meuCartao.dia_fechamento_fatura) {
+			currentDate.setMonth(currentDate.getMonth() + 1);
+		}
+		var month = currentDate.getUTCMonth() + 1; //months from 1-12
+
+		this.vencimento = this.months[month - 1];
+
+		// this.formCartaoCredito.value.
 	}
 	getCartoes() {
 		this.cartaoCreditoService.getCartoes().subscribe((res) => {
@@ -169,6 +215,7 @@ export class DespesaComponent implements OnInit {
 			dateObj.getFullYear();
 
 		this.formCartaoCredito.controls["dt_despesa"].setValue(MyDateString);
+		this.cartaoEscolhido();
 	}
 
 	configureDiaVencimento(maisOuMenos) {
@@ -229,7 +276,12 @@ export class DespesaComponent implements OnInit {
 			qtd_parcelas: this.formBuilder.control("1"),
 			dt_vencimento: this.formBuilder.control(this.getDate()),
 			dividirPessoas: this.formBuilder.array([
-				this.pessoaItem(this.usuarioLogado.id_pessoa, "VOCÊ"),
+				this.pessoaItem(
+					this.usuarioLogado.id_pessoa,
+					"VOCÊ",
+					"",
+					this.usuarioLogado.img_perfil
+				),
 			]),
 
 			// vl_despesac
@@ -279,6 +331,7 @@ export class DespesaComponent implements OnInit {
 		id_pessoa = "",
 		no_pessoa = "",
 		email = "",
+		img_perfil = "",
 		valor = "0"
 	): FormGroup {
 		if (id_pessoa != "") {
@@ -287,6 +340,7 @@ export class DespesaComponent implements OnInit {
 				no_pessoa: this.formBuilder.control(no_pessoa),
 				email: this.formBuilder.control(email),
 				valor: this.formBuilder.control(valor),
+				img_perfil: this.formBuilder.control(img_perfil),
 			});
 		}
 	}
@@ -297,7 +351,8 @@ export class DespesaComponent implements OnInit {
 			this.pessoaItem(
 				pessoa.id_pessoa_amigo ?? pessoa.id_pessoa,
 				pessoa.no_pessoa,
-				pessoa.email
+				pessoa.email,
+				pessoa.img_perfil
 			)
 		);
 		// this.closeBtn.nativeElement.click();

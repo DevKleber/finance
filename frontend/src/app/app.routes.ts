@@ -1,6 +1,7 @@
 import { Routes } from "@angular/router";
 
 import { LoginComponent } from "./security/login/login.component";
+import { NovaContaComponent } from "./security/nova-conta/nova-conta.component";
 
 import { LoggedInGuard } from "./security/loggedin.guard";
 
@@ -8,6 +9,7 @@ export const ROUTES: Routes = [
 	// { path: '', component: HomeComponent ,canLoad:[LoggedInGuard]},
 	{ path: "login/:to", component: LoginComponent },
 	{ path: "login", component: LoginComponent },
+	{ path: "novaconta", component: NovaContaComponent },
 
 	{ path: "", redirectTo: "dashboard", pathMatch: "full" },
 	{
