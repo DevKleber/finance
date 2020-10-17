@@ -29,7 +29,7 @@ class PessoaController extends Controller
 
     public function criarCategoriaParaUsuario()
     {
-        $this->categoriaDespesas(22);
+        $this->categoriaDespesas(17);
     }
 
     /**
