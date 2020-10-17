@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Helpers;
 use Illuminate\Http\Request;
+use Storage;
 
 class PessoaController extends Controller
 {
@@ -26,6 +27,11 @@ class PessoaController extends Controller
     {
     }
 
+    public function criarCategoriaParaUsuario()
+    {
+        $this->categoriaDespesas(22);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -33,6 +39,19 @@ class PessoaController extends Controller
      */
     public function store(Request $request)
     {
+        if (null == $request['password']) {
+            return response(['response' => 'Campo SENHA é obrigatório'], 400);
+        }
+        if (null == $request['no_pessoa']) {
+            return response(['response' => 'Campo NOME é obrigatório'], 400);
+        }
+        if (null == $request['no_email']) {
+            return response(['response' => 'Campo E-MAIL é obrigatório'], 400);
+        }
+        if (is_array($request['sexo'])) {
+            return response(['response' => 'Campo SEXO é obrigatório'], 400);
+        }
+
         $request['bo_ativo'] = true;
         $request['dt_nascimento'] = null;
         $request['img_perfil'] = 'storage/profile/'.rand(1, 16).'.png';
@@ -50,6 +69,12 @@ class PessoaController extends Controller
             $userDados['id_pessoa'] = $pessoa->id_pessoa;
             $userDados['password'] = bcrypt($request['password']);
             $ar = $usuario->create($userDados);
+        }
+        $categoriaDespesa = $this->categoriaDespesas($ar->id_usuario);
+        if (!$categoriaDespesa) {
+            \DB::rollback();
+
+            return response(['response' => 'Erro ao criar categorias para despesas. Entre em contato'], 400);
         }
         \DB::commit();
 
@@ -109,6 +134,38 @@ class PessoaController extends Controller
 
     public function destroy($id)
     {
+    }
+
+    private function categoriaDespesas($id_usuario)
+    {
+        $json = Storage::disk('local')->get('/json/categoriaDespesas.json');
+        $json = json_decode($json, true);
+
+        foreach ($json['dados']['pais'] as $key => $value) {
+            $request['no_categoria_despesa'] = $value['no_categoria'];
+            $request['id_categoria_despesa_pai'] = null;
+            $request['bo_ativo'] = true;
+            $request['id_usuario'] = $id_usuario;
+            $request['icon'] = $value['icon'];
+            $categoriaDespesa = \App\CategoriaDespesa::create($request);
+            if (!$categoriaDespesa) {
+                return false;
+            }
+
+            foreach ($value['filhas'] as $key => $filhas) {
+                $request['no_categoria_despesa'] = $filhas['no_categoria'];
+                $request['id_categoria_despesa_pai'] = $categoriaDespesa->id_categoria_despesa;
+                $request['bo_ativo'] = true;
+                $request['id_usuario'] = $id_usuario;
+                $request['icon'] = $filhas['icon'];
+                $categoriaDespesaFilhas = \App\CategoriaDespesa::create($request);
+                if (!$categoriaDespesaFilhas) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     private function updatePessoa($request, $pessoa)

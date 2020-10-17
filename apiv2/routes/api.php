@@ -8,6 +8,7 @@ Route::get('auth/logout', 'AuthController@logout');
 Route::post('auth/refresh', 'AuthController@refresh');
 
 Route::get('testando', 'CategoriaDespesaController@montandoarray');
+Route::get('categoriaparausuario', 'PessoaController@criarCategoriaParaUsuario');
 
 Route::group(['middleware' => 'apiJwt'], function () {
     Route::resource('tipoDespesa', 'TipoDespesaController');
