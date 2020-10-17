@@ -99,6 +99,7 @@ export class NovaContaComponent implements OnInit, AfterContentInit {
 			.subscribe(
 				(user) => {
 					location.replace("/#/dashboard");
+					location.reload();
 				},
 
 				(response) => {

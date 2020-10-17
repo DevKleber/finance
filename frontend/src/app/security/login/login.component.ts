@@ -86,7 +86,7 @@ export class LoginComponent implements OnInit, AfterContentInit {
 
 					//atob é para decodificar
 					// this.router.navigate(['/']);
-					// location.reload();
+					location.reload();
 					// console.log("/#"+atob(this.navigateTo))
 					// this.router.navigate([atob(this.navigateTo)])
 				},
