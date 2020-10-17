@@ -33,7 +33,7 @@ export class AmigosService {
 		return this.http.get<Amigos[]>(`${API}/solicitacao-amizade`);
 	}
 	solicitarAmizade(id_pessoa): Observable<Amigos[]> {
-		return this.http.post<Amigos[]>(`${API}/amigo/`, {
+		return this.http.post<Amigos[]>(`${API}/amigo`, {
 			id_pessoa: id_pessoa,
 		});
 	}
