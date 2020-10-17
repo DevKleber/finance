@@ -98,7 +98,7 @@ export class NovaContaComponent implements OnInit, AfterContentInit {
 			.login(this.loginForm.value.login, this.loginForm.value.password)
 			.subscribe(
 				(user) => {
-					location.replace("dashboard");
+					location.replace("/#/dashboard");
 				},
 
 				(response) => {

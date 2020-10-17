@@ -26,8 +26,8 @@ export class LoginComponent implements OnInit, AfterContentInit {
 
 	ngOnInit() {
 		this.loginForm = this.fb.group({
-			login: this.fb.control("start107", [Validators.required]),
-			password: this.fb.control("3ptp3tc", [Validators.required]),
+			login: this.fb.control("", [Validators.required]),
+			password: this.fb.control("", [Validators.required]),
 		});
 		//btoa é para criptografar com javascript puro
 		this.navigateTo =
@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit, AfterContentInit {
 				(user) => {
 					//enviando para ultima rota.
 					// location.replace("/#" + atob(this.navigateTo))
-					location.replace("dashboard");
+					location.replace("/#/dashboard");
 
 					// this.notificationService.notifySweet(`Bem vindo, ${user.user["no_funcionario"]}`),
 
