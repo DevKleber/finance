@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Helpers;
 use Illuminate\Http\Request;
-
 
 class DespesaCartaoController extends Controller
 {
@@ -24,6 +24,8 @@ class DespesaCartaoController extends Controller
 
     public function store(Request $request, $bo_amigos = false)
     {
+        $request['dt_despesa'] = Helpers::convertdateWithSeparatorToDatabase($request['dt_despesa']);
+
         $despesa = new \App\Despesa();
         \DB::beginTransaction();
         $ar = $despesa->insert($request, $bo_amigos);

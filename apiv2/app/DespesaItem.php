@@ -14,15 +14,23 @@ class DespesaItem extends Model
 
     public function insert($request, $despesa)
     {
+        $dataDaCompra = $request['dt_despesa']; // data atual
+        $timestamp_dataDaCompra = strtotime($dataDaCompra); // converte para timestamp Unix
+
         $errors = 0;
         $qtParcelas = $request['qtd_parcelas'];
         if (null != $request['id_cartao_credito']) {
             $cartaoCredito = \App\CartaoCredito::getVencimentoByCartao($request['id_cartao_credito']);
             $cartaoCredito->dia_vencimento = str_pad($cartaoCredito->dia_vencimento, 2, '0', STR_PAD_LEFT);
+
             $diaAtual = date('Y-m-d');
             $dtVencimento = date("Y-m-{$cartaoCredito->dia_vencimento}");
-            if (date('d') >= $cartaoCredito->dia_fechamento_fatura) {
+            $timestamp_dt_expira = strtotime($dtVencimento); // converte para timestamp Unix
+
+            if ($timestamp_dataDaCompra >= $timestamp_dt_expira) { // true
                 $dtVencimento = date('Y-m-d', strtotime('+1 month', strtotime($diaAtual)));
+                // if (date('d') >= $cartaoCredito->dia_fechamento_fatura) {
+                // }
             }
         } else {
             $dtVencimento = Helpers::convertdateBr2DB(date($request['dt_vencimento']));
