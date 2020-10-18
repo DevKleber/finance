@@ -26,6 +26,8 @@
 							"src/assets/css/helpers.css",
 							"src/assets/css/checkbox.css",
 							"src/assets/theme/css/sb-admin-2.min.css",
+							"src/assets/css/mobile.css",
+							"src/assets/css/modificacoes.css",
 							"src/styles.css"
 						],
 						"scripts": [

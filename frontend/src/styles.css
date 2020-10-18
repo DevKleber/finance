@@ -56,6 +56,3 @@ div.ng-select-container {
 div#wrapper app-menu {
 	background-color: #234bbf;
 }
-html body#page-top app-root div#wrapper div#content-wrapper.d-flex.flex-column div#content div.container-fluid div.col-xl-12.col-md-12.mb-4 div.h-100.py-2 div.card-body app-nova-conta div.container div.row.justify-content-center div.col-xl-10.col-lg-12.col-md-9 div.o-hidden.border-0.shadow-lg.my-5 div.p-0 div.row div.col-lg-8 div.p-5 form.user.ng-untouched.ng-pristine.ng-invalid div.form-group ng-select.ng-select.ng-select-single.ng-select-searchable.ng-select-clearable.ng-untouched.ng-pristine.ng-invalid.ng-select-opened.ng-select-bottom div.ng-select-container.ng-has-value{
-
-}

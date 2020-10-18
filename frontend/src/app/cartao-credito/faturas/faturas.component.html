@@ -3,9 +3,19 @@
 		<div class="card shadow padding-15">
 			<div class="row margin-bottom-15">
 				<div class="data">
-					<span class="cursor-pointer iconSubMonth" (click)="configureDate('-')"> <i class="fas fa-minus-circle"></i> </span>
-					{{dataFiltro?.mesNome}} {{dataFiltro?.ano}}
-					<span class="cursor-pointer iconAddMonth" (click)="configureDate('+')"> <i class="fas fa-plus-circle"></i> </span>
+					<span
+						class="cursor-pointer iconSubMonth"
+						(click)="configureDate('-')"
+					>
+						<i class="fas fa-minus-circle"></i>
+					</span>
+					{{ dataFiltro?.mesNome }} {{ dataFiltro?.ano }}
+					<span
+						class="cursor-pointer iconAddMonth"
+						(click)="configureDate('+')"
+					>
+						<i class="fas fa-plus-circle"></i>
+					</span>
 				</div>
 			</div>
 			<div class="row margin-top-15">
@@ -120,7 +130,7 @@
 				</div>
 				<div class="displayFlexRow">
 					<div class="limite text-limite text-center">
-						Limite: {{ cartoes?.vl_limite }}
+						Limite: {{ cartoes?.vl_limite | currency: "BRL":true }}
 					</div>
 					<div class="diaVencimento text-diaVencimento text-center">
 						Venc: {{ cartoes?.dia_vencimento }}

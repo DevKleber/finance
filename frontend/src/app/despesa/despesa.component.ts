@@ -109,22 +109,32 @@ export class DespesaComponent implements OnInit {
 		let dt_despesa = this.formCartaoCredito.get("dt_despesa").value;
 		var dt_despesaArray = dt_despesa.split("/");
 
-		var dateObj = new Date(
-			parseInt(dt_despesaArray[2]),
-			parseInt(dt_despesaArray[1]),
-			parseInt(dt_despesaArray[0])
+		var currentDate = new Date();
+		var hoje = new Date();
+
+		let diaVencimentoCartao = parseInt(
+			("0" + meuCartao.dia_fechamento_fatura).slice(-2)
 		);
 
-		var currentDate = new Date();
-		if (dateObj.getDate() >= meuCartao.dia_fechamento_fatura) {
+		var dataCompra = new Date(
+			dt_despesaArray[2],
+			dt_despesaArray[1] - 1,
+			dt_despesaArray[0]
+		);
+		var dataVencimentoCartao = new Date(
+			hoje.getUTCFullYear(),
+			hoje.getUTCMonth(),
+			diaVencimentoCartao
+		);
+		if (dataCompra >= dataVencimentoCartao) {
 			currentDate.setMonth(currentDate.getMonth() + 1);
 		}
-		var month = currentDate.getUTCMonth() + 1; //months from 1-12
+
+		var month = currentDate.getUTCMonth() + 1;
 
 		this.vencimento = this.months[month - 1];
-
-		// this.formCartaoCredito.value.
 	}
+
 	getCartoes() {
 		this.cartaoCreditoService.getCartoes().subscribe((res) => {
 			this.cartoes = res;
