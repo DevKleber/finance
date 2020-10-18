@@ -173,7 +173,7 @@ class AmigoController extends Controller
             ->first()
         ;
         \DB::commit();
-        \App\Email::solicitarAmizade($amigo);
+        \App\Email::solicitarAmizade($usuarioPessoaLogado);
 
         return ['dados' => $amigo];
     }
