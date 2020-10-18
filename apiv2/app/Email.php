@@ -9,9 +9,10 @@ use Illuminate\Support\Facades\Mail;
 
 class Email extends Model
 {
-    public static function solicitarAmizade($request)
+    public static function solicitarAmizade($request, $req)
     {
-        Mail::to($request->no_email)->queue( new SolicitacaoAmizade($request->no_pessoa) );
+        Mail::to($request->no_email)->queue(new SolicitacaoAmizade($req->no_pessoa));
+
         return $request;
     }
 
