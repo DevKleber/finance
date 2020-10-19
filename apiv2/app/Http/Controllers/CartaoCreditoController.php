@@ -60,6 +60,7 @@ class CartaoCreditoController extends Controller
                     $dividaAmigos[$valueAmigo->id_pessoa]['nome'] = $valueAmigo->no_pessoa;
                     $dividaAmigos[$valueAmigo->id_pessoa]['valor'] = isset($dividaAmigos[$valueAmigo->id_pessoa]['valor']) ? $dividaAmigos[$valueAmigo->id_pessoa]['valor'] + $valorDoAmigo : $valorDoAmigo;
                     $dividaAmigos[$valueAmigo->id_pessoa]['categoria'][$value->no_categoria_despesa] = isset($dividaAmigos[$valueAmigo->id_pessoa]['categoria'][$value->no_categoria_despesa]) ? $dividaAmigos[$valueAmigo->id_pessoa]['categoria'][$value->no_categoria_despesa] + $valorDoAmigo : $valorDoAmigo;
+                    sort($dividaAmigos[$valueAmigo->id_pessoa]['categoria']);
                 }
             } else {
                 $dividaAmigos[$usuarioLogado->id_pessoa]['valor'] =
@@ -70,6 +71,7 @@ class CartaoCreditoController extends Controller
                     isset($dividaAmigos[$usuarioLogado->id_pessoa]['categoria'][$value->no_categoria_despesa]) ?
                         $dividaAmigos[$usuarioLogado->id_pessoa]['categoria'][$value->no_categoria_despesa] + $value->vl_despesa :
                         $value->vl_despesa;
+                sort($dividaAmigos[$usuarioLogado->id_pessoa]['categoria'][$value->no_categoria_despesa]);
             }
         }
 
