@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 class MovimentacoesController extends Controller
 {
-
     public function index(Request $request)
     {
         $pessoa = new \App\Pessoa();
@@ -32,6 +31,8 @@ class MovimentacoesController extends Controller
         $i = 0;
         foreach ($minhasDespesasComCartao as $key => $value) {
             $tudo[$i]['id_despesa'] = $value->id_despesa;
+            $tudo[$i]['no_categoria_despesa'] = $value->no_categoria_despesa;
+            $tudo[$i]['icon'] = $value->icon;
             $tudo[$i]['vl_despesac'] = $value->vl_despesac;
             $tudo[$i]['dt_despesa'] = $value->dt_despesa;
             $tudo[$i]['ds_despesa'] = $value->ds_despesa;
@@ -56,6 +57,8 @@ class MovimentacoesController extends Controller
         }
         foreach ($despesasCompartilhadasComAmigosMeuCartao as $key => $value) {
             $tudo[$i]['id_despesa'] = $value->id_despesa;
+            $tudo[$i]['no_categoria_despesa'] = $value->no_categoria_despesa;
+            $tudo[$i]['icon'] = $value->icon;
             $tudo[$i]['vl_despesac'] = $value->vl_despesac;
             $tudo[$i]['dt_despesa'] = $value->dt_despesa;
             $tudo[$i]['ds_despesa'] = $value->ds_despesa;
@@ -80,6 +83,8 @@ class MovimentacoesController extends Controller
         }
         foreach ($despesasCompartilhadasComAmigosCartaoDoAmigo as $key => $value) {
             $tudo[$i]['id_despesa'] = $value->id_despesa;
+            $tudo[$i]['no_categoria_despesa'] = $value->no_categoria_despesa;
+            $tudo[$i]['icon'] = $value->icon;
             $tudo[$i]['vl_despesac'] = $value->vl_despesac;
             $tudo[$i]['dt_despesa'] = $value->dt_despesa;
             $tudo[$i]['ds_despesa'] = $value->ds_despesa;
@@ -107,6 +112,8 @@ class MovimentacoesController extends Controller
         }
         foreach ($minhasDespesasEmConta as $key => $value) {
             $tudo[$i]['id_despesa'] = $value->id_despesa;
+            $tudo[$i]['no_categoria_despesa'] = $value->no_categoria_despesa;
+            $tudo[$i]['icon'] = $value->icon;
             $tudo[$i]['vl_despesac'] = $value->vl_despesac;
             $tudo[$i]['dt_despesa'] = $value->dt_despesa;
             $tudo[$i]['ds_despesa'] = $value->ds_despesa;
@@ -130,6 +137,8 @@ class MovimentacoesController extends Controller
         }
         foreach ($despesasCompartilhadasComAmigosNaMinhaConta as $key => $value) {
             $tudo[$i]['id_despesa'] = $value->id_despesa;
+            $tudo[$i]['no_categoria_despesa'] = $value->no_categoria_despesa;
+            $tudo[$i]['icon'] = $value->icon;
             $tudo[$i]['vl_despesac'] = $value->vl_despesac;
             $tudo[$i]['dt_despesa'] = $value->dt_despesa;
             $tudo[$i]['ds_despesa'] = $value->ds_despesa;
@@ -154,6 +163,8 @@ class MovimentacoesController extends Controller
         }
         foreach ($despesasCompartilhadasComAmigosNaContaDoAmigo as $key => $value) {
             $tudo[$i]['id_despesa'] = $value->id_despesa;
+            $tudo[$i]['no_categoria_despesa'] = $value->no_categoria_despesa;
+            $tudo[$i]['icon'] = $value->icon;
             $tudo[$i]['vl_despesac'] = $value->vl_despesac;
             $tudo[$i]['dt_despesa'] = $value->dt_despesa;
             $tudo[$i]['ds_despesa'] = $value->ds_despesa;
@@ -203,6 +214,7 @@ class MovimentacoesController extends Controller
     public function minhasDespesasComCartao($usuarioLogado, $data)
     {
         return \App\DespesaCartao::Join('despesa', 'despesa.id_despesa', '=', 'despesa_cartao.id_despesa')
+            ->join('categoria_despesa', 'categoria_despesa.id_categoria_despesa', '=', 'despesa.id_categoria_despesa')
             ->Join('cartao_credito', 'cartao_credito.id_cartao_credito', '=', 'despesa_cartao.id_cartao_credito')
             ->Join('despesa_item', 'despesa_item.id_despesa', '=', 'despesa_cartao.id_despesa')
             ->whereRaw('YEAR(dt_vencimento)='.$data['ano'].' AND MONTH(dt_vencimento) = '.$data['mes'].' and bo_dividir_amigos = false and tb_despesa.id_usuario = '.$usuarioLogado->id_usuario)
@@ -213,6 +225,7 @@ class MovimentacoesController extends Controller
     public function despesasCompartilhadasComAmigosMeuCartao($usuarioLogado, $data)
     {
         return \App\DespesaCartao::Join('despesa', 'despesa.id_despesa', '=', 'despesa_cartao.id_despesa')
+            ->join('categoria_despesa', 'categoria_despesa.id_categoria_despesa', '=', 'despesa.id_categoria_despesa')
             ->Join('cartao_credito', 'cartao_credito.id_cartao_credito', '=', 'despesa_cartao.id_cartao_credito')
             ->Join('conta_compartilhada_valor', 'conta_compartilhada_valor.id_despesa', '=', 'despesa_cartao.id_despesa')
             ->Join('despesa_item', 'despesa_item.id_despesa', '=', 'despesa_cartao.id_despesa')
@@ -227,6 +240,7 @@ class MovimentacoesController extends Controller
     public function despesasCompartilhadasComAmigosCartaoDoAmigo($usuarioLogado, $data)
     {
         return \App\DespesaCartao::Join('despesa', 'despesa.id_despesa', '=', 'despesa_cartao.id_despesa')
+            ->join('categoria_despesa', 'categoria_despesa.id_categoria_despesa', '=', 'despesa.id_categoria_despesa')
             ->Join('cartao_credito', 'cartao_credito.id_cartao_credito', '=', 'despesa_cartao.id_cartao_credito')
             ->Join('conta_compartilhada_valor', 'conta_compartilhada_valor.id_despesa', '=', 'despesa_cartao.id_despesa')
             ->Join('despesa_item', 'despesa_item.id_despesa', '=', 'despesa_cartao.id_despesa')
@@ -240,6 +254,7 @@ class MovimentacoesController extends Controller
     public function minhasDespesasEmConta($usuarioLogado, $data)
     {
         return \App\DespesaConta::Join('despesa', 'despesa.id_despesa', '=', 'despesa_conta.id_despesa')
+            ->join('categoria_despesa', 'categoria_despesa.id_categoria_despesa', '=', 'despesa.id_categoria_despesa')
             ->Join('despesa_item', 'despesa_item.id_despesa', '=', 'despesa_conta.id_despesa')
             ->whereRaw('YEAR(dt_vencimento)='.$data['ano'].' AND MONTH(dt_vencimento) = '.$data['mes'].' and bo_dividir_amigos = false and tb_despesa.id_usuario = '.$usuarioLogado->id_usuario)
             ->get()
@@ -250,6 +265,7 @@ class MovimentacoesController extends Controller
     {
         // where  and id_pessoa = 45 and td.id_usuario =12;
         return \App\DespesaConta::Join('despesa', 'despesa.id_despesa', '=', 'despesa_conta.id_despesa')
+            ->join('categoria_despesa', 'categoria_despesa.id_categoria_despesa', '=', 'despesa.id_categoria_despesa')
             ->Join('conta_compartilhada_valor', 'conta_compartilhada_valor.id_despesa', '=', 'despesa_conta.id_despesa')
             ->Join('despesa_item', 'despesa_item.id_despesa', '=', 'despesa_conta.id_despesa')
             ->whereRaw('YEAR(dt_vencimento)='.$data['ano'].' AND MONTH(dt_vencimento) = '.$data['mes'].' and bo_dividir_amigos = true and tb_conta_compartilhada_valor.bo_aprovado = true and id_pessoa = '.$usuarioLogado->id_pessoa.' and tb_despesa.id_usuario = '.$usuarioLogado->id_usuario)
@@ -260,6 +276,7 @@ class MovimentacoesController extends Controller
     public function despesasCompartilhadasComAmigosNaContaDoAmigo($usuarioLogado, $data)
     {
         return \App\DespesaConta::Join('despesa', 'despesa.id_despesa', '=', 'despesa_conta.id_despesa')
+            ->join('categoria_despesa', 'categoria_despesa.id_categoria_despesa', '=', 'despesa.id_categoria_despesa')
             ->Join('conta_compartilhada_valor', 'conta_compartilhada_valor.id_despesa', '=', 'despesa_conta.id_despesa')
             ->Join('despesa_item', 'despesa_item.id_despesa', '=', 'despesa_conta.id_despesa')
             ->Join('usuario', 'usuario.id_usuario', '=', 'despesa.id_usuario')

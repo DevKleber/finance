@@ -1,4 +1,5 @@
 
+<pre>{{ movimentacoes | json }}</pre>
 <div class="row">
 	<div class="col-md-8">
 		<div class="card shadow padding-15">
@@ -39,7 +40,9 @@
 									{{ movimentacao.responsavel }}
 								</span>
 							</td>
-							<td>{{ movimentacao.id_categoria_despesa }}</td>
+							<td>
+								<i class="{{movimentacao.icon}}"></i> {{ movimentacao.no_categoria_despesa }}
+							</td>
 							<!-- <td>
 								{{
 									movimentacao.vl_despesac

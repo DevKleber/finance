@@ -82,6 +82,7 @@ class CartaoCreditoController extends Controller
     public function getFaturasCartao($usuarioLogado, $id_cartao_credito, $data)
     {
         return \App\DespesaCartao:: join('despesa', 'despesa.id_despesa', '=', 'despesa_cartao.id_despesa')
+            ->join('categoria_despesa', 'categoria_despesa.id_categoria_despesa', '=', 'despesa.id_categoria_despesa')
             ->join('despesa_item', 'despesa_item.id_despesa', '=', 'despesa_cartao.id_despesa')
             ->Join('cartao_credito', 'cartao_credito.id_cartao_credito', '=', 'despesa_cartao.id_cartao_credito')
             ->where('despesa_cartao.id_cartao_credito', $id_cartao_credito)
