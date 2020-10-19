@@ -173,6 +173,13 @@
 			<p class="valorResumo">
 				{{ amigoPagar?.value.valor | currency: "BRL":true }}
 			</p>
+			<!-- <pre>{{ amigoPagar | json }}</pre> -->
+			<div class="row">
+
+				<div class="categorias card padding-5" *ngFor="let cate of amigoPagar?.value.categoria | keyvalue">
+					{{cate.key}} {{cate.value | currency: "BRL":true}}
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
