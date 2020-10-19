@@ -44,6 +44,8 @@ import { MatCardModule } from "@angular/material/card";
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 import { PERFECT_SCROLLBAR_CONFIG } from "ngx-perfect-scrollbar";
 import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
+import { NgxChartsModule } from "@swimlane/ngx-charts";
+
 import ptBr from "@angular/common/locales/pt";
 
 import { MatBottomSheetModule } from "@angular/material/bottom-sheet";
@@ -86,6 +88,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		MatButtonModule,
 		NgxMaskModule.forRoot(),
 		MatStepperModule,
+		NgxChartsModule,
 	],
 	exports: [
 		BooleanMessagePipe,
@@ -114,6 +117,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		MatButtonModule,
 		MatStepperModule,
 		NgxMaskModule,
+		NgxChartsModule,
 	],
 })
 export class SharedModule {

@@ -59,19 +59,39 @@ class CartaoCreditoController extends Controller
                     $valorDoAmigo = $value->vl_despesa * $valueAmigo->vl_conta_compartilhada_porcentagem / 100;
                     $dividaAmigos[$valueAmigo->id_pessoa]['nome'] = $valueAmigo->no_pessoa;
                     $dividaAmigos[$valueAmigo->id_pessoa]['valor'] = isset($dividaAmigos[$valueAmigo->id_pessoa]['valor']) ? $dividaAmigos[$valueAmigo->id_pessoa]['valor'] + $valorDoAmigo : $valorDoAmigo;
-                    $dividaAmigos[$valueAmigo->id_pessoa]['categoria'][$value->no_categoria_despesa] = isset($dividaAmigos[$valueAmigo->id_pessoa]['categoria'][$value->no_categoria_despesa]) ? $dividaAmigos[$valueAmigo->id_pessoa]['categoria'][$value->no_categoria_despesa] + $valorDoAmigo : $valorDoAmigo;
-                    sort($dividaAmigos[$valueAmigo->id_pessoa]['categoria']);
+
+                    $dividaAmigos[$valueAmigo->id_pessoa]['categoria'][$value->id_categoria_despesa][] = [
+                        'name' => $value->no_categoria_despesa,
+                        'value' => $valorDoAmigo,
+                    ]
+                        ;
                 }
             } else {
                 $dividaAmigos[$usuarioLogado->id_pessoa]['valor'] =
                     isset($dividaAmigos[$usuarioLogado->id_pessoa]['valor']) ?
                         $dividaAmigos[$usuarioLogado->id_pessoa]['valor'] + $value->vl_despesa :
                         $value->vl_despesa;
-                $dividaAmigos[$usuarioLogado->id_pessoa]['categoria'][$value->no_categoria_despesa] =
-                    isset($dividaAmigos[$usuarioLogado->id_pessoa]['categoria'][$value->no_categoria_despesa]) ?
-                        $dividaAmigos[$usuarioLogado->id_pessoa]['categoria'][$value->no_categoria_despesa] + $value->vl_despesa :
-                        $value->vl_despesa;
-                sort($dividaAmigos[$usuarioLogado->id_pessoa]['categoria'][$value->no_categoria_despesa]);
+                $dividaAmigos[$usuarioLogado->id_pessoa]['categoria'][$value->id_categoria_despesa][] = [
+                    'name' => $value->no_categoria_despesa,
+                    'value' => $value->vl_despesa,
+                ]
+                            ;
+            }
+        }
+
+        // montando array para grafico
+
+        foreach ($dividaAmigos as $key => $value) {
+            foreach ($value['categoria'] as $keyCat => $cat) {
+                $categoriaCalculo = [
+                    'name' => null,
+                    'value' => 0,
+                ];
+                $categoriaCalculo['name'] = $cat[0]['name'];
+                foreach ($cat as $keyItem => $item) {
+                    $categoriaCalculo['value'] += $item['value'];
+                }
+                $dividaAmigos[$key]['grafico'][] = $categoriaCalculo;
             }
         }
 

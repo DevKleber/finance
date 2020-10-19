@@ -174,11 +174,25 @@
 				{{ amigoPagar?.value.valor | currency: "BRL":true }}
 			</p>
 			<!-- <pre>{{ amigoPagar | json }}</pre> -->
-			<div class="row">
+			<div class="row" style="display: grid; align-content: center; justify-content:center; height: 250px;">
+				<ngx-charts-bar-vertical
 
-				<div class="categorias card padding-5" *ngFor="let cate of amigoPagar?.value.categoria | keyvalue">
+					[scheme]="colorScheme"
+					[results]="amigoPagar?.value.grafico"
+					[gradient]="gradient"
+					[xAxis]="showXAxis"
+					[yAxis]="showYAxis"
+					[legend]="showLegend"
+					[showXAxisLabel]="showXAxisLabel"
+					[showYAxisLabel]="showYAxisLabel"
+					[xAxisLabel]="xAxisLabel"
+					[yAxisLabel]="yAxisLabel"
+					(select)="onSelect($event)">
+				</ngx-charts-bar-vertical>
+
+				<!-- <div class="categorias card padding-5" *ngFor="let cate of amigoPagar?.value.categoria | keyvalue">
 					{{cate.key}} {{cate.value | currency: "BRL":true}}
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>

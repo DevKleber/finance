@@ -44,6 +44,24 @@ export class FaturasComponent implements OnInit {
 		"Dezembro",
 	];
 
+	multi: any[];
+
+	view: any[] = [null, 400];
+
+	// options
+	showXAxis = true;
+	showYAxis = true;
+	gradient = false;
+	showLegend = false;
+	showXAxisLabel = true;
+	xAxisLabel = "Categorias";
+	showYAxisLabel = true;
+	yAxisLabel = "Reais";
+
+	colorScheme = {
+		domain: ["#5AA454", "#4e73df", "#f79e1b", "#AAAAAA"],
+	};
+
 	constructor(
 		private cartaoCreditoService: CartaoCreditoService,
 		private formBuilder: FormBuilder,
