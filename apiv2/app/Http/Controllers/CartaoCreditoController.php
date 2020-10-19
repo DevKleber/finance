@@ -59,15 +59,17 @@ class CartaoCreditoController extends Controller
                     $valorDoAmigo = $value->vl_despesa * $valueAmigo->vl_conta_compartilhada_porcentagem / 100;
                     $dividaAmigos[$valueAmigo->id_pessoa]['nome'] = $valueAmigo->no_pessoa;
                     $dividaAmigos[$valueAmigo->id_pessoa]['valor'] = isset($dividaAmigos[$valueAmigo->id_pessoa]['valor']) ? $dividaAmigos[$valueAmigo->id_pessoa]['valor'] + $valorDoAmigo : $valorDoAmigo;
-                    $dividaAmigos[$valueAmigo->id_pessoa]['categoria'][$value->no_categoria_despesa] = isset($dividaAmigos[$valueAmigo->id_pessoa]['categoria'][$value->no_categoria_despesa]) ? $dividaAmigos[$valueAmigo->id_pessoa]['categoria'][$value->no_categoria_despesa] + $dividaAmigos[$valueAmigo->id_pessoa]['valor'] : $dividaAmigos[$valueAmigo->id_pessoa]['valor'];
+                    $dividaAmigos[$valueAmigo->id_pessoa]['categoria'][$value->no_categoria_despesa] = isset($dividaAmigos[$valueAmigo->id_pessoa]['valor']) ? $dividaAmigos[$valueAmigo->id_pessoa]['valor'] + $valorDoAmigo : $valorDoAmigo;
                 }
             } else {
                 $dividaAmigos[$usuarioLogado->id_pessoa]['valor'] =
                     isset($dividaAmigos[$usuarioLogado->id_pessoa]['valor']) ?
                         $dividaAmigos[$usuarioLogado->id_pessoa]['valor'] + $value->vl_despesa :
                         $value->vl_despesa;
-
-                $dividaAmigos[$usuarioLogado->id_pessoa]['categoria'][$value->no_categoria_despesa] = isset($dividaAmigos[$usuarioLogado->id_pessoa]['categoria'][$value->no_categoria_despesa]) ? $dividaAmigos[$usuarioLogado->id_pessoa]['categoria'][$value->no_categoria_despesa] + $dividaAmigos[$usuarioLogado->id_pessoa]['valor'] : $dividaAmigos[$usuarioLogado->id_pessoa]['valor'];
+                $dividaAmigos[$usuarioLogado->id_pessoa]['categoria'][$value->no_categoria_despesa] =
+                    isset($dividaAmigos[$usuarioLogado->id_pessoa]['valor']) ?
+                        $dividaAmigos[$usuarioLogado->id_pessoa]['valor'] + $value->vl_despesa :
+                        $value->vl_despesa;
             }
         }
 
