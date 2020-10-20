@@ -15,4 +15,7 @@ export class HomeComponent implements OnInit {
 			{ no_rotina: "Listar", ds_url: "funcionario", active: "active" },
 		]);
 	}
+	configureDate(op) {
+		return true;
+	}
 }
