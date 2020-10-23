@@ -19,6 +19,10 @@ export class DespesaService {
 		private router: Router
 	) {}
 
+	ajuda(): Observable<any[]> {
+		return this.http.get<any[]>(`${API}/ajuda/despesa`);
+	}
+
 	getDespesas(search?: string): Observable<Despesa[]> {
 		return this.http.get<Despesa[]>(`${API}/`);
 	}

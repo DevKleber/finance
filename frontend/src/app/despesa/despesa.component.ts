@@ -40,6 +40,9 @@ export class DespesaComponent implements OnInit {
 	novaPessoaModel: string = "";
 
 	cartoes: any[] = [];
+	ajudas: any[] = [];
+	ajudasFiltro: any[] = [];
+
 	tiposDespesa: any[] = [];
 	tiposCartao: any[] = [];
 	tiposConta: any[] = [];
@@ -90,6 +93,7 @@ export class DespesaComponent implements OnInit {
 		this.getCategorias();
 		this.getAmigos();
 		this.getAmigosForaSistema();
+		this.ajuda();
 		this.breadCrumb();
 	}
 	breadCrumb(nome = "Despesas") {
@@ -133,6 +137,36 @@ export class DespesaComponent implements OnInit {
 		var month = currentDate.getUTCMonth() + 1;
 
 		this.vencimento = this.months[month - 1];
+	}
+	ajuda() {
+		this.despesaService.ajuda().subscribe((res) => {
+			this.ajudas = res;
+		});
+	}
+	procurarNomeDespesa(busca) {
+		const caracteres = 3;
+
+		if (busca.length < caracteres) {
+			this.ajudasFiltro = [];
+			return false;
+		}
+
+		this.ajudasFiltro = this.ajudas.filter((el) => {
+			// whereLike
+			if (el.ds_despesa.toUpperCase().indexOf(busca.toUpperCase()) > -1) {
+				return el;
+			}
+		});
+	}
+	escolherFiltro(item) {
+		if (!item.id_categoria_despesa) {
+			return false;
+		}
+		this.formCartaoCredito.controls["ds_despesa"].setValue(item.ds_despesa);
+		this.formCartaoCredito.controls["id_categoria_despesa"].setValue(
+			item.id_categoria_despesa
+		);
+		this.ajudasFiltro = [];
 	}
 
 	getCartoes() {

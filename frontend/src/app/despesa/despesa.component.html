@@ -7,7 +7,6 @@
 				<!-- <div class="col-md-12">
 					Larçar
 				</div> -->
-
 				<div class="col-md-6 text-center cartao">
 					<div
 						class="padding-15 cursor-pointer card shadow"
@@ -99,11 +98,20 @@
 						label="Despesa"
 					>
 						<input
+							(keyup)="procurarNomeDespesa(formCartaoCredito.value.ds_despesa)"
 							class="form-control"
 							formControlName="ds_despesa"
 							placeholder=""
 						/>
 					</app-input-container>
+
+					<div class="row" style="margin-top: -10px; ">
+						<div class="card cursor-pointer" *ngFor="let item of ajudasFiltro" style="margin: 5px 5px;" (click)="escolherFiltro(item)">
+							<div >
+								{{item?.ds_despesa}}
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<div class="form-group is-empty col-md-4">

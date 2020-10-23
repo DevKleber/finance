@@ -51,6 +51,8 @@ Route::group(['middleware' => 'apiJwt'], function () {
 
     Route::post('movimentacoes', 'MovimentacoesController@index');
 
+    Route::get('ajuda/despesa', 'DespesaController@getAjuda');
+
     Route::get('despesas_aguardando', 'AguardandoAprovacaoController@index');
     Route::post('despesas_aguardando', 'AguardandoAprovacaoController@despesasAguardandoAprovacao');
 });
