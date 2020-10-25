@@ -21,14 +21,15 @@ class DespesaItem extends Model
         $qtParcelas = $request['qtd_parcelas'];
         if (null != $request['id_cartao_credito']) {
             $cartaoCredito = \App\CartaoCredito::getVencimentoByCartao($request['id_cartao_credito']);
-            $cartaoCredito->dia_vencimento = str_pad($cartaoCredito->dia_vencimento, 2, '0', STR_PAD_LEFT);
+            $cartaoCredito->dia_fechamento_fatura = str_pad($cartaoCredito->dia_fechamento_fatura, 2, '0', STR_PAD_LEFT);
+            $dtVencimentoCartao = date("Y-m-{$cartaoCredito->dia_vencimento}");
 
             $diaAtual = date('Y-m-d');
-            $dtVencimento = date("Y-m-{$cartaoCredito->dia_vencimento}");
-            $timestamp_dt_expira = strtotime($dtVencimento); // converte para timestamp Unix
+            $dtFechamento = date("Y-m-{$cartaoCredito->dia_fechamento_fatura}");
+            $timestamp_dt_expira = strtotime($dtFechamento); // converte para timestamp Unix
 
             if ($timestamp_dataDaCompra >= $timestamp_dt_expira) { // true
-                $dtVencimento = date('Y-m-d', strtotime('+1 month', strtotime($diaAtual)));
+                $dtVencimento = date('Y-m-d', strtotime('+1 month', strtotime($dtVencimentoCartao)));
                 // if (date('d') >= $cartaoCredito->dia_fechamento_fatura) {
                 // }
             }
