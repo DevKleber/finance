@@ -34,6 +34,7 @@ class DespesaItem extends Model
                 // }
             }
         } else {
+            $request['dt_despesa'] = Helpers::convertdateWithSeparatorToDatabase($request['dt_despesa']);
             $dtVencimento = Helpers::convertdateBr2DB(date($request['dt_vencimento']));
         }
 

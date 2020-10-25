@@ -438,7 +438,7 @@ export class DespesaComponent implements OnInit {
 		this.formCartaoCredito.controls["id_tipo_despesa"].setValue("");
 		this.formCartaoCredito.controls["id_categoria_despesa"].setValue("");
 		this.formCartaoCredito.controls["qtd_parcelas"].setValue("1");
-		this.formCartaoCredito.controls["dt_vencimento"].setValue("");
+		// this.formCartaoCredito.controls["dt_vencimento"].setValue("");
 	}
 
 	oqueLancar(frase, qualLancar) {
