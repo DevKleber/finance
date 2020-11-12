@@ -24,11 +24,11 @@ class DespesaItem extends Model
             $cartaoCredito->dia_fechamento_fatura = str_pad($cartaoCredito->dia_fechamento_fatura, 2, '0', STR_PAD_LEFT);
             $dtVencimentoCartao = date("Y-m-{$cartaoCredito->dia_vencimento}");
 
-            throw new \Exception($dtVencimentoCartao, 1);
             $diaAtual = date('Y-m-d');
             $dtFechamento = date("Y-m-{$cartaoCredito->dia_fechamento_fatura}");
             $timestamp_dt_expira = strtotime($dtFechamento); // converte para timestamp Unix
 
+            $dtVencimento = $dtVencimentoCartao;
             if ($timestamp_dataDaCompra >= $timestamp_dt_expira) { // true
                 $dtVencimento = date('Y-m-d', strtotime('+1 month', strtotime($dtVencimentoCartao)));
                 // if (date('d') >= $cartaoCredito->dia_fechamento_fatura) {
