@@ -37,6 +37,20 @@ class Helpers
         return $controler;
     }
 
+    public static function convertDateWithoutSeparatorToDatabase($date)
+    {
+        $exOpcao1 = explode('-', $date);
+        $exOpcao2 = explode('/', $date);
+        if (count($exOpcao1) > 1) {
+            return $date;
+        }
+        if (count($exOpcao2) > 1) {
+            return date('Y-m-d', strtotime(str_replace('/', '-', $date)));
+        }
+
+        return substr($date, 4, 4).'-'.substr($date, 2, 2).'-'.substr($date, 0, 2);
+    }
+
     public static function convertdateWithSeparatorToDatabase($date)
     {
         $exOpcao1 = explode('-', $date);
