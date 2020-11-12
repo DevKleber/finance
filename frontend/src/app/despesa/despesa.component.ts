@@ -459,8 +459,8 @@ export class DespesaComponent implements OnInit {
 		console.log(amigo);
 		// this.amigosParaDividir.push(amigo);
 		this.notificationService.notifySweet("Adicionado");
-		this.amigosFiltrado.splice(this.amigosFiltrado.indexOf(amigo), 1);
-		this.amigos.splice(this.amigos.indexOf(amigo), 1);
+		// this.amigosFiltrado.splice(this.amigosFiltrado.indexOf(amigo), 1);
+		// this.amigos.splice(this.amigos.indexOf(amigo), 1);
 		this.addPessoas(amigo);
 	}
 }
