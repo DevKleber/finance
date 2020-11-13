@@ -73,8 +73,8 @@ class CartaoCreditoController extends Controller
                             $dividaAmigos[$valueAmigo->id_pessoa]['valor'] + $valorDoAmigo :
                                 $valorDoAmigo;
 
-                    $dividaAmigos[$valueAmigo->id_pessoa]['categoria'][$value->id_categoria_despesa][] = [
-                        'name' => $value->no_categoria_despesa,
+                    $dividaAmigos[$valueAmigo->id_pessoa]['categoria'][$value->catpai_id_categoria_despesa][] = [
+                        'name' => $value->catpai_no_categoria_despesa,
                         'value' => $valorDoAmigo,
                     ]
                         ;
@@ -87,8 +87,8 @@ class CartaoCreditoController extends Controller
                     isset($dividaAmigos[$usuarioLogado->id_pessoa]['valor']) ?
                         $dividaAmigos[$usuarioLogado->id_pessoa]['valor'] + $value->vl_despesa :
                         $value->vl_despesa;
-                $dividaAmigos[$usuarioLogado->id_pessoa]['categoria'][$value->id_categoria_despesa][] = [
-                    'name' => $value->no_categoria_despesa,
+                $dividaAmigos[$usuarioLogado->id_pessoa]['categoria'][$value->catpai_id_categoria_despesa][] = [
+                    'name' => $value->catpai_no_categoria_despesa,
                     'value' => $value->vl_despesa,
                 ]
                             ;
@@ -127,11 +127,23 @@ class CartaoCreditoController extends Controller
         return \App\DespesaCartao:: join('despesa', 'despesa.id_despesa', '=', 'despesa_cartao.id_despesa')
             ->join('usuario', 'usuario.id_usuario', '=', 'despesa.id_usuario')
             ->join('categoria_despesa', 'categoria_despesa.id_categoria_despesa', '=', 'despesa.id_categoria_despesa')
+            ->leftjoin('categoria_despesa as cdp', 'cdp.id_categoria_despesa', '=', 'categoria_despesa.id_categoria_despesa_pai')
             ->join('despesa_item', 'despesa_item.id_despesa', '=', 'despesa_cartao.id_despesa')
             ->Join('cartao_credito', 'cartao_credito.id_cartao_credito', '=', 'despesa_cartao.id_cartao_credito')
             ->where('despesa_cartao.id_cartao_credito', $id_cartao_credito)
             ->where('cartao_credito.tb_usuario_id_usuario', $usuarioLogado->id_usuario)
             ->whereRaw('YEAR(dt_vencimento)='.$data['ano'].' AND MONTH(dt_vencimento) = '.$data['mes'])
+            ->select(
+                'despesa_cartao.*',
+                'usuario.*',
+                'categoria_despesa.*',
+                'categoria_despesa.*',
+                'despesa_item.*',
+                'cartao_credito.*',
+                'despesa.*',
+                'cdp.id_categoria_despesa as catpai_id_categoria_despesa',
+                'cdp.no_categoria_despesa as catpai_no_categoria_despesa'
+            )
             ->get()
         ;
     }
