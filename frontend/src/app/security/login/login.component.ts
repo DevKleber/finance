@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit, AfterContentInit {
 		document.getElementById("content-wrapper").style.backgroundColor =
 			"transparent";
 		this.helper.findAndRemoveClassByName("shadow");
-		this.helper.findAndRemoveClassByName("card");
+		// this.helper.findAndRemoveClassByName("card");
 		this.helper.findAndRemoveClassByName("bg-white");
 	}
 	criarconta() {
