@@ -55,4 +55,6 @@ Route::group(['middleware' => 'apiJwt'], function () {
 
     Route::get('despesas_aguardando', 'AguardandoAprovacaoController@index');
     Route::post('despesas_aguardando', 'AguardandoAprovacaoController@despesasAguardandoAprovacao');
+
+    Route::resource('pagamento','PagamentoController');
 });

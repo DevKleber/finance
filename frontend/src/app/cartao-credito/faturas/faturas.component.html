@@ -40,6 +40,9 @@
 							</td>
 							<td>
 								{{ movimentacao.ds_despesa }}
+								<span *ngIf="movimentacao.pago" class="mov-pg"
+									>Pago</span
+								>
 
 								<tr
 									*ngFor="let pessoas of movimentacao.pessoas"
@@ -59,11 +62,17 @@
 												pessoas.vl_conta_compartilhada_porcentagem) /
 												100 | currency: "BRL":true
 										}}
+										<span
+											*ngIf="pessoas.pago"
+											class="mov-pg"
+											>Pago</span
+										>
 									</div>
 								</tr>
 							</td>
 							<td>
-								<i class="{{movimentacao.icon}}"></i> {{ movimentacao.no_categoria_despesa }}
+								<i class="{{ movimentacao.icon }}"></i>
+								{{ movimentacao.no_categoria_despesa }}
 							</td>
 							<!-- <td>
 								{{
@@ -174,9 +183,16 @@
 				{{ amigoPagar?.value.valor | currency: "BRL":true }}
 			</p>
 			<!-- <pre>{{ amigoPagar | json }}</pre> -->
-			<div class="row" style="display: grid; align-content: center; justify-content:center; height: 250px;">
+			<div
+				class="row"
+				style="
+					display: grid;
+					align-content: center;
+					justify-content: center;
+					height: 250px;
+				"
+			>
 				<ngx-charts-bar-vertical
-
 					[scheme]="colorScheme"
 					[results]="amigoPagar?.value.grafico"
 					[gradient]="gradient"
@@ -187,7 +203,8 @@
 					[showYAxisLabel]="showYAxisLabel"
 					[xAxisLabel]="xAxisLabel"
 					[yAxisLabel]="yAxisLabel"
-					(select)="onSelect($event)">
+					(select)="onSelect($event)"
+				>
 				</ngx-charts-bar-vertical>
 
 				<!-- <div class="categorias card padding-5" *ngFor="let cate of amigoPagar?.value.categoria | keyvalue">

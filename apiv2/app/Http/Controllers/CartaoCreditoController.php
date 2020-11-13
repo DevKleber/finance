@@ -52,13 +52,26 @@ class CartaoCreditoController extends Controller
         foreach ($getFaturasCartao as $key => $value) {
             $faturas[$key] = $value;
             // ->where('bo_aprovado', true)
-            $faturas[$key]['pessoas'] = \App\DespesaCompartilhada::where('id_despesa', $value->id_despesa)->join('pessoa', 'pessoa.id_pessoa', '=', 'conta_compartilhada_valor.id_pessoa')->get();
+            $pessoas = \App\DespesaCompartilhada::join('pessoa', 'pessoa.id_pessoa', '=', 'conta_compartilhada_valor.id_pessoa')
+                ->where('conta_compartilhada_valor.id_despesa', $value->id_despesa)
+                ->get()
+            ;
+            $faturas[$key]['pessoas'] = $pessoas;
+
             $resumo['totalAPagarCartao'] += $value->vl_despesa;
+
             if ($faturas[$key]['pessoas']->count() > 0) {
                 foreach ($faturas[$key]['pessoas'] as $keyAmigo => $valueAmigo) {
+                    $pago = \App\Pagamento::where('id_despesa_item', $value->id_despesa_item)->where('id_pessoa', $valueAmigo->id_pessoa)->where('bo_paga', true)->count();
+                    $faturas[$key]['pessoas'][$keyAmigo]['pago'] = $pago > 0 ? true : false;
+
                     $valorDoAmigo = $value->vl_despesa * $valueAmigo->vl_conta_compartilhada_porcentagem / 100;
+
                     $dividaAmigos[$valueAmigo->id_pessoa]['nome'] = $valueAmigo->no_pessoa;
-                    $dividaAmigos[$valueAmigo->id_pessoa]['valor'] = isset($dividaAmigos[$valueAmigo->id_pessoa]['valor']) ? $dividaAmigos[$valueAmigo->id_pessoa]['valor'] + $valorDoAmigo : $valorDoAmigo;
+                    $dividaAmigos[$valueAmigo->id_pessoa]['valor'] =
+                        isset($dividaAmigos[$valueAmigo->id_pessoa]['valor']) ?
+                            $dividaAmigos[$valueAmigo->id_pessoa]['valor'] + $valorDoAmigo :
+                                $valorDoAmigo;
 
                     $dividaAmigos[$valueAmigo->id_pessoa]['categoria'][$value->id_categoria_despesa][] = [
                         'name' => $value->no_categoria_despesa,
@@ -67,6 +80,9 @@ class CartaoCreditoController extends Controller
                         ;
                 }
             } else {
+                $pago = \App\Pagamento::where('id_despesa_item', $value->id_despesa_item)->where('id_pessoa', $value->id_pessoa)->where('bo_paga', true)->count();
+                $faturas[$key]['pago'] = $pago > 0 ? true : false;
+
                 $dividaAmigos[$usuarioLogado->id_pessoa]['valor'] =
                     isset($dividaAmigos[$usuarioLogado->id_pessoa]['valor']) ?
                         $dividaAmigos[$usuarioLogado->id_pessoa]['valor'] + $value->vl_despesa :
@@ -109,6 +125,7 @@ class CartaoCreditoController extends Controller
     public function getFaturasCartao($usuarioLogado, $id_cartao_credito, $data)
     {
         return \App\DespesaCartao:: join('despesa', 'despesa.id_despesa', '=', 'despesa_cartao.id_despesa')
+            ->join('usuario', 'usuario.id_usuario', '=', 'despesa.id_usuario')
             ->join('categoria_despesa', 'categoria_despesa.id_categoria_despesa', '=', 'despesa.id_categoria_despesa')
             ->join('despesa_item', 'despesa_item.id_despesa', '=', 'despesa_cartao.id_despesa')
             ->Join('cartao_credito', 'cartao_credito.id_cartao_credito', '=', 'despesa_cartao.id_cartao_credito')

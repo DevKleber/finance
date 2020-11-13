@@ -56,3 +56,16 @@ div.ng-select-container {
 div#wrapper app-menu {
 	background-color: #234bbf;
 }
+.mov-pg {
+	color: #0f6848;
+	margin-left: 5px;
+	font-size: 12px;
+	font-weight: bold;
+	border: 1px solid #0f6848;
+	padding: 2px;
+}
+.alert-apagar {
+}
+.alert-pago {
+	color: #0f6848;
+}
