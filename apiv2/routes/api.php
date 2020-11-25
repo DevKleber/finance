@@ -9,6 +9,7 @@ Route::post('auth/refresh', 'AuthController@refresh');
 
 Route::get('testando', 'CategoriaDespesaController@montandoarray');
 Route::get('categoriaparausuario', 'PessoaController@criarCategoriaParaUsuario');
+Route::get('email/cartao', 'EmailController@cartaoCreditoVencendo');
 
 Route::group(['middleware' => 'apiJwt'], function () {
     Route::resource('tipoDespesa', 'TipoDespesaController');
@@ -56,5 +57,5 @@ Route::group(['middleware' => 'apiJwt'], function () {
     Route::get('despesas_aguardando', 'AguardandoAprovacaoController@index');
     Route::post('despesas_aguardando', 'AguardandoAprovacaoController@despesasAguardandoAprovacao');
 
-    Route::resource('pagamento','PagamentoController');
+    Route::resource('pagamento', 'PagamentoController');
 });

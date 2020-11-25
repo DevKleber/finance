@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Mail\CartaoVencendo;
 use App\Mail\Despesa;
 use App\Mail\SolicitacaoAmizade;
 use Illuminate\Database\Eloquent\Model;
@@ -14,6 +15,13 @@ class Email extends Model
         Mail::to($request->no_email)->queue(new SolicitacaoAmizade($req->no_pessoa));
 
         return $request;
+    }
+
+    public static function cartaoVencendo($req)
+    {
+        Mail::to($req['no_email'])->queue(new CartaoVencendo($req));
+
+        return $req;
     }
 
     public static function despesaCompartilhada($request)
