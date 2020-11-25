@@ -30,4 +30,7 @@ export class MovimentacoesService {
 	goTo(path: string = "depoimento") {
 		this.router.navigate([`/${path}`]);
 	}
+	pagarDespesa(form, id) {
+		return this.http.post<any>(`${API}/pagarDespesa/${id}`, form);
+	}
 }

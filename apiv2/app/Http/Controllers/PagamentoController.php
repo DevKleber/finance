@@ -28,6 +28,31 @@ class PagamentoController extends Controller
         return response(['response' => 'Salvo com sucesso', 'dados' => $pagamento]);
     }
 
+    public function pagarDespesaItem(Request $request, $id)
+    {
+        $req['bo_paga'] = true;
+        $req['id_despesa_item'] = $id;
+        $req['id_pessoa'] = auth()->user()->id_pessoa;
+
+        $recibo['caminho'] = '';
+
+        if ($request->file('recibo')) {
+            try {
+                $recibo = \App\Arquivo::saveFileQuality($request->file('recibo'), 'recibo', 10);
+            } catch (\Throwable $th) {
+                return response(['response' => $th->getMessage(), 400]);
+            }
+        }
+
+        $req['comprovante'] = $recibo['caminho'];
+        $pagamento = \App\Pagamento::create($req);
+        if (!$pagamento) {
+            return  response(['response' => 'Erro ao salvar Pagamento'], 400);
+        }
+
+        return response($recibo);
+    }
+
     public function show($id)
     {
         $pagamento = \App\Pagamento::find($id);

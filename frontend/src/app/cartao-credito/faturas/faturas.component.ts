@@ -7,6 +7,7 @@ import { CartaoCredito } from "../cartao-credito.model";
 import { CartaoCreditoService } from "../cartao-credito.service";
 import { Helper } from "../../helper";
 import { BreadcrumbService } from "../../layout/breadcrumb/breadcrumb.service";
+import { APIDominio } from "../../app.api";
 
 import { Observable } from "rxjs";
 
@@ -26,6 +27,7 @@ export class FaturasComponent implements OnInit {
 	imgBin: string = "";
 	urlImgBin: string = "/assets/img/card/bin";
 	bandeira: string = "";
+	imgApi: string = APIDominio;
 
 	dataFiltro: any = {};
 	dateObj = new Date();

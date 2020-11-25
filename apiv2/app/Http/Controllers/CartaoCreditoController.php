@@ -62,8 +62,12 @@ class CartaoCreditoController extends Controller
 
             if ($faturas[$key]['pessoas']->count() > 0) {
                 foreach ($faturas[$key]['pessoas'] as $keyAmigo => $valueAmigo) {
-                    $pago = \App\Pagamento::where('id_despesa_item', $value->id_despesa_item)->where('id_pessoa', $valueAmigo->id_pessoa)->where('bo_paga', true)->count();
-                    $faturas[$key]['pessoas'][$keyAmigo]['pago'] = $pago > 0 ? true : false;
+                    $pago = \App\Pagamento::where('id_despesa_item', $value->id_despesa_item)->where('id_pessoa', $valueAmigo->id_pessoa)->where('bo_paga', true);
+                    $pagoTotal = $pago->count();
+                    $pagamento = $pago->first();
+
+                    $faturas[$key]['pessoas'][$keyAmigo]['pago'] = $pagoTotal > 0 ? true : false;
+                    $faturas[$key]['pessoas'][$keyAmigo]['pagamento'] = $pagamento;
 
                     $valorDoAmigo = $value->vl_despesa * $valueAmigo->vl_conta_compartilhada_porcentagem / 100;
 
@@ -80,8 +84,12 @@ class CartaoCreditoController extends Controller
                         ;
                 }
             } else {
-                $pago = \App\Pagamento::where('id_despesa_item', $value->id_despesa_item)->where('id_pessoa', $value->id_pessoa)->where('bo_paga', true)->count();
-                $faturas[$key]['pago'] = $pago > 0 ? true : false;
+                $pago = \App\Pagamento::where('id_despesa_item', $value->id_despesa_item)->where('id_pessoa', $value->id_pessoa)->where('bo_paga', true);
+                $pagoTotal = $pago->count();
+                $pagamento = $pago->first();
+
+                $faturas[$key]['pago'] = $pagoTotal > 0 ? true : false;
+                $faturas[$key]['pessoas']['pagamento'] = $pagamento;
 
                 $dividaAmigos[$usuarioLogado->id_pessoa]['valor'] =
                     isset($dividaAmigos[$usuarioLogado->id_pessoa]['valor']) ?

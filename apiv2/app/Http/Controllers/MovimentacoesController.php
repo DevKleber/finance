@@ -30,7 +30,10 @@ class MovimentacoesController extends Controller
         ];
         $i = 0;
         foreach ($minhasDespesasComCartao as $key => $value) {
-            $pago = \App\Pagamento::where('id_despesa_item', $value->id_despesa_item)->where('id_pessoa', $usuarioLogado->id_pessoa)->where('bo_paga', true)->count();
+            $pago = \App\Pagamento::where('id_despesa_item', $value->id_despesa_item)->where('id_pessoa', $usuarioLogado->id_pessoa)->where('bo_paga', true);
+            $pagoTotal = $pago->count();
+            $pagamento = $pago->first();
+
             $tudo[$i]['id_despesa'] = $value->id_despesa;
             $tudo[$i]['no_categoria_despesa'] = $value->no_categoria_despesa;
             $tudo[$i]['icon'] = $value->icon;
@@ -52,13 +55,16 @@ class MovimentacoesController extends Controller
             $tudo[$i]['bo_cartao'] = true;
             $tudo[$i]['parcelas'] = $value->nu_parcela_atual.'/'.$value->nu_parcela;
             $tudo[$i]['vl_total_minha_parte'] = $tudo[$i]['vl_despesa'] * $value->nu_parcela;
-            $tudo[$i]['pago'] = $pago > 0 ? true : false;
+            $tudo[$i]['pago'] = $pagoTotal > 0 ? true : false;
+            $tudo[$i]['pagamento'] = $pagamento ?? '';
             $resumo['minhasDespesasComCartao'] += $tudo[$i]['vl_despesa'];
 
             ++$i;
         }
         foreach ($despesasCompartilhadasComAmigosMeuCartao as $key => $value) {
-            $pago = \App\Pagamento::where('id_despesa_item', $value->id_despesa_item)->where('id_pessoa', $usuarioLogado->id_pessoa)->where('bo_paga', true)->count();
+            $pago = \App\Pagamento::where('id_despesa_item', $value->id_despesa_item)->where('id_pessoa', $usuarioLogado->id_pessoa)->where('bo_paga', true);
+            $pagoTotal = $pago->count();
+            $pagamento = $pago->first();
             $tudo[$i]['id_despesa'] = $value->id_despesa;
             $tudo[$i]['no_categoria_despesa'] = $value->no_categoria_despesa;
             $tudo[$i]['icon'] = $value->icon;
@@ -80,13 +86,17 @@ class MovimentacoesController extends Controller
             $tudo[$i]['bo_cartao'] = true;
             $tudo[$i]['parcelas'] = $value->nu_parcela_atual.'/'.$value->nu_parcela;
             $tudo[$i]['vl_total_minha_parte'] = $tudo[$i]['vl_despesa'] * $value->nu_parcela;
-            $tudo[$i]['pago'] = $pago > 0 ? true : false;
+            $tudo[$i]['pago'] = $pagoTotal > 0 ? true : false;
+            $tudo[$i]['pagamento'] = $pagamento ?? '';
             $resumo['despesasCompartilhadasComAmigosMeuCartao'] += $tudo[$i]['vl_despesa'];
 
             ++$i;
         }
         foreach ($despesasCompartilhadasComAmigosCartaoDoAmigo as $key => $value) {
-            $pago = \App\Pagamento::where('id_despesa_item', $value->id_despesa_item)->where('id_pessoa', $usuarioLogado->id_pessoa)->where('bo_paga', true)->count();
+            $pago = \App\Pagamento::where('id_despesa_item', $value->id_despesa_item)->where('id_pessoa', $usuarioLogado->id_pessoa)->where('bo_paga', true);
+            $pagoTotal = $pago->count();
+            $pagamento = $pago->first();
+
             $tudo[$i]['id_despesa'] = $value->id_despesa;
             $tudo[$i]['no_categoria_despesa'] = $value->no_categoria_despesa;
             $tudo[$i]['icon'] = $value->icon;
@@ -108,7 +118,8 @@ class MovimentacoesController extends Controller
             $tudo[$i]['bo_cartao'] = true;
             $tudo[$i]['parcelas'] = $value->nu_parcela_atual.'/'.$value->nu_parcela;
             $tudo[$i]['vl_total_minha_parte'] = $tudo[$i]['vl_despesa'] * $value->nu_parcela;
-            $tudo[$i]['pago'] = $pago > 0 ? true : false;
+            $tudo[$i]['pago'] = $pagoTotal > 0 ? true : false;
+            $tudo[$i]['pagamento'] = $pagamento ?? '';
             $resumo['despesasCompartilhadasComAmigosCartaoDoAmigo'] += $tudo[$i]['vl_despesa'];
 
             $amigosPagar[$tudo[$i]['responsavel']][$i]['responsavel'] = $tudo[$i]['responsavel'];
@@ -117,7 +128,10 @@ class MovimentacoesController extends Controller
             ++$i;
         }
         foreach ($minhasDespesasEmConta as $key => $value) {
-            $pago = \App\Pagamento::where('id_despesa_item', $value->id_despesa_item)->where('id_pessoa', $usuarioLogado->id_pessoa)->where('bo_paga', true)->count();
+            $pago = \App\Pagamento::where('id_despesa_item', $value->id_despesa_item)->where('id_pessoa', $usuarioLogado->id_pessoa)->where('bo_paga', true);
+            $pagoTotal = $pago->count();
+            $pagamento = $pago->first();
+
             $tudo[$i]['id_despesa'] = $value->id_despesa;
             $tudo[$i]['no_categoria_despesa'] = $value->no_categoria_despesa;
             $tudo[$i]['icon'] = $value->icon;
@@ -138,13 +152,17 @@ class MovimentacoesController extends Controller
             $tudo[$i]['bo_cartao'] = false;
             $tudo[$i]['parcelas'] = $value->nu_parcela_atual.'/'.$value->nu_parcela;
             $tudo[$i]['vl_total_minha_parte'] = $tudo[$i]['vl_despesa'] * $value->nu_parcela;
-            $tudo[$i]['pago'] = $pago > 0 ? true : false;
+            $tudo[$i]['pago'] = $pagoTotal > 0 ? true : false;
+            $tudo[$i]['pagamento'] = $pagamento ?? '';
             $resumo['minhasDespesasEmConta'] += $tudo[$i]['vl_despesa'];
 
             ++$i;
         }
         foreach ($despesasCompartilhadasComAmigosNaMinhaConta as $key => $value) {
-            $pago = \App\Pagamento::where('id_despesa_item', $value->id_despesa_item)->where('id_pessoa', $usuarioLogado->id_pessoa)->where('bo_paga', true)->count();
+            $pago = \App\Pagamento::where('id_despesa_item', $value->id_despesa_item)->where('id_pessoa', $usuarioLogado->id_pessoa)->where('bo_paga', true);
+            $pagoTotal = $pago->count();
+            $pagamento = $pago->first();
+
             $tudo[$i]['id_despesa'] = $value->id_despesa;
             $tudo[$i]['no_categoria_despesa'] = $value->no_categoria_despesa;
             $tudo[$i]['icon'] = $value->icon;
@@ -166,13 +184,17 @@ class MovimentacoesController extends Controller
             $tudo[$i]['bo_cartao'] = false;
             $tudo[$i]['parcelas'] = $value->nu_parcela_atual.'/'.$value->nu_parcela;
             $tudo[$i]['vl_total_minha_parte'] = $tudo[$i]['vl_despesa'] * $value->nu_parcela;
-            $tudo[$i]['pago'] = $pago > 0 ? true : false;
+            $tudo[$i]['pago'] = $pagoTotal > 0 ? true : false;
+            $tudo[$i]['pagamento'] = $pagamento ?? '';
             $resumo['despesasCompartilhadasComAmigosNaMinhaConta'] += $tudo[$i]['vl_despesa'];
 
             ++$i;
         }
         foreach ($despesasCompartilhadasComAmigosNaContaDoAmigo as $key => $value) {
             $pago = \App\Pagamento::where('id_despesa_item', $value->id_despesa_item)->where('id_pessoa', $usuarioLogado->id_pessoa)->where('bo_paga', true)->count();
+            $pagoTotal = $pago->count();
+            $pagamento = $pago->first();
+
             $tudo[$i]['id_despesa'] = $value->id_despesa;
             $tudo[$i]['no_categoria_despesa'] = $value->no_categoria_despesa;
             $tudo[$i]['icon'] = $value->icon;
@@ -194,7 +216,8 @@ class MovimentacoesController extends Controller
             $tudo[$i]['bo_cartao'] = false;
             $tudo[$i]['parcelas'] = $value->nu_parcela_atual.'/'.$value->nu_parcela;
             $tudo[$i]['vl_total_minha_parte'] = $tudo[$i]['vl_despesa'] * $value->nu_parcela;
-            $tudo[$i]['pago'] = $pago > 0 ? true : false;
+            $tudo[$i]['pago'] = $pagoTotal > 0 ? true : false;
+            $tudo[$i]['pagamento'] = $pagamento ?? '';
             $resumo['despesasCompartilhadasComAmigosNaContaDoAmigo'] += $tudo[$i]['vl_despesa'];
 
             $amigosPagar[$tudo[$i]['responsavel']][$i]['responsavel'] = $tudo[$i]['responsavel'];

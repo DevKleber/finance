@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { MovimentacoesService } from "./movimentacoes.service";
+import { Helper } from "../helper";
+import { APIDominio } from "../app.api";
 @Component({
 	selector: "app-movimentacoes",
 	templateUrl: "./movimentacoes.component.html",
@@ -9,8 +11,15 @@ export class MovimentacoesComponent implements OnInit {
 	movimentacoes: any[] = [];
 	resumo: any = {};
 	amigosPagar: any = {};
+	movimentacaoEscolhida: any = {};
 	dataFiltro: any = {};
 	dateObj = new Date();
+	img: any = "assets/img/system/recibo3.png";
+	imgApi: string = APIDominio;
+	comprovante: any;
+	selectedFile: File;
+	imagem: any;
+
 	months = [
 		"Janeiro",
 		"Fevereiro",
@@ -25,7 +34,10 @@ export class MovimentacoesComponent implements OnInit {
 		"Novembro",
 		"Dezembro",
 	];
-	constructor(private movimentacoesService: MovimentacoesService) {}
+	constructor(
+		private movimentacoesService: MovimentacoesService,
+		private helper: Helper
+	) {}
 
 	ngOnInit(): void {
 		this.configureDate("");
@@ -54,5 +66,42 @@ export class MovimentacoesComponent implements OnInit {
 		this.dataFiltro.mesNome = this.months[month - 1];
 		this.dataFiltro.ano = year;
 		this.getMovimentacoes();
+	}
+	movimentacaoSelecionada(mov) {
+		this.movimentacaoEscolhida = mov;
+	}
+	pagarDespesa() {
+		if (!this.movimentacaoEscolhida.id_despesa_item) {
+			alert("Escolha uma despesa");
+			return;
+		}
+
+		const uploadData = new FormData();
+		if (this.selectedFile) {
+			uploadData.append(
+				"recibo",
+				this.selectedFile,
+				this.selectedFile.name
+			);
+		}
+
+		this.movimentacoesService
+			.pagarDespesa(
+				uploadData,
+				this.movimentacaoEscolhida.id_despesa_item
+			)
+			.subscribe((data) => {
+				this.getMovimentacoes();
+			});
+	}
+
+	onFileChanged(event) {
+		const file: any = this.helper.onFileChanged(event);
+		if (!file) {
+			alert("Arquivo não permitido");
+			return;
+		}
+		this.img = file.img;
+		this.selectedFile = file.selectedFile;
 	}
 }
