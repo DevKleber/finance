@@ -88,7 +88,7 @@ class Arquivo extends Model
         $name = storage_path().'/app/public/'.$folder.'/'.$nome.'.'.$extension;
 
         if (Image::make($file)->save($name, $quality)) {
-            return 'public/storage/'.$folder.'/'.$nome.'.'.$extension;
+            return 'storage/'.$folder.'/'.$nome.'.'.$extension;
         }
 
         return false;
