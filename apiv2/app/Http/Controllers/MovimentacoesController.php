@@ -191,7 +191,7 @@ class MovimentacoesController extends Controller
             ++$i;
         }
         foreach ($despesasCompartilhadasComAmigosNaContaDoAmigo as $key => $value) {
-            $pago = \App\Pagamento::where('id_despesa_item', $value->id_despesa_item)->where('id_pessoa', $usuarioLogado->id_pessoa)->where('bo_paga', true)->count();
+            $pago = \App\Pagamento::where('id_despesa_item', $value->id_despesa_item)->where('id_pessoa', $usuarioLogado->id_pessoa)->where('bo_paga', true);
             $pagoTotal = $pago->count();
             $pagamento = $pago->first();
 
