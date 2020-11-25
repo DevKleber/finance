@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { MovimentacoesService } from "./movimentacoes.service";
 import { Helper } from "../helper";
 import { APIDominio } from "../app.api";
@@ -34,6 +34,8 @@ export class MovimentacoesComponent implements OnInit {
 		"Novembro",
 		"Dezembro",
 	];
+	@ViewChild("closeModalPagamento", { static: true })
+	closeModalPagamento: ElementRef;
 	constructor(
 		private movimentacoesService: MovimentacoesService,
 		private helper: Helper
@@ -91,6 +93,7 @@ export class MovimentacoesComponent implements OnInit {
 				this.movimentacaoEscolhida.id_despesa_item
 			)
 			.subscribe((data) => {
+				this.closeModalPagamento.nativeElement.click();
 				this.getMovimentacoes();
 			});
 	}
