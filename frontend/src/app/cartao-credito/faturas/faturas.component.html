@@ -40,58 +40,34 @@
 							</td>
 							<td>
 								{{ movimentacao.ds_despesa }}
-								<span *ngIf="movimentacao.pago" class="mov-pg"
-								title="{{movimentacao.pagamento.created_at}}"
-								>
+								<span *ngIf="movimentacao.pago" class="mov-pg" >
+									<!-- despesa minha sem compartilhar com amigos -->
 									Pago
-									<a target="_BLANK" href="{{imgApi}}/{{movimentacao?.pagamento?.comprovante}}" *ngIf="movimentacao?.pagamento?.comprovante">
+									<a target="_BLANK" href="{{imgApi}}/{{movimentacao.pagamento.comprovante}}" *ngIf="movimentacao.pagamento.comprovante">
 										<i  class="fa fa-receipt"></i>
-									</a></span
-								>
+									</a>
+								</span>
 
-								<tr
-									*ngFor="let pessoas of movimentacao.pessoas"
-								>
+								<tr  *ngFor="let pessoas of movimentacao?.pessoas" >
 									<div>
-										<i
-											style="
-												margin-left: 5px;
-												color: #cbccce;
-											"
-											class="fa fa-users"
-										></i>
-
+										<i style=" margin-left: 5px; color: #cbccce; " class="fa fa-users" ></i>
 										{{ pessoas.no_pessoa }}:
-										{{
-											(movimentacao.vl_despesa *
-												pessoas.vl_conta_compartilhada_porcentagem) /
-												100 | currency: "BRL":true
-										}}
-										<span
-											*ngIf="pessoas.pago"
-											class="mov-pg"
-											title="{{pessoas.pagamento.created_at}}"
-											>
-												Pago
-												<a target="_BLANK" href="{{imgApi}}/{{pessoas?.pagamento?.comprovante}}" *ngIf="pessoas?.pagamento?.comprovante">
-													<i  class="fa fa-receipt"></i>
-												</a>
+										{{ (movimentacao.vl_despesa * pessoas.vl_conta_compartilhada_porcentagem) / 100 | currency: "BRL":true }}
+										<span *ngIf="pessoas.pago" class="mov-pg" >
 
-										</span
-										>
+											Pago
+											<a target="_BLANK" href="{{imgApi}}/{{pessoas?.pagamento?.comprovante}}" *ngIf="pessoas.pagamento.comprovante">
+												<i  class="fa fa-receipt"></i>
+											</a>
+										</span >
 									</div>
 								</tr>
 							</td>
 							<td>
-								<i class="{{ movimentacao.icon }}"></i>
+								<i class="{{ movimentacao?.icon }}"></i>
 								{{ movimentacao.no_categoria_despesa }}
 							</td>
-							<!-- <td>
-								{{
-									movimentacao.vl_despesac
-										| currency: "BRL":true
-								}}
-							</td> -->
+
 							<td>
 								{{
 									movimentacao.vl_despesac
@@ -112,8 +88,6 @@
 						</tr>
 					</tbody>
 				</table>
-				<!-- <pre>{{ dividaAmigos | json }}</pre> -->
-				<!-- <pre>{{ cartoes | json }}</pre> -->
 			</div>
 		</div>
 	</div>

@@ -67,7 +67,7 @@ class CartaoCreditoController extends Controller
                     $pagamento = $pago->first();
 
                     $faturas[$key]['pessoas'][$keyAmigo]['pago'] = $pagoTotal > 0 ? true : false;
-                    $faturas[$key]['pessoas'][$keyAmigo]['pagamento'] = $pagamento;
+                    $faturas[$key]['pessoas'][$keyAmigo]['pagamento'] = $pagamento ?? false;
 
                     $valorDoAmigo = $value->vl_despesa * $valueAmigo->vl_conta_compartilhada_porcentagem / 100;
 
@@ -89,7 +89,7 @@ class CartaoCreditoController extends Controller
                 $pagamento = $pago->first();
 
                 $faturas[$key]['pago'] = $pagoTotal > 0 ? true : false;
-                $faturas[$key]['pessoas']['pagamento'] = $pagamento;
+                $faturas[$key]['pagamento'] = $pagamento ?? false;
 
                 $dividaAmigos[$usuarioLogado->id_pessoa]['valor'] =
                     isset($dividaAmigos[$usuarioLogado->id_pessoa]['valor']) ?
