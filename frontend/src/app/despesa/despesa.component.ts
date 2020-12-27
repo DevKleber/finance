@@ -96,7 +96,7 @@ export class DespesaComponent implements OnInit {
 		this.ajuda();
 		this.breadCrumb();
 	}
-	breadCrumb(nome = "Despesas") {
+	breadCrumb(nome = "Lançar despesa") {
 		this.breadcrumbService.chosenPagina([
 			{ no_rotina: nome, ds_url: "categoria", active: "" },
 			{ no_rotina: "Inserir", ds_url: "mudar-texto", active: "active" },
@@ -338,6 +338,27 @@ export class DespesaComponent implements OnInit {
 			// vl_conta_compartilhada_porcentagem
 		});
 		this.setValorRemanescente(0);
+	}
+	copyValue() {
+		const control = <FormArray>(
+			this.formCartaoCredito.controls["dividirPessoas"]
+		);
+
+		const value =
+			this.formCartaoCredito.value.vl_despesac / control.value.length;
+		console.log(value);
+
+		for (let index = 0; index < control.value.length; index++) {
+			let formPessoa = (<FormArray>(
+				this.formCartaoCredito.get("dividirPessoas")
+			)).at(index);
+			formPessoa.patchValue({
+				valor: value,
+			});
+		}
+		this.setValorRemanescente(
+			this.formCartaoCredito.get("vl_despesac").value
+		);
 	}
 	mudandoValorParaCada(item, indexPessoa) {
 		let total = 0;

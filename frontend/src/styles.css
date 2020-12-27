@@ -103,3 +103,154 @@ span.mov-pg a{
 	align-items: center;
 	justify-content: center;
 }
+
+.display-flex{
+	display: flex;;
+}
+.flex-column{
+	flex-direction: column;
+}
+.center-center {
+	align-items: center;
+	justify-content: center;
+}
+
+
+/* Mobile */
+
+@media (min-width: 800px) and (max-width: 1023px) {
+	.desktopHide {
+		display: none !important;
+	}
+}
+@media (min-width: 1023px) and (max-width: 5024px) {
+	.desktopHide {
+		display: none !important;
+	}
+}
+@media (min-width: 0px) and (max-width: 600px) {
+	/* //aqui vai os códigos do app */
+	body{
+		background-color: #f8f9fc!important;
+	}
+	.table {
+		width: 100%!important;
+		overflow-x: auto;
+		display: block;
+		font-size: 0.9em;
+	}
+	.app-display-flex{
+		display: flex;
+	}
+	.app-flex-column{
+		flex-direction: column;
+	}
+	.app-center-center {
+		align-items: center;
+		justify-content: center;
+	}
+	.appW100{
+		width: 100%!important;
+	}
+	.appHide {
+		display: none !important;
+	}
+	.content-app{
+		margin-top: 60px!important;
+	}
+
+	.headerApp {
+		background-color: #fff!important;
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)!important;
+		transition: 0.3s;
+		padding: 15px;
+		position: absolute;
+		width: 100%;
+		top: 0;
+		left: 0;
+
+	}
+
+	.headerApp:hover {
+		box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+	}
+
+	/* lancar despesas */
+	.app-valorRemanescente,
+	.app-pessoasEnvolvidas,.app-despesaCartaoCredito,.app-despesaConta{
+		margin: 5px 15px!important;
+	}
+	.appContentVencimentoCartao{
+		display: flex;
+		flex-direction: row;
+		width: 100%;
+		justify-content: center;
+		align-items: center;
+	}
+	.app-cardDiaVencimento{
+		margin-right: 0px!important;
+	}
+	.app-cardDiaVencimento,
+	.app-cardDiaFechamento{
+		width: 50%!important;
+		width: 50% !important;
+		display: flex;
+		justify-content: center;
+		justify-items: center;
+		text-align: center;
+	}
+	.selectDespesa{
+		margin-top: 15px!important;
+	}
+
+	.app-cardDividirAmigo{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+	}
+	.app-cardDividirAmigo img{
+		align-items: center;
+		justify-content: center;
+		width: 80px!important;
+		height: 80px!important;
+		border-radius: 40px!important;
+	}
+
+	/* fim lancar despesas */
+}
+@media (min-width: 600px) and (max-width: 1023px) {
+}
+@media (min-width: 1000px) and (max-width: 1024px) {
+}
+@media (min-width: 1025px) and (max-width: 1152px) {
+}
+@media (min-width: 1153px) and (max-width: 1280px) {
+	.table {
+		width: 100%!important;
+		overflow-x: auto;
+		display: block;
+		font-size: 0.9em;
+	}
+	.sidebar {
+		width: 12rem !important;
+	}
+}
+@media (min-width: 1281px) and (max-width: 1366px) {
+	.sidebar {
+		width: 12rem !important;
+	}
+	.table {
+		width: 100%!important;
+		display: block;
+		font-size: 0.9em;
+	}
+}
+@media (min-width: 1367px) and (max-width: 1440px) {
+}
+@media (min-width: 1441px) and (max-width: 1600px) {
+}
+@media (min-width: 1601px) and (max-width: 1680px) {
+}
+@media (min-width: 1681px) and (max-width: 1920px) {
+}

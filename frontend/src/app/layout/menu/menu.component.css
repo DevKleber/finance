@@ -1,9 +1,15 @@
+ul {
+	list-style-type: none!important;
+	padding: 0!important;
+	margin: 0!important;
+}
 .menuApp {
 	position: fixed;
 	bottom: 0;
 	width: 100%;
-	background-color: #25476a;
-	color: #fff;
+	background-color: #fff;
+	color: #838491;
+	/* color: #fff; */
 
 	z-index: 999;
 
@@ -33,5 +39,20 @@
 }
 
 .item {
-	color: #fff !important;
+	color: #838491 !important;
+}
+.iconMenu {
+	font-size: 1.3em;
+	color: #838491 !important;
+}
+.menuAppActive{
+	color: #181e33 !important;
+}
+.nav-link-app {
+	padding: 0 !important;
+}
+.img-profile-menuapp {
+	width: 30px;
+	height: 30px;
+	border-radius: 15px;
 }

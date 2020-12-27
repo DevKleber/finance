@@ -47,7 +47,11 @@ export class CategoriaReceitaComponent implements OnInit {
 	}
 	breadCrumb() {
 		this.breadcrumbService.chosenPagina([
-			{ no_rotina: "Categorias", ds_url: "categoria", active: "" },
+			{
+				no_rotina: "Categorias receitas",
+				ds_url: "categoria",
+				active: "",
+			},
 			{ no_rotina: "Inserir", ds_url: "mudar-texto", active: "active" },
 		]);
 	}

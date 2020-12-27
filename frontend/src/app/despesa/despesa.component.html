@@ -9,7 +9,7 @@
 				</div> -->
 				<div class="col-md-6 text-center cartao">
 					<div
-						class="padding-15 cursor-pointer card shadow"
+						class="padding-15 cursor-pointer card shadow app-despesaCartaoCredito"
 						[ngClass]="{
 							'bg-gradient-primary text-white': despesaCartaoCredito
 						}"
@@ -22,7 +22,7 @@
 				</div>
 				<div class="col-md-6 text-center conta">
 					<div
-						class="padding-15 cursor-pointer card shadow"
+						class="padding-15 cursor-pointer card shadow app-despesaConta"
 						[ngClass]="{
 							'bg-gradient-primary text-white': despesaConta
 						}"
@@ -70,25 +70,28 @@
 						<div class="col-md-12 padding-0">
 							<h3>Dados do cartão</h3>
 						</div>
-						<div class="card margin-top-0">
-							<span style="font-weight: bold"
+						<div class="appContentVencimentoCartao">
+
+							<div class="app-cardDiaVencimento card margin-top-0">
+								<span style="font-weight: bold"
 								>Dia vencimento</span
-							>
-							<span style="text-align: center; font-size: 1.2em">
-								{{
-									cartaoEscolhidoParaLancamento?.dia_vencimento
-								}}
-							</span>
-						</div>
-						<div class="card margin-top-0">
-							<span style="font-weight: bold"
+								>
+								<span style="text-align: center; font-size: 1.2em">
+									{{
+										cartaoEscolhidoParaLancamento?.dia_vencimento
+									}}
+								</span>
+							</div>
+							<div class="app-cardDiaFechamento card margin-top-0">
+								<span style="font-weight: bold"
 								>Fechamento da fatura</span
-							>
-							<span style="text-align: center; font-size: 1.2em">
-								{{
-									cartaoEscolhidoParaLancamento?.dia_fechamento_fatura
-								}}
-							</span>
+								>
+								<span style="text-align: center; font-size: 1.2em">
+									{{
+										cartaoEscolhidoParaLancamento?.dia_fechamento_fatura
+									}}
+								</span>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -111,7 +114,7 @@
 
 					<div class="row" style="margin-top: -10px">
 						<div
-							class="card cursor-pointer"
+							class="card cursor-pointer appW100"
 							*ngFor="let item of ajudasFiltro"
 							style="margin: 5px 5px"
 							(click)="escolherFiltro(item)"
@@ -308,10 +311,10 @@
 							class="row"
 							*ngIf="formCartaoCredito.value.bo_dividir_amigos"
 						>
-							<div class="card">
+							<div class="card appW100 app-valorRemanescente">
 								Valor remanescente: {{ valorRemanescente }}
 							</div>
-							<div class="card">
+							<div class="card appW100 app-pessoasEnvolvidas">
 								Pessoas envolvidas:
 								{{
 									formCartaoCredito.get("dividirPessoas")
@@ -333,6 +336,7 @@
 										| currency: "BRL":true:"0.1-3"
 								}}
 								para cada
+								<i class="fa fa-copy" (click)="copyValue()"></i>
 							</div>
 						</div>
 					</app-input-container>
@@ -350,8 +354,8 @@
 									let j = index
 								"
 							>
-								<div [formGroup]="itemDividir">
-									<div class="card-1">
+								<div [formGroup]="itemDividir" class="app-contentDividirAmigo">
+									<div class="card-1 app-cardDividirAmigo">
 										<img
 											src="{{ PATHAPI }}/{{
 												itemDividir?.value.img_perfil
@@ -521,7 +525,10 @@
 						style="padding-bottom: 1.5rem"
 						*ngFor="let item of amigosFiltrado"
 					>
-						<div class="card-1" *ngIf="item.situacao == 'a'">
+
+
+
+						<div class="card-1 app-cardDividirAmigo" *ngIf="item.situacao == 'a'">
 							<img
 								src="{{ PATHAPI }}/{{ item?.img_perfil }}"
 								alt="Avatar"

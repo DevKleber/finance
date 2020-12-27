@@ -11,6 +11,7 @@ import { NotificationService } from "../../shared/messages/notification.service"
 import { Despesa } from "./../despesa.model";
 import { DespesaService } from "./../despesa.service";
 import { APIDominio } from "./../../app.api";
+import { BreadcrumbService } from "../../layout/breadcrumb/breadcrumb.service";
 
 import { Observable } from "rxjs";
 
@@ -27,11 +28,19 @@ export class AprovarComponent implements OnInit {
 
 	constructor(
 		private despesaService: DespesaService,
-		private notificationService: NotificationService
+		private notificationService: NotificationService,
+		private breadcrumbService: BreadcrumbService
 	) {}
 
 	ngOnInit() {
 		this.getDespesasAguardandoAprovacao();
+		this.breadCrumb();
+	}
+	breadCrumb(nome = "Aprovar despesa") {
+		this.breadcrumbService.chosenPagina([
+			{ no_rotina: nome, ds_url: "movimentacoes", active: "" },
+			{ no_rotina: "Inserir", ds_url: "movimentacoes", active: "active" },
+		]);
 	}
 	getDespesasAguardandoAprovacao() {
 		this.despesaService

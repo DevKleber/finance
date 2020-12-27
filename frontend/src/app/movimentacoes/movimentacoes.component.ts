@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { MovimentacoesService } from "./movimentacoes.service";
 import { Helper } from "../helper";
+import { BreadcrumbService } from "../layout/breadcrumb/breadcrumb.service";
 import { APIDominio } from "../app.api";
 @Component({
 	selector: "app-movimentacoes",
@@ -38,12 +39,20 @@ export class MovimentacoesComponent implements OnInit {
 	closeModalPagamento: ElementRef;
 	constructor(
 		private movimentacoesService: MovimentacoesService,
-		private helper: Helper
+		private helper: Helper,
+		private breadcrumbService: BreadcrumbService
 	) {}
 
 	ngOnInit(): void {
 		this.configureDate("");
 		this.getMovimentacoes();
+		this.breadCrumb();
+	}
+	breadCrumb(nome = "Movimentações") {
+		this.breadcrumbService.chosenPagina([
+			{ no_rotina: nome, ds_url: "movimentacoes", active: "" },
+			{ no_rotina: "Inserir", ds_url: "movimentacoes", active: "active" },
+		]);
 	}
 	getMovimentacoes() {
 		this.movimentacoesService
