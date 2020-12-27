@@ -83,7 +83,8 @@ export class LoginComponent implements OnInit, AfterContentInit {
 					// location.replace("/#/dashboard");
 					// window.location.href = "/#/dashboard/";
 					location.replace("/#/dashboard/");
-					window.location.reload();
+					location.reload();
+
 					return false;
 
 					// this.notificationService.notifySweet(`Bem vindo, ${user.user["no_funcionario"]}`),
