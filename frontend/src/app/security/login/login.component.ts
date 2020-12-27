@@ -80,13 +80,14 @@ export class LoginComponent implements OnInit, AfterContentInit {
 				(user) => {
 					//enviando para ultima rota.
 					// location.replace("/#" + atob(this.navigateTo))
-					location.replace("/#/dashboard");
+					// location.replace("/#/dashboard");
+					window.location.href = "/";
 
 					// this.notificationService.notifySweet(`Bem vindo, ${user.user["no_funcionario"]}`),
 
 					//atob é para decodificar
 					// this.router.navigate(['/']);
-					location.reload();
+
 					// console.log("/#"+atob(this.navigateTo))
 					// this.router.navigate([atob(this.navigateTo)])
 				},
