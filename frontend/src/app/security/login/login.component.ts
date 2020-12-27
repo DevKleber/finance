@@ -81,7 +81,8 @@ export class LoginComponent implements OnInit, AfterContentInit {
 					//enviando para ultima rota.
 					// location.replace("/#" + atob(this.navigateTo))
 					// location.replace("/#/dashboard");
-					window.location.href = "/";
+					document.location.href = "/";
+					return false;
 
 					// this.notificationService.notifySweet(`Bem vindo, ${user.user["no_funcionario"]}`),
 
