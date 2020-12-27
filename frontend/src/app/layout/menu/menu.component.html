@@ -51,13 +51,13 @@
 
 <div class="menuApp shadow desktopHide">
 	<div class="items">
-		<ng-container *ngFor="let item of menus">
+		<div *ngFor="let item of menus">
 			<div class="item" *ngIf="item.bo_mostrar_app">
 				<a [routerLink]="['/' + item?.ds_url]">
 					<i routerLinkActive="menuAppActive" class="iconMenu fa fa-{{ item.icon }}"></i>
 				</a>
 			</div>
-		</ng-container>
+		</div>
 		<ul>
 		<li class="nav-item dropdown no-arrow">
 			<a
