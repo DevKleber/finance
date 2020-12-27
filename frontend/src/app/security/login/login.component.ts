@@ -83,7 +83,18 @@ export class LoginComponent implements OnInit, AfterContentInit {
 					// location.replace("/#/dashboard");
 					// window.location.href = "/#/dashboard/";
 					location.replace("/#/dashboard/");
-					location.reload();
+
+					var url = location.origin;
+					var pathname = location.pathname;
+					var hash = location.hash;
+
+					var location =
+						url +
+						pathname +
+						"?application_refresh=" +
+						Math.random() * 100000 +
+						hash;
+					location.reload(true);
 
 					return false;
 
