@@ -12,6 +12,8 @@ export class HomeComponent implements OnInit {
 	dashboardCategoriaPaiMes: any[] = [];
 	total: any = {};
 	totalCategoriaPai: any = {};
+	dashboardCategoriaPaiAno: any[] = [];
+	totalCategoriaPaiAno: any = {};
 	amigosPagar: any = {};
 	movimentacaoEscolhida: any = {};
 	dataFiltro: any = {};
@@ -81,6 +83,10 @@ export class HomeComponent implements OnInit {
 			this.dashboardCategoriaPaiMes =
 				res["despesasDoMesCategoriaPai"]["data"];
 			this.totalCategoriaPai = res["despesasDoMesCategoriaPai"]["total"];
+			this.dashboardCategoriaPaiAno =
+				res["despesasDoAnoCategoriaPai"]["data"];
+			this.totalCategoriaPaiAno =
+				res["despesasDoAnoCategoriaPai"]["total"];
 		});
 	}
 

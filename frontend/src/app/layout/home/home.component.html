@@ -169,4 +169,28 @@
 			</div>
 		</div>
 	</div>
+	<div class="col-xl-6 col-md-6 mb-4">
+		<div class="card shadow h-100 py-2">
+			<div class="card-body">
+				<div class="row no-gutters align-items-center">
+					<div class="col mr-2">
+						<div class="text-xs font-weight-bold text-uppercase mb-1">Despesas por categoria Pai (Ano) {{totalCategoriaPaiAno | currency:'BRL':true}}</div>
+						<div class="text-center" style="
+						display: grid;
+						align-content: center;
+						justify-content: center;
+						height: 250px;
+					">
+							<ngx-charts-bar-vertical [scheme]="colorScheme" [results]="dashboardCategoriaPaiAno"
+								[gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend"
+								[showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+								[xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" >
+							</ngx-charts-bar-vertical>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
