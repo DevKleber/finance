@@ -1,16 +1,10 @@
 <div class="row">
 	<div class="data">
-		<span
-			class="cursor-pointer iconSubMonth"
-			(click)="configureDate('-')"
-		>
+		<span class="cursor-pointer iconSubMonth" (click)="configureDate('-')">
 			<i class="fas fa-minus-circle"></i>
 		</span>
-		Janeiro 2020
-		<span
-			class="cursor-pointer iconAddMonth"
-			(click)="configureDate('+')"
-		>
+		{{ dataFiltro?.mesNome }} {{ dataFiltro?.ano }}
+		<span class="cursor-pointer iconAddMonth" (click)="configureDate('+')">
 			<i class="fas fa-plus-circle"></i>
 		</span>
 	</div>
@@ -23,7 +17,8 @@
 			<div class="card-body">
 				<div class="row no-gutters align-items-center">
 					<div class="col mr-2">
-						<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Despesas no meu cartão</div>
+						<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Despesas no meu cartão
+						</div>
 						<div class="h5 mb-0 font-weight-bold text-gray-800">R$ 00,00</div>
 					</div>
 					<div class="col-auto">
@@ -40,7 +35,8 @@
 			<div class="card-body">
 				<div class="row no-gutters align-items-center">
 					<div class="col mr-2">
-						<div class="text-xs font-weight-bold text-success text-uppercase mb-1">Despesas no cartão do amigo</div>
+						<div class="text-xs font-weight-bold text-success text-uppercase mb-1">Despesas no cartão do
+							amigo</div>
 						<div class="h5 mb-0 font-weight-bold text-gray-800">R$ 00,00</div>
 					</div>
 					<div class="col-auto">
@@ -79,7 +75,8 @@
 			<div class="card-body">
 				<div class="row no-gutters align-items-center">
 					<div class="col mr-2">
-						<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Despesas na conta do amigo</div>
+						<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Despesas na conta do
+							amigo</div>
 						<div class="h5 mb-0 font-weight-bold text-gray-800">R$ 00,00</div>
 					</div>
 					<div class="col-auto">
@@ -129,9 +126,18 @@
 			<div class="card-body">
 				<div class="row no-gutters align-items-center">
 					<div class="col mr-2">
-						<div class="text-xs font-weight-bold text-uppercase mb-1">Despesas por categoria (Mês)</div>
-						<div class="text-center">
-							Em desenvolvimento...
+						<div class="text-xs font-weight-bold text-uppercase mb-1">Despesas por categoria (Mês) {{total | currency:'BRL':true}}</div>
+						<div class="text-center" style="
+						display: grid;
+						align-content: center;
+						justify-content: center;
+						height: 250px;
+					">
+							<ngx-charts-bar-vertical [scheme]="colorScheme" [results]="dashboard"
+								[gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend"
+								[showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+								[xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" >
+							</ngx-charts-bar-vertical>
 						</div>
 					</div>
 
@@ -144,9 +150,18 @@
 			<div class="card-body">
 				<div class="row no-gutters align-items-center">
 					<div class="col mr-2">
-						<div class="text-xs font-weight-bold text-uppercase mb-1">Despesas por categoria (Ano)</div>
-						<div class="text-center">
-							Em desenvolvimento...
+						<div class="text-xs font-weight-bold text-uppercase mb-1">Despesas por categoria Pai (Mês) {{totalCategoriaPai | currency:'BRL':true}}</div>
+						<div class="text-center" style="
+						display: grid;
+						align-content: center;
+						justify-content: center;
+						height: 250px;
+					">
+							<ngx-charts-bar-vertical [scheme]="colorScheme" [results]="dashboardCategoriaPaiMes"
+								[gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend"
+								[showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+								[xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" >
+							</ngx-charts-bar-vertical>
 						</div>
 					</div>
 
