@@ -12,6 +12,8 @@ Route::get('categoriaparausuario', 'PessoaController@criarCategoriaParaUsuario')
 Route::get('email/cartao', 'EmailController@cartaoCreditoVencendo');
 
 Route::group(['middleware' => 'apiJwt'], function () {
+    Route::post('dashboard', 'DashboardController@getDashboard');
+
     Route::resource('tipoDespesa', 'TipoDespesaController');
     Route::resource('mudarTexto', 'MudarTextoController');
     Route::resource('user', 'PessoaController');
