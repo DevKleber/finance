@@ -1,0 +1,90 @@
+<div class="row">
+	<div
+		class="col-hd-6 col-md-4 padding-bottom-20"
+		*ngFor="let item of despesas"
+	>
+		<div class="card-1" style="background-color: #fff">
+			<img
+				class="avatar margin-right-15"
+				style="float: left"
+				src="{{ PATHAPI }}/{{ item?.img_perfil }}"
+				alt="Avatar"
+			/>
+			<div class="container">
+				<div class="valorTotal">
+					<small style="font-size: 0.5em">R$</small>
+					{{
+						(item?.vl_despesac *
+							item.vl_conta_compartilhada_porcentagem) /
+							100 | currency: "":""
+					}}
+				</div>
+				<h4>
+					<b>{{ item?.no_pessoa }}</b>
+				</h4>
+				<p>{{ item?.no_email }}</p>
+				<p class="font-bold">{{ item?.ds_despesa }}</p>
+				<div class="row">
+					<div
+						class="parcelaItem col-md-4 margin-bottom-15"
+						*ngFor="let parcela of item.itens"
+					>
+						<div class="card text-center">
+							<div class="valor">
+								{{
+									(parcela?.vl_despesa *
+										item.vl_conta_compartilhada_porcentagem) /
+										100 | currency: "BRL":true
+								}}
+							</div>
+							<div class="qtdParcelas">
+								{{ parcela?.nu_parcela_atual }} de
+								{{ parcela?.nu_parcela }}
+							</div>
+							<div class="venciemnto">
+								{{
+									parcela?.dt_vencimento | date: "dd/MM/yyyy"
+								}}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row margin-top-15">
+					<div class="box-footer col-md-12 text-right">
+						<button
+							class="btn btn-danger"
+							(click)="
+								aprovarOuRecusar(
+									0,
+									item?.id_conta_compartilhada
+								)
+							"
+						>
+							RECUSAR
+						</button>
+						<button
+							class="margin-left-10 btn btn-primary"
+							(click)="
+								aprovarOuRecusar(
+									1,
+									item?.id_conta_compartilhada
+								)
+							"
+						>
+							APROVAR
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div
+	class="text-center card mb-4 py-3 border-bottom-warning"
+	*ngIf="!despesas.length"
+>
+	<div class="card-body">
+		Você não tem despesas com amigos aguardando sua aprovação
+	</div>
+</div>

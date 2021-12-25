@@ -1,0 +1,63 @@
+input {
+	padding: 25px;
+	font-size: 1.6em;
+}
+.despesa {
+	margin-top: 25px;
+	padding: 25px;
+}
+
+/* cartao de credito */
+.text-center {
+	text-align: center;
+}
+.card {
+	padding: 15px;
+	margin: 15px;
+}
+.bodyCard {
+	margin-top: 15px;
+}
+.removeItem {
+	position: absolute;
+	top: 0;
+	right: 0;
+	color: #e44c45;
+}
+.valorAPagar {
+	text-align: center;
+	font-size: 1.5em;
+}
+.btnEscolherAmigo {
+	height: 60px;
+}
+
+.classOk {
+	border: 1px solid chartreuse;
+}
+
+.acoesEscolherAmigo {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	align-items: center;
+	align-content: center;
+	align-self: center;
+}
+.dayMais {
+	position: absolute;
+	right: 13px;
+	top: 44%;
+	padding: 0;
+	margin: 0;
+	font-size: 1.3em;
+}
+.dayMenos {
+	cursor: pointer;
+	position: absolute;
+	left: 13px;
+	top: 44%;
+	padding: 0;
+	margin: 0;
+	font-size: 1.3em;
+}

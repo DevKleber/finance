@@ -1,0 +1,29 @@
+.card{
+	border-radius: 25px;
+}
+.data {
+	padding: 15px 55px;
+	border-radius: 20px;
+	border: 2px solid #4e73df;
+	color: #4e73df;
+	font-weight: bold;
+	margin: 0 auto;
+	position: relative;
+	margin-bottom: 15px;
+}
+
+
+.iconSubMonth{
+	cursor: pointer;
+	position: absolute;
+	left: 8px;
+	font-size: 1.5em;
+	top: 8px;
+}
+.iconAddMonth{
+	cursor: pointer;
+	position: absolute;
+	right: 8px;
+	font-size: 1.5em;
+	top: 8px;
+}

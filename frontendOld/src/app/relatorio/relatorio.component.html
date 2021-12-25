@@ -1,0 +1,26 @@
+<div class='row'>
+    <div class='col-md-12'>
+        <div class='box box-primary'>
+            <div class='box-header with-border'>
+                <h3 class='box-title'></h3>
+            </div>
+            <div class="panel-body">
+                <div class="pad-btm form-inline">
+                    <div class="row">
+                        <div class="col-md-4 " *ngFor="let relatorio of menus['2']">
+                            <div class="well panel cursor-pointer heigth" [routerLink]="['/'+relatorio?.ds_url]">
+                                <!-- <perfect-scrollbar> -->
+                                    <div class="panel-body text-center">
+                                        <i style="font-size: 4em;" class="pli-{{relatorio?.icon}}"></i>
+                                        <h3> {{relatorio?.no_rotina}} </h3>
+                                        <small *ngIf="relatorio?.ds_rotina">{{relatorio?.ds_rotina}}</small>
+                                    </div>
+                                <!-- </perfect-scrollbar> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

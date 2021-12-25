@@ -1,0 +1,13 @@
+.bg-login-image {
+	/* background: url(/assets/img/bg-img/profileLogin.jpeg); */
+	background-position: center;
+	background-size: cover;
+}
+
+.ng-select.custom ::ng-deep .ng-select-container  {
+	/* min-height: 0px; */
+	border-radius: 10rem!important;
+	color: #6e707e;
+	font-size: .8rem;
+    /* border-radius: 0; */
+}

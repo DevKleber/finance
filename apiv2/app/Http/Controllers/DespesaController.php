@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Helpers;
 use Illuminate\Http\Request;
 
 class DespesaController extends Controller
@@ -14,6 +15,32 @@ class DespesaController extends Controller
         }
 
         return $despesa;
+    }
+
+    public function uploadFileDespesa(Request $request, $id)
+    {
+        if ($file = $request->file('recibo')) {
+            try {
+                $arExtrato = Helpers::readCSVExtrato($file, ['delimiter' => ',']);
+                foreach ($arExtrato as $key => $item) {
+                    $referenciaExtrato = $item[2] . $item[1] . $item[0] . $item[3];
+                    $idUsuario = auth()->user()->id_usuario;
+                    $despesa = \App\Despesa::whereNotNull('referencia_extrato')
+                        ->where('referencia_extrato', $referenciaExtrato)
+                        ->where('id_usuario', $idUsuario)
+                        ->first()
+                    ;
+                    if($despesa) {
+                        $lastIndice = count($item) - 1;
+                        $arExtrato[$key][$lastIndice] = 'Existe';
+                    }
+                }
+                // unset($arExtrato[0]);
+                return $arExtrato;
+            } catch (\Throwable $th) {
+                return response(['response' => $th->getMessage(), 400]);
+            }
+        }
     }
 
     public function store(Request $request, $bo_amigos = false)

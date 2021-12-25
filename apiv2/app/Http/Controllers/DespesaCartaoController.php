@@ -25,6 +25,7 @@ class DespesaCartaoController extends Controller
     public function store(Request $request, $bo_amigos = false)
     {
         $request['dt_despesa'] = Helpers::convertdateWithSeparatorToDatabase($request['dt_despesa']);
+        $request['referencia_extrato'] = $request['referenciaExtrato'] ?? '';
 
         $despesa = new \App\Despesa();
         \DB::beginTransaction();

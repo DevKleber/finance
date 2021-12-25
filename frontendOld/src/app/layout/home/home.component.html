@@ -1,0 +1,196 @@
+<div class="row">
+	<div class="data">
+		<span class="cursor-pointer iconSubMonth" (click)="configureDate('-')">
+			<i class="fas fa-minus-circle"></i>
+		</span>
+		{{ dataFiltro?.mesNome }} {{ dataFiltro?.ano }}
+		<span class="cursor-pointer iconAddMonth" (click)="configureDate('+')">
+			<i class="fas fa-plus-circle"></i>
+		</span>
+	</div>
+</div>
+<div class="row">
+
+	<!-- Earnings (Monthly) Card Example -->
+	<div class="col-xl-3 col-md-6 mb-4">
+		<div class="card border-left-primary shadow h-100 py-2">
+			<div class="card-body">
+				<div class="row no-gutters align-items-center">
+					<div class="col mr-2">
+						<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Despesas no meu cartão
+						</div>
+						<div class="h5 mb-0 font-weight-bold text-gray-800">R$ 00,00</div>
+					</div>
+					<div class="col-auto">
+						<i class="fas fa-credit-card fa-2x text-gray-300"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Earnings (Monthly) Card Example -->
+	<div class="col-xl-3 col-md-6 mb-4">
+		<div class="card border-left-success shadow h-100 py-2">
+			<div class="card-body">
+				<div class="row no-gutters align-items-center">
+					<div class="col mr-2">
+						<div class="text-xs font-weight-bold text-success text-uppercase mb-1">Despesas no cartão do
+							amigo</div>
+						<div class="h5 mb-0 font-weight-bold text-gray-800">R$ 00,00</div>
+					</div>
+					<div class="col-auto">
+						<i class="fas fa-credit-card fa-2x text-gray-300"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Earnings (Monthly) Card Example -->
+	<div class="col-xl-3 col-md-6 mb-4">
+		<div class="card border-left-info shadow h-100 py-2">
+			<div class="card-body">
+				<div class="row no-gutters align-items-center">
+					<div class="col mr-2">
+						<div class="text-xs font-weight-bold text-info text-uppercase mb-1">Despesas em conta</div>
+						<div class="row no-gutters align-items-center">
+							<div class="col-auto">
+								<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">R$ 00,00</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="col-auto">
+						<i class="fas fa-wallet fa-2x text-gray-300"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Pending Requests Card Example -->
+	<div class="col-xl-3 col-md-6 mb-4">
+		<div class="card border-left-warning shadow h-100 py-2">
+			<div class="card-body">
+				<div class="row no-gutters align-items-center">
+					<div class="col mr-2">
+						<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Despesas na conta do
+							amigo</div>
+						<div class="h5 mb-0 font-weight-bold text-gray-800">R$ 00,00</div>
+					</div>
+					<div class="col-auto">
+						<i class="fas fa-wallet fa-2x text-gray-300"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col-xl-6 col-md-6 mb-4">
+		<div class="card shadow h-100 py-2">
+			<div class="card-body">
+				<div class="row no-gutters align-items-center">
+					<div class="col mr-2">
+						<div class="text-xs font-weight-bold text-uppercase mb-1">Suas dividas com amigos</div>
+						<!-- <div class="h5 mb-0 font-weight-bold text-gray-800">18</div> -->
+						<div class="text-center">
+							Em desenvolvimento...
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-xl-6 col-md-6 mb-4">
+		<div class="card shadow h-100 py-2">
+			<div class="card-body">
+				<div class="row no-gutters align-items-center">
+					<div class="col mr-2">
+						<div class="text-xs font-weight-bold text-uppercase mb-1">Amigos que estão te devendo</div>
+						<div class="text-center">
+							Em desenvolvimento...
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-xl-6 col-md-6 mb-4">
+		<div class="card shadow h-100 py-2">
+			<div class="card-body">
+				<div class="row no-gutters align-items-center">
+					<div class="col mr-2">
+						<div class="text-xs font-weight-bold text-uppercase mb-1">Despesas por categoria (Mês) {{total | currency:'BRL':true}}</div>
+						<div class="text-center" style="
+						display: grid;
+						align-content: center;
+						justify-content: center;
+						height: 250px;
+					">
+							<ngx-charts-bar-vertical [scheme]="colorScheme" [results]="dashboard"
+								[gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend"
+								[showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+								[xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" >
+							</ngx-charts-bar-vertical>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-xl-6 col-md-6 mb-4">
+		<div class="card shadow h-100 py-2">
+			<div class="card-body">
+				<div class="row no-gutters align-items-center">
+					<div class="col mr-2">
+						<div class="text-xs font-weight-bold text-uppercase mb-1">Despesas por categoria Pai (Mês) {{totalCategoriaPai | currency:'BRL':true}}</div>
+						<div class="text-center" style="
+						display: grid;
+						align-content: center;
+						justify-content: center;
+						height: 250px;
+					">
+							<ngx-charts-bar-vertical [scheme]="colorScheme" [results]="dashboardCategoriaPaiMes"
+								[gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend"
+								[showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+								[xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" >
+							</ngx-charts-bar-vertical>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-xl-6 col-md-6 mb-4">
+		<div class="card shadow h-100 py-2">
+			<div class="card-body">
+				<div class="row no-gutters align-items-center">
+					<div class="col mr-2">
+						<div class="text-xs font-weight-bold text-uppercase mb-1">Despesas por categoria Pai (Ano) {{totalCategoriaPaiAno | currency:'BRL':true}}</div>
+						<div class="text-center" style="
+						display: grid;
+						align-content: center;
+						justify-content: center;
+						height: 250px;
+					">
+							<ngx-charts-bar-vertical [scheme]="colorScheme" [results]="dashboardCategoriaPaiAno"
+								[gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend"
+								[showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+								[xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" >
+							</ngx-charts-bar-vertical>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

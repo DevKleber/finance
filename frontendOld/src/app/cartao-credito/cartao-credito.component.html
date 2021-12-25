@@ -1,0 +1,169 @@
+<div class="cartoes">
+	<div class="row">
+		<form [formGroup]="form" novalidate>
+			<!-- <div class="row"> -->
+			<div class="credCard card-1 bg-light" style="margin: 15px">
+				<div class="displayFlexColumn">
+					<div class="displayFlexRow">
+						<div class="titulo"></div>
+						<div class="empresa">
+							<app-input-container
+								errorMessage="Campo obrigatório"
+							>
+								<input
+									class="form-control"
+									formControlName="no_cartao_credito"
+									placeholder="Nome cartão (Itaú)"
+								/>
+							</app-input-container>
+						</div>
+						<div
+							class="bandeira"
+							[style.background-image]="
+								'url(' + imgBin + ' )' | safeHtml: 'style'
+							"
+						></div>
+					</div>
+
+					<div class="displayFlexRow">
+						<div class="numero" style="width: 100%">
+							<app-input-container
+								errorMessage="Campo obrigatório"
+							>
+								<input
+									class="form-control"
+									formControlName="numero"
+									placeholder="Número"
+									(keyup)="getBinCard()"
+								/>
+							</app-input-container>
+						</div>
+					</div>
+					<div class="displayFlexRow">
+						<div class="titular" style="width: 100%">
+							<app-input-container
+								errorMessage="Campo obrigatório"
+							>
+								<input
+									class="form-control"
+									formControlName="no_titular"
+									placeholder="Títular"
+								/>
+							</app-input-container>
+						</div>
+					</div>
+					<div class="displayFlexRow">
+						<div class="limite">
+							<app-input-container
+								errorMessage="Campo obrigatório"
+							>
+								<input
+									class="form-control"
+									formControlName="vl_limite"
+									placeholder="Limite"
+								/>
+							</app-input-container>
+						</div>
+						<div class="diaVencimento">
+							<app-input-container
+								errorMessage="Campo obrigatório"
+							>
+								<input
+									class="form-control"
+									formControlName="dia_vencimento"
+									placeholder="Vencimento"
+								/>
+							</app-input-container>
+						</div>
+						<div class="diaFechamento">
+							<app-input-container
+								errorMessage="Campo obrigatório"
+							>
+								<input
+									class="form-control"
+									formControlName="dia_fechamento_fatura"
+									placeholder="Fechamento"
+								/>
+							</app-input-container>
+						</div>
+					</div>
+					<div class="displayFlexRow">
+						<button
+							(click)="save(form.value)"
+							[disabled]="!form.valid"
+							class="btn btn-primary"
+							style="width: 100%"
+						>
+							Salvar
+						</button>
+					</div>
+				</div>
+			</div>
+		</form>
+
+		<div *ngFor="let item of cartoes">
+			<div
+				class="credCard card-1 bg-gradient-dark text-white"
+				style="margin: 15px"
+			>
+				<div
+					class="displayFlexColumn cursor-pointer"
+					[routerLink]="[
+						'/cartao-credito/faturas',
+						item?.id_cartao_credito
+					]"
+				>
+					<div class="removeItem btn btn-sm" (click)="inativar(item)">
+						<i class="fas fa-minus-circle"></i>
+					</div>
+
+					<div class="displayFlexRow">
+						<div class="titulo"></div>
+						<div class="empresa text-empresa text-center">
+							{{ item?.no_cartao_credito }}
+						</div>
+						<div
+							class="bandeira"
+							[style.background-image]="
+								'url(' +
+									urlImgBin +
+									'/' +
+									item?.bandeira +
+									'.png )' | safeHtml: 'style'
+							"
+						></div>
+					</div>
+
+					<div class="displayFlexRow">
+						<div
+							class="numero text-numero text-center"
+							style="width: 100%"
+						>
+							{{ item?.numero }}
+						</div>
+					</div>
+					<div class="displayFlexRow">
+						<div class="titular text-titular" style="width: 100%">
+							{{ item?.no_titular }}
+						</div>
+					</div>
+					<div class="displayFlexRow">
+						<div class="limite text-limite text-center">
+							Limite: {{ item?.vl_limite }}
+						</div>
+						<div
+							class="diaVencimento text-diaVencimento text-center"
+						>
+							Venc: {{ item?.dia_vencimento }}
+						</div>
+						<div
+							class="diaFechamento text-diaFechamento text-center"
+						>
+							Fechamento: {{ item?.dia_fechamento_fatura }}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

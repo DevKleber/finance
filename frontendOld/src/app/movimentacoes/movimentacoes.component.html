@@ -1,0 +1,200 @@
+<!-- Modal -->
+<div class="modal fade" id="modalPagamento"  tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Fazer pagamento</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Fechar" #closeModalPagamento>
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<h2>
+					<i class="{{movimentacaoEscolhida?.icon}}"></i>
+					{{movimentacaoEscolhida?.ds_despesa}}
+					{{movimentacaoEscolhida?.parcelas}}
+					{{movimentacaoEscolhida?.vl_despesa | currency: "BRL":true}}
+				</h2>
+				<div class="file display-flex flex-column center-center">
+					<input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput
+						[(ngModel)]="comprovante" />
+					<div class="uploadArquivo" [style.background-image]=" 'url(' + img + ' )' | safeHtml: 'style' "> </div>
+					<button class="btn btn-upload" style="margin: 15px;" (click)="fileInput.click()"> Escolher comprovante </button>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" (click)="pagarDespesa()">Pagar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-9">
+		<div class="card shadow padding-15">
+			<div class="row margin-bottom-15">
+				<div class="data">
+					<span class="cursor-pointer iconSubMonth" (click)="configureDate('-')">
+						<i class="fas fa-minus-circle"></i>
+					</span>
+					{{ dataFiltro?.mesNome }} {{ dataFiltro?.ano }}
+					<span class="cursor-pointer iconAddMonth" (click)="configureDate('+')">
+						<i class="fas fa-plus-circle"></i>
+					</span>
+				</div>
+			</div>
+			<div class="row margin-top-15">
+				<div class="col-md-12">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th scope="col">Vencimento</th>
+							<th scope="col">Descrição</th>
+							<th scope="col">Categoria</th>
+							<th scope="col">Valor compra</th>
+							<th scope="col">Parcelas</th>
+							<th scope="col">Valor a pagar</th>
+							<th scope="col"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let movimentacao of movimentacoes">
+							<td>
+								{{
+									movimentacao.dt_vencimento
+										| date: "dd/MM/yyyy"
+								}}
+							</td>
+
+							<td>
+								{{ movimentacao.ds_despesa }}
+								<i *ngIf="movimentacao.bo_cartao" style="margin-left: 5px; color: #cbccce"
+									class="fa fa-credit-card"></i>
+								<i *ngIf="movimentacao.bo_amigo" style="margin-left: 5px; color: #cbccce"
+									class="fa fa-users"></i>
+								<span style="font-size: 0.5em">
+									{{ movimentacao.responsavel }}
+								</span>
+								<span *ngIf="movimentacao.pago" class="mov-pg" title="{{movimentacao.pagamento.created_at}}"
+								>
+									Pago
+									<a target="_BLANK" href="{{imgApi}}/{{movimentacao?.pagamento?.comprovante}}" *ngIf="movimentacao?.pagamento?.comprovante">
+										<i  class="fa fa-receipt"></i>
+									</a>
+								</span>
+							</td>
+							<td>
+								<i class="{{ movimentacao.icon }}"></i>
+								{{ movimentacao.no_categoria_despesa }}
+							</td>
+							<!-- <td>
+								{{
+									movimentacao.vl_despesac
+										| currency: "BRL":true
+								}}
+							</td> -->
+							<td>
+								{{
+									movimentacao.vl_total_minha_parte
+										| currency: "BRL":true
+								}}
+							</td>
+							<td>{{ movimentacao.parcelas }}</td>
+							<td>
+								{{
+									movimentacao.vl_despesa
+										| currency: "BRL":true
+								}}
+							</td>
+							<td>
+								<div *ngIf="!movimentacao.pago" class="action-pg" data-toggle="modal"
+									data-target="#modalPagamento" (click)="movimentacaoSelecionada(movimentacao)">
+									Pagar
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+				<!-- <pre>{{ amigosPagar | json }}</pre> -->
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="card shadow border-left-primary padding-15 margin-bottom-20">
+			<i class="iconResumo fa fa-credit-card text-primary"></i>
+
+			<span class="text text-primary">Despesas no meu cartão</span>
+			<p class="valorResumo">
+				{{
+					resumo?.minhasDespesasComCartao +
+						resumo?.despesasCompartilhadasComAmigosMeuCartao
+						| currency: "BRL":true
+				}}
+			</p>
+		</div>
+		<!-- <div class="card shadow padding-15 margin-bottom-20">
+			<i class="iconResumo fa fa-credit text-primary-card"></i>
+			<span class="text-primary">Meu cartão compartilhado com amigos</span>
+			<p class="valorResumo">
+				{{
+					resumo?.despesasCompartilhadasComAmigosMeuCartao
+						| currency: "BRL":true
+				}}
+			</p>
+		</div> -->
+		<div class="card shadow border-left-success padding-15 margin-bottom-20">
+			<i class="iconResumo fa fa-credit-card text-success"></i>
+			<i class="iconResumo2 fa fa-users text-success" style="opacity: 0.2"></i>
+			<i class="iconShared fa fa-share-square"></i>
+			<span class="text-success">Despesas no cartão do amigo</span>
+			<p class="valorResumo">
+				{{
+					resumo?.despesasCompartilhadasComAmigosCartaoDoAmigo
+						| currency: "BRL":true
+				}}
+			</p>
+		</div>
+		<div class="card shadow border-left-info padding-15 margin-bottom-20">
+			<i class="iconResumo fa fa-wallet text-info"></i>
+			<span class="text-info">Despesas em conta</span>
+			<p class="valorResumo">
+				{{
+					resumo?.minhasDespesasEmConta +
+						resumo?.despesasCompartilhadasComAmigosNaMinhaConta
+						| currency: "BRL":true
+				}}
+			</p>
+		</div>
+		<!-- <div class="card shadow padding-15 margin-bottom-20">
+			<i class="iconResumo fa fa-users"></i>
+			Compartilhado na minha conta
+			<p class="valorResumo">
+				{{
+					resumo?.despesasCompartilhadasComAmigosNaMinhaConta
+						| currency: "BRL":true
+				}}
+			</p>
+		</div> -->
+		<div class="card shadow border-left-warning padding-15 margin-bottom-20">
+			<i class="iconResumo fa fa-wallet text-warning"></i>
+			<i class="iconResumo2 fa fa-users text-warning" style="opacity: 0.2"></i>
+			<i class="iconShared fa fa-share-square"></i>
+			<span class="text-warning">Despesas na conta do amigo</span>
+			<p class="valorResumo">
+				{{
+					resumo?.despesasCompartilhadasComAmigosNaContaDoAmigo
+						| currency: "BRL":true
+				}}
+			</p>
+		</div>
+		<div class="card shadow border-left-secondary padding-15 margin-bottom-20">
+			<i class="iconResumo fa fa-money-bill-wave text-Secondary"></i>
+			<span class="text-Secondary">Pagar amigos</span>
+			<p class="" *ngFor="let item of amigosPagar | keyvalue">
+				{{ item.key }}:
+				{{ item.value | currency: "BRL":true }}
+			</p>
+		</div>
+	</div>
+</div>

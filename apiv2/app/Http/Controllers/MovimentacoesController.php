@@ -39,6 +39,7 @@ class MovimentacoesController extends Controller
             $tudo[$i]['icon'] = $value->icon;
             $tudo[$i]['vl_despesac'] = $value->vl_despesac;
             $tudo[$i]['dt_despesa'] = $value->dt_despesa;
+            $tudo[$i]['produto'] = $value->produto;
             $tudo[$i]['ds_despesa'] = $value->ds_despesa;
             $tudo[$i]['id_categoria_despesa'] = $value->id_categoria_despesa;
             $tudo[$i]['responsavel'] = $value->no_pessoa ?? null;
@@ -71,6 +72,7 @@ class MovimentacoesController extends Controller
             $tudo[$i]['vl_despesac'] = $value->vl_despesac;
             $tudo[$i]['dt_despesa'] = $value->dt_despesa;
             $tudo[$i]['ds_despesa'] = $value->ds_despesa;
+            $tudo[$i]['produto'] = $value->produto;
             $tudo[$i]['id_categoria_despesa'] = $value->id_categoria_despesa;
             $tudo[$i]['responsavel'] = $value->no_pessoa ?? null;
             $tudo[$i]['titular'] = $value->no_cartao_credito;
@@ -103,6 +105,7 @@ class MovimentacoesController extends Controller
             $tudo[$i]['vl_despesac'] = $value->vl_despesac;
             $tudo[$i]['dt_despesa'] = $value->dt_despesa;
             $tudo[$i]['ds_despesa'] = $value->ds_despesa;
+            $tudo[$i]['produto'] = $value->produto;
             $tudo[$i]['id_categoria_despesa'] = $value->id_categoria_despesa;
             $tudo[$i]['responsavel'] = $value->no_pessoa ?? null;
             $tudo[$i]['titular'] = $value->no_cartao_credito;
@@ -137,6 +140,7 @@ class MovimentacoesController extends Controller
             $tudo[$i]['icon'] = $value->icon;
             $tudo[$i]['vl_despesac'] = $value->vl_despesac;
             $tudo[$i]['dt_despesa'] = $value->dt_despesa;
+            $tudo[$i]['produto'] = $value->produto;
             $tudo[$i]['ds_despesa'] = $value->ds_despesa;
             $tudo[$i]['id_categoria_despesa'] = $value->id_categoria_despesa;
             $tudo[$i]['responsavel'] = $value->no_pessoa ?? null ?? null;
@@ -169,6 +173,7 @@ class MovimentacoesController extends Controller
             $tudo[$i]['vl_despesac'] = $value->vl_despesac;
             $tudo[$i]['dt_despesa'] = $value->dt_despesa;
             $tudo[$i]['ds_despesa'] = $value->ds_despesa;
+            $tudo[$i]['produto'] = $value->produto;
             $tudo[$i]['id_categoria_despesa'] = $value->id_categoria_despesa;
             $tudo[$i]['responsavel'] = $value->no_pessoa ?? null ?? null;
             $tudo[$i]['titular'] = $value->no_cartao_credito ?? null;
@@ -201,6 +206,7 @@ class MovimentacoesController extends Controller
             $tudo[$i]['vl_despesac'] = $value->vl_despesac;
             $tudo[$i]['dt_despesa'] = $value->dt_despesa;
             $tudo[$i]['ds_despesa'] = $value->ds_despesa;
+            $tudo[$i]['produto'] = $value->produto;
             $tudo[$i]['id_categoria_despesa'] = $value->id_categoria_despesa;
             $tudo[$i]['responsavel'] = $value->no_pessoa ?? null ?? null;
             $tudo[$i]['titular'] = $value->no_cartao_credito ?? null;
@@ -245,7 +251,114 @@ class MovimentacoesController extends Controller
             'amigosPagar' => $amigosPagarArray,
         ];
     }
+    public function deletarDespesa($id){
+        \DB::beginTransaction();
+        $despesasItens = \App\DespesaItem::where('id_despesa', $id)->get();
+        foreach ($despesasItens as $value) {
+            \App\Pagamento::where('id_despesa_item', $value->id_despesa_item)->delete();
+        }
+        \App\DespesaCompartilhada::where('id_despesa', $id)->delete();
+        \App\DespesaItem::where('id_despesa', $id)->delete();
+        \App\DespesaConta::where('id_despesa', $id)->delete();
+        \App\DespesaCartao::where('id_despesa', $id)->delete();
+        \App\Despesa::find($id)->delete();
+        \DB::commit();
 
+        return response(['response' => 'Despesa deletada com sucesso!']);
+
+    }
+    public function alterarDespesa(Request $request)
+    {
+        $despesa['id_despesa'] = $request['despesa']['id_despesa'];
+        $despesa['vl_despesac'] = $request['despesa']['vl_despesac'];
+        $despesa['dt_despesa'] = $request['despesa']['dt_despesa'];
+        $despesa['ds_despesa'] = $request['despesa']['ds_despesa'];
+
+        \DB::beginTransaction();
+        \App\Despesa::where('id_despesa', $despesa['id_despesa'])->update($despesa);
+
+        foreach ($request['despesaItem'] as $despesaItem) {
+            $vencimento = $despesaItem['vencimento'];
+
+            if(strlen($vencimento) == 8){
+                $dia = substr($vencimento, 0, 2);
+                $mes = substr($vencimento, 2, 2);
+                $ano = substr($vencimento, 4, 4);
+                $despesaItem['dt_vencimento'] = date("Y-m-d", strtotime($ano.'-'.$mes.'-'.$dia));
+            }
+
+            $despesaItem['vl_despesa'] = $despesa['vl_despesac'] / $despesaItem['nu_parcela'];
+            unset($despesaItem['vencimento']);
+            unset($despesaItem['created_at']);
+            unset($despesaItem['updated_at']);
+
+            \App\DespesaItem::where('id_despesa_item', $despesaItem['id_despesa_item'])->update($despesaItem);
+
+        }
+        $arCompartilhadaSalvar = [];
+        foreach ($request['despesaCompartilhada'] as $compartilhada) {
+            $valorDespesaItem = $request['despesaItem'][0]['vl_despesa'];
+
+            $arCompartilhadaSalvar['id_conta_compartilhada'] = $compartilhada['id_conta_compartilhada'];
+            $arCompartilhadaSalvar['vl_conta_compartilhada_porcentagem'] = $compartilhada['valor_cada'] * 100 / $valorDespesaItem;
+
+            \App\DespesaCompartilhada::where('id_conta_compartilhada', $compartilhada['id_conta_compartilhada'])->update($arCompartilhadaSalvar);
+        }
+        \DB::commit();
+        $despesaItem = $request['despesa'];
+        return $this->detalhar($despesa['id_despesa']);
+    }
+
+    public function detalhar($id)
+    {
+        $despesaConta = null;
+        $despesa = \App\Despesa::find($id);
+
+        if ($despesa->id_usuario != auth()->user()->id_usuario) {
+            return response(['response' => "Sem permissão para alterar a despesa. Apenas quem lançou pode alterar"], 400);
+        }
+
+        $despesaCartao = \App\DespesaCartao::where('id_despesa', $id)
+            ->join('cartao_credito', 'cartao_credito.id_cartao_credito', '=', 'despesa_cartao.id_cartao_credito')
+            ->first()
+        ;
+        if (!$despesaCartao) {
+            $despesaConta = \App\DespesaConta::where('id_despesa', $id)->first();
+        }
+
+        $despesaItem = \App\DespesaItem::where('id_despesa', $id)
+            ->selectRaw("DATE_FORMAT(dt_vencimento , '%d/%m/%Y') AS vencimento, tb_despesa_item.*")
+            ->get()->toArray();
+        ;
+
+        $despesaCompartilhada = \App\DespesaCompartilhada::where('id_despesa', $id)
+            ->join('pessoa', 'pessoa.id_pessoa', '=', 'conta_compartilhada_valor.id_pessoa')
+            ->get()
+        ;
+        $arDespesaCompartilhada = [];
+        foreach ($despesaCompartilhada as $key => $value) {
+            $vl_despesac = $despesaItem[0]['vl_despesa'];
+            $arDespesaCompartilhada[$key]['valor_cada'] = (float) $value->vl_conta_compartilhada_porcentagem * $vl_despesac / 100;
+            $arDespesaCompartilhada[$key]['id_conta_compartilhada'] = $value->id_conta_compartilhada;
+            $arDespesaCompartilhada[$key]['vl_conta_compartilhada_porcentagem'] = $value->vl_conta_compartilhada_porcentagem;
+            $arDespesaCompartilhada[$key]['id_despesa'] = $value->id_despesa;
+            $arDespesaCompartilhada[$key]['id_pessoa'] = $value->id_pessoa;
+            $arDespesaCompartilhada[$key]['no_pessoa'] = $value->no_pessoa;
+            $arDespesaCompartilhada[$key]['sexo'] = $value->sexo;
+            $arDespesaCompartilhada[$key]['no_email'] = $value->no_email;
+            $arDespesaCompartilhada[$key]['bo_ativo'] = $value->bo_ativo;
+            $arDespesaCompartilhada[$key]['img_perfil'] = $value->img_perfil;
+
+            # code...
+        }
+        return [
+            "despesa" => $despesa,
+            "despesaItem" => $despesaItem,
+            "despesaCartao" => $despesaCartao,
+            "despesaConta" => $despesaConta,
+            "despesaCompartilhada" => $arDespesaCompartilhada,
+        ];
+    }
     public function minhasDespesasComCartao($usuarioLogado, $data)
     {
         return \App\DespesaCartao::Join('despesa', 'despesa.id_despesa', '=', 'despesa_cartao.id_despesa')

@@ -39,6 +39,7 @@ Route::group(['middleware' => 'apiJwt'], function () {
     Route::resource('menu', 'MenuController');
 
     Route::resource('despesa', 'DespesaController');
+    Route::post('uploadeFileDespesa/{id}', 'DespesaController@uploadFileDespesa');
     Route::put('despesaItem/{id}', 'DespesaController@updateItem');
     Route::put('pagarItem/{id}', 'DespesaController@pagarDespesa');
 
@@ -53,6 +54,9 @@ Route::group(['middleware' => 'apiJwt'], function () {
     Route::get('auth/me', 'AuthController@me');
 
     Route::post('movimentacoes', 'MovimentacoesController@index');
+    Route::get('movimentacoes-datalhar/{id}', 'MovimentacoesController@detalhar');
+    Route::post('alterarDespesa', 'MovimentacoesController@alterarDespesa');
+    Route::delete('deletarDespesa/{id}', 'MovimentacoesController@deletarDespesa');
 
     Route::get('ajuda/despesa', 'DespesaController@getAjuda');
 

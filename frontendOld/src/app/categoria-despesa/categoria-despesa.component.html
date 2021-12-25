@@ -1,0 +1,248 @@
+<!-- <pre>{{ categoriaDespesas | json }}</pre> -->
+<!-- <i class="fas fa-brain"></i> -->
+<!-- <pre>{{ fontawesome | json }}</pre> -->
+
+<div class="row">
+	<!-- nova categoria -->
+	<div class="card shadow h-100 margin-15 padding-15">
+		<div class="catPai">
+			<form [formGroup]="form" novalidate>
+				<div class="box-body">
+					<div class="form-group is-empty col-md-12">
+						<label for=""
+							>Nova categoria
+							<i class="fa fa-arrow-alt-square-left"></i>
+						</label>
+						<input
+							class="form-control"
+							formControlName="no_categoria_despesa"
+							placeholder=""
+						/>
+						<button
+							class="btn btn-light"
+							data-toggle="modal"
+							data-target="#modalIcones"
+						>
+							ICONE <i class="{{ iconeSelecionado }}"></i>
+						</button>
+					</div>
+				</div>
+			</form>
+			<div class="modal-footer">
+				<button
+					class="btn btn-primary text-white"
+					(click)="savePai(form.value)"
+					[disabled]="!form.valid"
+				>
+					Salvar
+				</button>
+			</div>
+		</div>
+	</div>
+	<!-- nova categoria -->
+
+	<div
+		class="card shadow margin-15 padding-30 hover"
+		*ngFor="let pai of categoriaDespesas | keyvalue"
+	>
+		<p class="catPai">
+			<i
+				style="font-size: 0.7em"
+				(click)="removerCategoriaFilha(pai.value)"
+				class="fas fa-minus-circle iconeRemoverFilha"
+			></i>
+			<i style="font-size: 0.7em" class="{{ pai.value.icon }} iconList">
+			</i>
+			{{ pai.value.no_categoria_despesa }}
+		</p>
+		<div class="action">
+			<!-- <div class="item itemRemove">
+				<i class="fas fa-trash"></i>
+			</div> -->
+			<div
+				class="item itemAdd"
+				(click)="novaFilha(pai.value)"
+				data-toggle="modal"
+				data-target="#filhoModal"
+			>
+				<i class="fas fa-plus"></i>
+			</div>
+			<!-- <button href="#" class="btn btn-success btn-circle">
+				<i class="fas fa-plus"></i>
+			</button> -->
+		</div>
+		<div
+			class="catFilhas hover"
+			style="margin-left: 42px"
+			*ngFor="let filha of pai.value.children | keyvalue"
+		>
+			<!-- <img
+				src="assets/img/system/icons/right.png"
+				width="40px"
+				style="margin-top: -16px"
+			/> -->
+			<i
+				(click)="removerCategoriaFilha(filha.value)"
+				class="fas fa-minus-circle iconeRemoverFilha"
+			></i>
+			<i class="{{ filha.value.icon }} iconList"> </i>
+			{{ filha.value.no_categoria_despesa }}
+		</div>
+	</div>
+</div>
+
+<!-- MODALS -->
+
+<div
+	class="modal fade"
+	id="filhoModal"
+	tabindex="-1"
+	role="dialog"
+	aria-labelledby="exampleModalLabel"
+	aria-hidden="true"
+>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">
+					{{ categoriaSelecionada?.no_categoria_despesa }}
+				</h5>
+				<button
+					class="close"
+					type="button"
+					data-dismiss="modal"
+					aria-label="Close"
+				>
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="padding-bottom-15 margin-top-15">
+					<form [formGroup]="form" novalidate>
+						<div class="box-body">
+							<div class="form-group is-empty col-md-12">
+								<app-input-container
+									errorMessage="Campo obrigatório"
+									label="Nome subcategoria"
+								>
+									<input
+										class="form-control"
+										formControlName="no_categoria_despesa"
+										placeholder=""
+									/>
+								</app-input-container>
+							</div>
+							<button
+								class="btn btn-light"
+								data-toggle="modal"
+								data-target="#modalIcones"
+							>
+								ICONE <i class="{{ iconeSelecionado }}"></i>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button
+					class="btn btn-secondary"
+					type="button"
+					data-dismiss="modal"
+				>
+					Cancelar
+				</button>
+				<button
+					class="btn btn-primary text-white"
+					(click)="save(form.value)"
+					[disabled]="!form.valid"
+				>
+					Salvar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- MODALS icones -->
+
+<div
+	class="modal fade"
+	id="modalIcones"
+	tabindex="-1"
+	role="dialog"
+	aria-labelledby="exampleModalLabel"
+	aria-hidden="true"
+>
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content modal-lg">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">ICONES</h5>
+				<button
+					#closeModalIcon
+					class="close"
+					type="button"
+					data-dismiss="modal"
+					aria-label="Close"
+				>
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="padding-bottom-15 margin-top-15">
+					<div class="row" *ngIf="!fontawesomeIconesPorMenu?.icons">
+						<div
+							style="margin: 0 auto"
+							(click)="menuIcon(item)"
+							class="card cursor-pointer"
+							*ngFor="let item of fontawesome"
+							style="padding: 1px; margin: 4px"
+						>
+							<br />
+							<span>{{ item?.label }}</span>
+						</div>
+					</div>
+					<div class="row margin-bottom-15">
+						<a
+							*ngIf="fontawesomeIconesPorMenu?.icons"
+							class="close w-100 cursor-pointer text-center"
+							(click)="escolherOutroGrupoIcone()"
+						>
+							<span aria-hidden="true"
+								>{{ fontawesomeIconesPorMenu?.label }} ×</span
+							>
+						</a>
+					</div>
+
+					<div class="row">
+						<div
+							class="padding-5"
+							*ngFor="let icon of fontawesomeIconesPorMenu?.icons"
+						>
+							<i
+								(click)="selectIcon(icon)"
+								style="font-size: 3em"
+								class="fa fa-{{ icon }} cursor-pointer"
+							></i>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button
+					class="btn btn-secondary"
+					type="button"
+					data-dismiss="modal"
+				>
+					Cancelar
+				</button>
+				<button
+					class="btn btn-primary text-white"
+					(click)="save(form.value)"
+					[disabled]="!form.valid"
+				>
+					Salvar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

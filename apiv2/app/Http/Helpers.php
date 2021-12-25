@@ -90,4 +90,16 @@ class Helpers
 
         return $ar;
     }
+    public static function readCSVExtrato($csvFile, $array)
+    {
+        $file_handle = fopen($csvFile, 'r');
+        $i = 0;
+        while (!feof($file_handle)) {
+            $line_of_text[] = fgetcsv($file_handle, 0, $array['delimiter']);
+            $line_of_text[$i][] = '';
+            $i++;
+        }
+        fclose($file_handle);
+        return $line_of_text;
+    }
 }

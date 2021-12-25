@@ -10,7 +10,7 @@ class Despesa extends Model
 {
     protected $table = 'despesa';
     protected $primaryKey = 'id_despesa';
-    protected $fillable = ['vl_despesac', 'dt_despesa', 'ds_despesa', 'bo_dividir_amigos', 'id_tipo_despesa', 'id_categoria_despesa', 'id_usuario', 'created_at', 'updated_at'];
+    protected $fillable = ['vl_despesac', 'dt_despesa', 'ds_despesa', 'bo_dividir_amigos', 'id_tipo_despesa', 'id_categoria_despesa', 'id_usuario', 'created_at', 'updated_at','produto', 'referencia_extrato'];
 
     public function insert(Request $request, $bo_amigos = false)
     {

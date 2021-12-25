@@ -38,6 +38,21 @@ class Arquivo extends Model
 
         return $dados;
     }
+    public static function uploadFile($file, $folder = 'extrato'){
+
+        $size = $file->getSize();
+
+        $path = $file->store($folder);
+        if (!$path) {
+            return false;
+        }
+
+        $dados['no_arquivo'] = basename($path);
+        $dados['qt_tamanho'] = $file->getSize();
+        $dados['tp_arquivo'] = $file->getClientOriginalExtension();
+
+        return $dados;
+    }
 
     public static function upload($file, $folder)
     {

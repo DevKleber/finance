@@ -1,0 +1,84 @@
+.text-center {
+	text-align: center;
+}
+.card {
+	padding: 15px;
+	margin: 15px;
+}
+.bodyCard {
+	margin-top: 15px;
+}
+.removeItem {
+	position: absolute;
+	top: 0;
+	right: 0;
+	color: #e44c45;
+}
+
+/* credCard */
+.credCard {
+	display: flex;
+	position: relative;
+	width: 400px;
+	height: 300px;
+	/* background: #f8f9fc; */
+	border-radius: 8px;
+}
+.linha {
+	position: absolute;
+	width: 100%;
+}
+.displayFlexColumn {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	/* background: chartreuse; */
+}
+.displayFlexRow {
+	/* height: 70px; */
+	display: flex;
+	flex-direction: row;
+	flex: 1;
+	justify-content: space-between;
+}
+
+.titulo {
+	align-items: center;
+	width: 60px;
+	height: 60px;
+	border-radius: 8px;
+}
+.empresa {
+	align-items: center;
+
+	width: 230px;
+	height: 60px;
+	border-radius: 8px;
+	/* background-image: url("https://logodownload.org/wp-content/uploads/2014/05/itau-logo-1.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center; */
+}
+.bandeira {
+	align-items: center;
+	width: 60px;
+	height: 60px;
+	border-radius: 8px;
+	margin: 0 5px;
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-position: center;
+}
+input {
+	background: transparent;
+	border-top-width: 0px;
+	border-left-width: 0px;
+	border-right-width: 0px;
+}
+.text-numero {
+	font-size: 2em;
+}
+.text-titular {
+	font-size: 1.5em;
+	text-align: left;
+}

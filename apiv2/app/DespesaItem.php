@@ -18,7 +18,7 @@ class DespesaItem extends Model
         $timestamp_dataDaCompra = strtotime($dataDaCompra); // converte para timestamp Unix
 
         $errors = 0;
-        $qtParcelas = $request['qtd_parcelas'];
+        $qtParcelas = $request['qtd_parcelas'] ?? 1;
         if (null != $request['id_cartao_credito']) {
             $cartaoCredito = \App\CartaoCredito::getVencimentoByCartao($request['id_cartao_credito']);
             $cartaoCredito->dia_fechamento_fatura = str_pad($cartaoCredito->dia_fechamento_fatura, 2, '0', STR_PAD_LEFT);
