@@ -1,31 +1,40 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 import {
 	FormBuilder,
 	FormControl,
 	FormGroup,
 	Validators,
 	FormArray,
-} from "@angular/forms";
-import { NotificationService } from "../shared/messages/notification.service";
-import { Despesa } from "./despesa.model";
-import { DespesaService } from "./despesa.service";
-import { Helper } from "../helper";
-import { BreadcrumbService } from "../layout/breadcrumb/breadcrumb.service";
-import { CartaoCreditoService } from "../cartao-credito/cartao-credito.service";
-import { TipoDespesaService } from "../tipo-despesa/tipo-despesa.service";
-import { CategoriaDespesaService } from "../categoria-despesa/categoria-despesa.service";
-import { AmigosService } from "../amigos/amigos.service";
-import { APIDominio } from "../app.api";
+} from '@angular/forms';
+import { NotificationService } from '../shared/messages/notification.service';
+import { Despesa } from './despesa.model';
+import { DespesaService } from './despesa.service';
+import { Helper } from '../helper';
+import { BreadcrumbService } from '../layout/breadcrumb/breadcrumb.service';
+import { CartaoCreditoService } from '../cartao-credito/cartao-credito.service';
+import { TipoDespesaService } from '../tipo-despesa/tipo-despesa.service';
+import { CategoriaDespesaService } from '../categoria-despesa/categoria-despesa.service';
+import { AmigosService } from '../amigos/amigos.service';
+import { APIDominio } from '../app.api';
 
-import { Observable } from "rxjs";
-import { LoginService } from "../security/login/login.service";
+import { Observable } from 'rxjs';
+import { LoginService } from '../security/login/login.service';
 
 @Component({
-	selector: "app-despesa",
-	templateUrl: "./despesa.component.html",
-	styleUrls: ["./despesa.component.css"],
+	selector: 'app-despesa',
+	templateUrl: './despesa.component.html',
+	styleUrls: ['./despesa.component.css'],
 })
 export class DespesaComponent implements OnInit {
+	enviarExtrato: Boolean = false;
+	selectedFile: File;
+	img: any = 'assets/img/system/recibo3.png';
+	imagem: any;
+	anexoBanco: any;
+	extrato: any[] = [];
+	itemExtratoSelected: any;
+	categoriasEncontrada: any[] = [];
+
 	despesas: Despesa;
 	loader: boolean = true;
 	formCartaoCredito: FormGroup;
@@ -34,10 +43,10 @@ export class DespesaComponent implements OnInit {
 	cartaoEscolhidoParaLancamento: any = {};
 	PATHAPI = APIDominio;
 
-	vencimento: any = "";
+	vencimento: any = '';
 
-	nomePessoaModel: string = "";
-	novaPessoaModel: string = "";
+	nomePessoaModel: string = '';
+	novaPessoaModel: string = '';
 
 	cartoes: any[] = [];
 	ajudas: any[] = [];
@@ -56,18 +65,18 @@ export class DespesaComponent implements OnInit {
 	despesaConta: boolean = false;
 	despesaCartaoCredito: boolean = false;
 	months = [
-		"Janeiro",
-		"Fevereiro",
-		"Março",
-		"Abril",
-		"Maio",
-		"Junho",
-		"Julho",
-		"Agosto",
-		"Setembro",
-		"Outubro",
-		"Novembro",
-		"Dezembro",
+		'Janeiro',
+		'Fevereiro',
+		'Março',
+		'Abril',
+		'Maio',
+		'Junho',
+		'Julho',
+		'Agosto',
+		'Setembro',
+		'Outubro',
+		'Novembro',
+		'Dezembro',
 	];
 
 	valorRemanescente = 0;
@@ -96,10 +105,10 @@ export class DespesaComponent implements OnInit {
 		this.ajuda();
 		this.breadCrumb();
 	}
-	breadCrumb(nome = "Lançar despesa") {
+	breadCrumb(nome = 'Lançar despesa') {
 		this.breadcrumbService.chosenPagina([
-			{ no_rotina: nome, ds_url: "categoria", active: "" },
-			{ no_rotina: "Inserir", ds_url: "mudar-texto", active: "active" },
+			{ no_rotina: nome, ds_url: 'categoria', active: '' },
+			{ no_rotina: 'Inserir', ds_url: 'mudar-texto', active: 'active' },
 		]);
 	}
 	cartaoEscolhido() {
@@ -110,14 +119,14 @@ export class DespesaComponent implements OnInit {
 		let meuCartao = cartao[0];
 		this.cartaoEscolhidoParaLancamento = meuCartao;
 
-		let dt_despesa = this.formCartaoCredito.get("dt_despesa").value;
-		var dt_despesaArray = dt_despesa.split("/");
+		let dt_despesa = this.formCartaoCredito.get('dt_despesa').value;
+		var dt_despesaArray = dt_despesa.split('/');
 
 		var currentDate = new Date();
 		var hoje = new Date();
 
 		let diaVencimentoCartao = parseInt(
-			("0" + meuCartao.dia_fechamento_fatura).slice(-2)
+			('0' + meuCartao.dia_fechamento_fatura).slice(-2)
 		);
 
 		var dataCompra = new Date(
@@ -138,9 +147,105 @@ export class DespesaComponent implements OnInit {
 
 		this.vencimento = this.months[month - 1];
 	}
+	setEnviarExtratos() {
+		this.enviarExtrato = this.enviarExtrato ? false : true;
+	}
+	selectItemExtrato(item, status = 'Selected') {
+		this.itemExtratoSelected = item;
+		const ultimo = item.length - 1;
+		if (item[ultimo] == 'Existe' || item[ultimo] == 'Lancado') {
+			return true;
+		}
+
+		if (status != 'Lancado') {
+			this.extrato.filter((item, index) => {
+				if (item[ultimo] == 'Selected') {
+					this.extrato[index][ultimo] = '';
+					return item;
+				}
+			});
+			const parcelas = item[2].split('/')[1];
+			const qtd_parcelas = parcelas !== undefined ? Number(parcelas) : '';
+			const id_tipo_despesa = parcelas !== undefined ? 2 : 1;
+			const dataCompra = this.helper.formateDateDB2BR(item[0]);
+
+			let valor = new Intl.NumberFormat('pt-BR', {
+				currency: 'BRL',
+			}).format(item[3]);
+
+			// valor = item[3];
+
+			this.procurarNomeCategoria(item[1]);
+			const idCategoria =
+				this.categoriasEncontrada.length > 0
+					? this.categoriasEncontrada[0].id_categoria_despesa
+					: '';
+
+			const referenciaExtrato = item[2] + item[1] + item[0] + item[3];
+			this.setCamposAoSelecionarExtrato(
+				'',
+				valor,
+				item[2],
+				false,
+				id_tipo_despesa,
+				idCategoria,
+				qtd_parcelas,
+				dataCompra,
+				referenciaExtrato
+			);
+		}
+
+		item[ultimo] = status;
+	}
+
+	onFileChanged(event) {
+		const file: any = this.helper.onFileChanged(event);
+		if (!file) {
+			alert('Arquivo não permitido');
+			return;
+		}
+		this.img = file.img;
+		this.selectedFile = file.selectedFile;
+
+		const uploadData = new FormData();
+		if (this.selectedFile) {
+			uploadData.append(
+				'recibo',
+				this.selectedFile,
+				this.selectedFile.name
+			);
+		}
+
+		this.despesaService
+			.uploadeFile(
+				uploadData,
+				this.cartaoEscolhidoParaLancamento.id_cartao_credito
+			)
+			.subscribe((data) => {
+				this.extrato = data;
+			});
+	}
+
 	ajuda() {
 		this.despesaService.ajuda().subscribe((res) => {
 			this.ajudas = res;
+		});
+	}
+	procurarNomeCategoria(categoria) {
+		const caracteres = 4;
+
+		if (categoria.length < caracteres) {
+			this.categoriasEncontrada = [];
+			return false;
+		}
+
+		this.categoriasEncontrada = this.categorias.filter((el) => {
+			const noCategoriaDb = el.no_categoria_despesa.toUpperCase();
+			const categoriaExtrato = categoria.toUpperCase();
+
+			if (noCategoriaDb.indexOf(categoriaExtrato) > -1) {
+				return el;
+			}
 		});
 	}
 	procurarNomeDespesa(busca) {
@@ -162,8 +267,8 @@ export class DespesaComponent implements OnInit {
 		if (!item.id_categoria_despesa) {
 			return false;
 		}
-		this.formCartaoCredito.controls["ds_despesa"].setValue(item.ds_despesa);
-		this.formCartaoCredito.controls["id_categoria_despesa"].setValue(
+		this.formCartaoCredito.controls['ds_despesa'].setValue(item.ds_despesa);
+		this.formCartaoCredito.controls['id_categoria_despesa'].setValue(
 			item.id_categoria_despesa
 		);
 		this.ajudasFiltro = [];
@@ -177,6 +282,8 @@ export class DespesaComponent implements OnInit {
 	getTipoDespesas() {
 		this.tipoDespesaService.getTipoDespesas().subscribe((res) => {
 			this.tiposDespesa = res;
+			console.log(res);
+
 			this.separandoTiposDespesa(this.tiposDespesa);
 		});
 	}
@@ -189,6 +296,8 @@ export class DespesaComponent implements OnInit {
 			if (element.id_tipo_despesa == 1 || element.id_tipo_despesa == 2) {
 				this.tiposConta.push(element);
 			}
+			console.log(this.tiposCartao);
+			console.log(this.tiposConta);
 		});
 	}
 	getCategorias() {
@@ -196,6 +305,7 @@ export class DespesaComponent implements OnInit {
 			.getCategoriaDespesasSelect()
 			.subscribe((res) => {
 				this.categorias = res;
+				console.log(res);
 			});
 	}
 	procurarPessoa() {
@@ -229,14 +339,14 @@ export class DespesaComponent implements OnInit {
 	}
 	getAmigos() {
 		this.amigosService.getAmigos().subscribe((res) => {
-			this.amigos = res["tudo"];
+			this.amigos = res['tudo'];
 			this.amigosFiltrado = this.amigos;
 			this.loader = false;
 		});
 	}
 	configureDia(maisOuMenos) {
-		let dt_despesa = this.formCartaoCredito.get("dt_despesa").value;
-		var dt_despesaArray = dt_despesa.split("/");
+		let dt_despesa = this.formCartaoCredito.get('dt_despesa').value;
+		var dt_despesaArray = dt_despesa.split('/');
 
 		var dateObj = new Date(
 			parseInt(dt_despesaArray[2]),
@@ -245,27 +355,27 @@ export class DespesaComponent implements OnInit {
 		);
 
 		var MyDateString;
-		if (maisOuMenos == "+") {
+		if (maisOuMenos == '+') {
 			dateObj.setDate(dateObj.getDate() + 1);
 		} else {
 			dateObj.setDate(dateObj.getDate() - 1);
 		}
 
 		MyDateString =
-			("0" + dateObj.getDate()).slice(-2) +
-			"/" +
-			("0" + dateObj.getMonth()).slice(-2) +
-			"/" +
+			('0' + dateObj.getDate()).slice(-2) +
+			'/' +
+			('0' + dateObj.getMonth()).slice(-2) +
+			'/' +
 			dateObj.getFullYear();
 
-		this.formCartaoCredito.controls["dt_despesa"].setValue(MyDateString);
+		this.formCartaoCredito.controls['dt_despesa'].setValue(MyDateString);
 		this.cartaoEscolhido();
 	}
 
 	configureDiaVencimento(maisOuMenos) {
-		let dt_despesaVencimento = this.formCartaoCredito.get("dt_vencimento")
-			.value;
-		var dt_despesaVencimentoArray = dt_despesaVencimento.split("/");
+		let dt_despesaVencimento =
+			this.formCartaoCredito.get('dt_vencimento').value;
+		var dt_despesaVencimentoArray = dt_despesaVencimento.split('/');
 
 		var dateObj = new Date(
 			parseInt(dt_despesaVencimentoArray[2]),
@@ -274,20 +384,20 @@ export class DespesaComponent implements OnInit {
 		);
 
 		var MyDateString;
-		if (maisOuMenos == "+") {
+		if (maisOuMenos == '+') {
 			dateObj.setDate(dateObj.getDate() + 1);
 		} else {
 			dateObj.setDate(dateObj.getDate() - 1);
 		}
 
 		MyDateString =
-			("0" + dateObj.getDate()).slice(-2) +
-			"/" +
-			("0" + dateObj.getMonth()).slice(-2) +
-			"/" +
+			('0' + dateObj.getDate()).slice(-2) +
+			'/' +
+			('0' + dateObj.getMonth()).slice(-2) +
+			'/' +
 			dateObj.getFullYear();
 
-		this.formCartaoCredito.controls["dt_vencimento"].setValue(MyDateString);
+		this.formCartaoCredito.controls['dt_vencimento'].setValue(MyDateString);
 	}
 	getDate() {
 		var dateObj = new Date();
@@ -296,74 +406,72 @@ export class DespesaComponent implements OnInit {
 		var year = dateObj.getUTCFullYear();
 
 		let date =
-			("0" + day).slice(-2) + "/" + ("0" + month).slice(-2) + "/" + year;
+			('0' + day).slice(-2) + '/' + ('0' + month).slice(-2) + '/' + year;
 
 		return date;
 	}
 
 	initializeFormEmpty() {
 		this.formCartaoCredito = this.formBuilder.group({
-			nomePessoaSearch: this.formBuilder.control(""),
-			vl_despesac: this.formBuilder.control("", [Validators.required]),
-			ds_despesa: this.formBuilder.control("", [Validators.required]),
+			nomePessoaSearch: this.formBuilder.control(''),
+			vl_despesac: this.formBuilder.control('', [Validators.required]),
+			ds_despesa: this.formBuilder.control('', [Validators.required]),
+			produto: this.formBuilder.control(''),
 			dt_despesa: this.formBuilder.control(this.getDate(), [
 				Validators.required,
 			]),
 			bo_dividir_amigos: this.formBuilder.control(false),
-			id_tipo_despesa: this.formBuilder.control("", [
+			id_tipo_despesa: this.formBuilder.control('', [
 				Validators.required,
 			]),
-			id_categoria_despesa: this.formBuilder.control("", [
+			id_categoria_despesa: this.formBuilder.control('', [
 				Validators.required,
 			]),
-			id_cartao_credito: this.formBuilder.control(""),
-			qtd_parcelas: this.formBuilder.control("1"),
+			id_cartao_credito: this.formBuilder.control(''),
+			qtd_parcelas: this.formBuilder.control('1'),
 			dt_vencimento: this.formBuilder.control(this.getDate()),
+			referenciaExtrato: this.formBuilder.control(''),
 			dividirPessoas: this.formBuilder.array([
 				this.pessoaItem(
 					this.usuarioLogado.id_pessoa,
-					"VOCÊ",
-					"",
+					'VOCÊ',
+					'',
 					this.usuarioLogado.img_perfil
 				),
 			]),
-
-			// vl_despesac
-			// ds_despesa
-			// id_tipo_despesa
-			// id_categoria_despesa
-			// dt_vencimento
-			// qtd_parcelas
-			// id_pessoa
-			// vl_conta_compartilhada_porcentagem
 		});
-		this.setValorRemanescente(0);
+		this.setValorRemanescente(
+			Number(this.formCartaoCredito.get('vl_despesac').value)
+		);
 	}
 	copyValue() {
 		const control = <FormArray>(
-			this.formCartaoCredito.controls["dividirPessoas"]
+			this.formCartaoCredito.controls['dividirPessoas']
 		);
+		let valorDaDespesa = this.formCartaoCredito.value.vl_despesac;
+		const valorTemVirgula = valorDaDespesa.toString().split(',');
+		if (valorTemVirgula.length > 1) {
+			valorDaDespesa = valorDaDespesa.replace('.', '').replace(',', '.');
+		}
 
-		const value =
-			this.formCartaoCredito.value.vl_despesac / control.value.length;
-		console.log(value);
+		const value = valorDaDespesa / control.value.length;
 
 		for (let index = 0; index < control.value.length; index++) {
 			let formPessoa = (<FormArray>(
-				this.formCartaoCredito.get("dividirPessoas")
+				this.formCartaoCredito.get('dividirPessoas')
 			)).at(index);
 			formPessoa.patchValue({
 				valor: value,
 			});
 		}
 		this.setValorRemanescente(
-			this.formCartaoCredito.get("vl_despesac").value
+			this.formCartaoCredito.get('vl_despesac').value
 		);
 	}
 	mudandoValorParaCada(item, indexPessoa) {
 		let total = 0;
 		const control = <FormArray>(
-			this.formCartaoCredito.controls["dividirPessoas"]
+			this.formCartaoCredito.controls['dividirPessoas']
 		);
 
 		control.value.forEach((element) => {
@@ -375,31 +483,43 @@ export class DespesaComponent implements OnInit {
 				this.setValorRemanescente(total);
 				let valorRem = this.valorRemanescente;
 				const formPessoa = (<FormArray>(
-					this.formCartaoCredito.get("dividirPessoas")
+					this.formCartaoCredito.get('dividirPessoas')
 				)).at(indexPessoa);
 				formPessoa.patchValue({
 					valor: this.valorRemanescente,
 				});
 				// zerando valor remanescente
 				this.setValorRemanescente(
-					this.formCartaoCredito.get("vl_despesac").value
+					this.formCartaoCredito.get('vl_despesac').value
 				);
 			}
 		});
 	}
 	setValorRemanescente(total) {
-		let valorCompra = this.formCartaoCredito.get("vl_despesac").value;
-		this.valorRemanescente = valorCompra - total;
-		console.log(valorCompra - total);
+		let valorDaDespesa = this.formCartaoCredito.get('vl_despesac').value;
+		const valorTemVirgula = valorDaDespesa.toString().split(',');
+		if (valorTemVirgula.length > 1) {
+			valorDaDespesa = valorDaDespesa.replace('.', '').replace(',', '.');
+		}
+
+		let valorTotal = total;
+		const totalTemVirgula = total.toString().split(',');
+		if (totalTemVirgula.length > 1) {
+			valorTotal = valorTotal.replace('.', '').replace(',', '.');
+		}
+
+		const valorDespesaNumber = Number(valorDaDespesa) ?? 0;
+		const totalNumber = Number(valorTotal) ?? 0;
+		this.valorRemanescente = valorDespesaNumber - totalNumber;
 	}
 	pessoaItem(
-		id_pessoa = "",
-		no_pessoa = "",
-		email = "",
-		img_perfil = "",
-		valor = "0"
+		id_pessoa = '',
+		no_pessoa = '',
+		email = '',
+		img_perfil = '',
+		valor = '0'
 	): FormGroup {
-		if (id_pessoa != "") {
+		if (id_pessoa != '') {
 			return this.formBuilder.group({
 				id_pessoa: this.formBuilder.control(id_pessoa),
 				no_pessoa: this.formBuilder.control(no_pessoa),
@@ -411,7 +531,7 @@ export class DespesaComponent implements OnInit {
 	}
 
 	addPessoas(pessoa) {
-		this.items = this.formCartaoCredito.get("dividirPessoas") as FormArray;
+		this.items = this.formCartaoCredito.get('dividirPessoas') as FormArray;
 		this.items.push(
 			this.pessoaItem(
 				pessoa.id_pessoa_amigo ?? pessoa.id_pessoa,
@@ -440,26 +560,70 @@ export class DespesaComponent implements OnInit {
 	}
 
 	salvarCartaoCredito(form) {
+		let valorDaDespesa = form.vl_despesac;
+		const valorTemVirgula = valorDaDespesa.toString().split(',');
+		if (valorTemVirgula.length > 1) {
+			valorDaDespesa = valorDaDespesa.replace('.', '').replace(',', '.');
+		}
+		form.vl_despesac = valorDaDespesa;
 		this.despesaService.salvarCartaoCredito(form).subscribe((res) => {
-			this.notificationService.notifySweet("Salvo com sucesso!");
+			this.notificationService.notifySweet('Salvo com sucesso!');
 			this.limparCamposAoSalvar();
+			this.selectItemExtrato(this.itemExtratoSelected, 'Lancado');
 		});
 	}
 	salvarConta(form) {
 		this.despesaService.salvarConta(form).subscribe((res) => {
-			this.notificationService.notifySweet("Salvo com sucesso!");
+			this.notificationService.notifySweet('Salvo com sucesso!');
 			this.limparCamposAoSalvar();
 		});
 	}
 	limparCamposAoSalvar() {
-		this.formCartaoCredito.controls["nomePessoaSearch"].setValue("");
-		this.formCartaoCredito.controls["vl_despesac"].setValue("");
-		this.formCartaoCredito.controls["ds_despesa"].setValue("");
-		this.formCartaoCredito.controls["bo_dividir_amigos"].setValue(false);
-		this.formCartaoCredito.controls["id_tipo_despesa"].setValue("");
-		this.formCartaoCredito.controls["id_categoria_despesa"].setValue("");
-		this.formCartaoCredito.controls["qtd_parcelas"].setValue("1");
+		this.formCartaoCredito.controls['nomePessoaSearch'].setValue('');
+		this.formCartaoCredito.controls['vl_despesac'].setValue('');
+		this.formCartaoCredito.controls['ds_despesa'].setValue('');
+		this.formCartaoCredito.controls['bo_dividir_amigos'].setValue(false);
+		this.formCartaoCredito.controls['id_tipo_despesa'].setValue('');
+		this.formCartaoCredito.controls['id_categoria_despesa'].setValue('');
+		this.formCartaoCredito.controls['qtd_parcelas'].setValue('1');
+		this.formCartaoCredito.controls['referenciaExtrato'].setValue('');
 		// this.formCartaoCredito.controls["dt_vencimento"].setValue("");
+	}
+	setCamposAoSelecionarExtrato(
+		nomePessoaSearch,
+		vl_despesac,
+		ds_despesa,
+		bo_dividir_amigos,
+		id_tipo_despesa,
+		id_categoria_despesa,
+		qtd_parcelas,
+		dtDespesa,
+		referenciaExtrato
+	) {
+		this.formCartaoCredito.controls['nomePessoaSearch'].setValue(
+			nomePessoaSearch
+		);
+		this.formCartaoCredito.controls['vl_despesac'].setValue(vl_despesac);
+		this.formCartaoCredito.controls['ds_despesa'].setValue(ds_despesa);
+		this.formCartaoCredito.controls['bo_dividir_amigos'].setValue(
+			bo_dividir_amigos
+		);
+		this.formCartaoCredito.controls['id_tipo_despesa'].setValue(
+			id_tipo_despesa
+		);
+		this.formCartaoCredito.controls['id_categoria_despesa'].setValue(
+			id_categoria_despesa
+		);
+		this.formCartaoCredito.controls['qtd_parcelas'].setValue(qtd_parcelas);
+		this.formCartaoCredito.controls['dt_despesa'].setValue(dtDespesa);
+
+		this.formCartaoCredito.controls['referenciaExtrato'].setValue(
+			referenciaExtrato
+		);
+
+		// this.formCartaoCredito.controls["dt_vencimento"].setValue("");
+
+		this.setValorRemanescente(0);
 	}
 
 	oqueLancar(frase, qualLancar) {
@@ -467,10 +631,10 @@ export class DespesaComponent implements OnInit {
 		this.despesaConta = false;
 
 		switch (qualLancar) {
-			case "dcc":
+			case 'dcc':
 				this.despesaCartaoCredito = true;
 				break;
-			case "dct":
+			case 'dct':
 				this.despesaConta = true;
 				break;
 		}
@@ -479,7 +643,7 @@ export class DespesaComponent implements OnInit {
 	dividirComAmigo(amigo) {
 		console.log(amigo);
 		// this.amigosParaDividir.push(amigo);
-		this.notificationService.notifySweet("Adicionado");
+		this.notificationService.notifySweet('Adicionado');
 		// this.amigosFiltrado.splice(this.amigosFiltrado.indexOf(amigo), 1);
 		// this.amigos.splice(this.amigos.indexOf(amigo), 1);
 		this.addPessoas(amigo);

@@ -1,15 +1,15 @@
-import { Component, OnInit, OnDestroy, Renderer2 } from "@angular/core";
-import { version } from "../../../../package.json";
+import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 
 @Component({
-	selector: "app-config",
-	templateUrl: "./config.component.html",
-	styleUrls: ["./config.component.css"],
+	selector: 'app-config',
+	templateUrl: './config.component.html',
+	styleUrls: ['./config.component.css'],
 })
 export class ConfigComponent implements OnInit {
-	theme: string = "theme-whbl";
+	theme: string = 'theme-whbl';
+	version: any = 1;
 	darkmode: boolean;
-	pathcss: string = "../assets/css/theme-dark-full.min.css";
+	pathcss: string = '../assets/css/theme-dark-full.min.css';
 
 	constructor(private renderer: Renderer2) {
 		this.renderer.addClass(document.body, this.theme);
@@ -17,26 +17,26 @@ export class ConfigComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.darkmode =
-			localStorage.getItem("darkmode") == "true" ? true : false;
+			localStorage.getItem('darkmode') == 'true' ? true : false;
 		this.setTheme();
 		this.verifyVersion();
 	}
 	verifyVersion() {
-		if (version != this.getVersionLocalStorage()) {
-			console.log("refresh and set version");
-			this.setVersionLocalStorage(version);
+		if (this.version != this.getVersionLocalStorage()) {
+			console.log('refresh and set version');
+			this.setVersionLocalStorage(this.version);
 			window.location.reload();
 		}
 	}
 	setDarkMode() {
-		localStorage.setItem("darkmode", JSON.parse(this.darkmode.toString()));
+		localStorage.setItem('darkmode', JSON.parse(this.darkmode.toString()));
 		this.setTheme();
 	}
 	getVersionLocalStorage() {
-		return localStorage.getItem("rifa_version");
+		return localStorage.getItem('rifa_version');
 	}
 	setVersionLocalStorage(version) {
-		return localStorage.setItem("rifa_version", version);
+		return localStorage.setItem('rifa_version', version);
 	}
 
 	// setTheme(theme) {
@@ -54,19 +54,19 @@ export class ConfigComponent implements OnInit {
 	loadCSS() {
 		// Get HTML head element
 		if (this.darkmode) {
-			var head = document.getElementsByTagName("HEAD")[0];
+			var head = document.getElementsByTagName('HEAD')[0];
 
 			// Create new link Element
-			var link = document.createElement("link");
+			var link = document.createElement('link');
 			// set the attributes for link element
-			link.rel = "stylesheet";
-			link.type = "text/css";
-			link.id = "iddarkmode";
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.id = 'iddarkmode';
 			link.href = this.pathcss;
 			// Append link element to HTML head
 			head.appendChild(link);
 		} else {
-			var sheet = document.getElementById("iddarkmode");
+			var sheet = document.getElementById('iddarkmode');
 			if (sheet != null) sheet.parentNode.removeChild(sheet);
 		}
 	}

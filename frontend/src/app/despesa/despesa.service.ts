@@ -1,16 +1,16 @@
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { tap, filter } from "rxjs/operators";
-import { HttpClient } from "@angular/common/http";
-import { Router, NavigationEnd } from "@angular/router";
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { tap, filter } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Router, NavigationEnd } from '@angular/router';
 
-import { Despesa } from "./despesa.model";
+import { Despesa } from './despesa.model';
 
-import { NotificationService } from "../shared/messages/notification.service";
-import { API } from "../app.api";
+import { NotificationService } from '../shared/messages/notification.service';
+import { API } from '../app.api';
 
 @Injectable({
-	providedIn: "root",
+	providedIn: 'root',
 })
 export class DespesaService {
 	constructor(
@@ -32,6 +32,9 @@ export class DespesaService {
 	despesasAguardandoAprovacao(form) {
 		return this.http.post<any>(`${API}/despesas_aguardando`, form);
 	}
+	uploadeFile(form, cartao) {
+		return this.http.post<any>(`${API}/uploadeFileDespesa/${cartao}`, form);
+	}
 
 	getdespesaById(id: string): Observable<Despesa> {
 		return this.http.get<Despesa>(`${API}//${id}`);
@@ -47,9 +50,9 @@ export class DespesaService {
 	update(form, id) {
 		return this.http.put(`${API}//${id}`, form).subscribe(
 			(data) => {
-				if (data["response"]) {
-					this.notify("Registro Alterado Com Sucesso!");
-					this.router.navigate(["/"]);
+				if (data['response']) {
+					this.notify('Registro Alterado Com Sucesso!');
+					this.router.navigate(['/']);
 				}
 				console.log(data);
 			},
@@ -65,7 +68,7 @@ export class DespesaService {
 	notify(msg) {
 		this.notificationService.notifySweet(msg);
 	}
-	goTo(path: string = "depoimento") {
+	goTo(path: string = 'depoimento') {
 		this.router.navigate([`/${path}`]);
 	}
 }

@@ -1,6 +1,6 @@
 <!-- Modal -->
-<div class="modal fade" id="modalPagamento"  tabindex="-1" role="dialog"
-	aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalPagamento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -19,13 +19,124 @@
 				<div class="file display-flex flex-column center-center">
 					<input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput
 						[(ngModel)]="comprovante" />
-					<div class="uploadArquivo" [style.background-image]=" 'url(' + img + ' )' | safeHtml: 'style' "> </div>
-					<button class="btn btn-upload" style="margin: 15px;" (click)="fileInput.click()"> Escolher comprovante </button>
+					<div class="uploadArquivo" [style.background-image]=" 'url(' + img + ' )' | safeHtml: 'style' ">
+					</div>
+					<button class="btn btn-upload" style="margin: 15px;" (click)="fileInput.click()"> Escolher
+						comprovante </button>
 				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" (click)="pagarDespesa()">Pagar</button>
 			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="alterarConta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Alterar despesa</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Fechar" #closeModalAlterarDespesa>
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<h2>
+					<i class="{{movimentacaoEscolhida?.icon}}"></i>
+					{{movimentacaoEscolhida?.ds_despesa}} -
+					<small>({{ detalhesDespesa?.['despesa']?.produto }})</small>
+					{{movimentacaoEscolhida?.parcelas}}
+					<small>
+						{{ detalhesDespesa?.['despesa']?.dt_despesa | date: "dd/MM/yyyy" }}
+					</small>
+					<br>
+
+					<input
+						class="form-control"
+						(change)="update(detalhesDespesa)"
+						type='text'
+						[(ngModel)]="detalhesDespesaDespesaVlDespesac"
+						mask="separator.2" [thousandSeparator]="'.'" [decimalMarker]="','" prefix="R$ "
+						style="
+						    width: 220px;
+							text-align: left;
+							border: none;
+							font-size: 2rem;
+							background: #eee;
+						"
+					>
+					<br>
+					<div *ngIf="detalhesDespesa?.['despesaCartao']?.id_despesa_cartao" style=" font-size: 1rem; ">
+						<br>{{ detalhesDespesa?.['despesaCartao']?.no_cartao_credito }}
+						<br>{{ detalhesDespesa?.['despesaCartao']?.numero }}
+						<br>{{ detalhesDespesa?.['despesaCartao']?.bandeira }}
+					</div>
+					<div style="
+						display: flex;
+						justify-content: end;
+						padding-bottom: 15px;
+					">
+						<button (click)="deletarDespesa(movimentacaoEscolhida?.id_despesa)" class="btn btn-danger">Deletar despesa e parcelas</button>
+					</div>
+				</h2>
+				<div class="content">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">Vencimento</th>
+								<th scope="col">Parcelas</th>
+								<th scope="col">Valor a pagar</th>
+								<th scope="col"
+									*ngFor="let compartilhadaItem of detalhesDespesa?.['despesaCompartilhada']">
+									{{ compartilhadaItem?.no_pessoa | helpers: 'firstName' }}
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let items of detalhesDespesa?.['despesaItem']">
+
+								<td>
+									<!-- {{ items?.vencimento }} -->
+									<!-- {{ items?.dt_vencimento | date: "dd/MM/yyyy" }} -->
+									<input
+										[(ngModel)]="items.vencimento"
+										#dt_vencimento
+										(change)="update(detalhesDespesa)"
+										class="form-control text-center"
+										style="
+											width: 115px;
+										"
+									placeholder="" mask="dX/M0/0000" />
+								</td>
+
+
+								<td>{{ items?.nu_parcela_atual }}/{{ items?.nu_parcela}}</td>
+								<td>
+									{{
+									items?.vl_despesa
+									| currency: "BRL":true
+									}}
+								</td>
+								<td *ngFor="let compartilhadaItem of detalhesDespesa?.['despesaCompartilhada']">
+									<input
+										[(ngModel)]="compartilhadaItem.valor_cada"
+
+										(change)="update(detalhesDespesa)"
+										class="form-control text-center"
+										value=" 123 "
+										style="
+											width: 115px;
+										"
+										mask="separator.2" [thousandSeparator]="'.'" [decimalMarker]="','" prefix="R$ " />
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<!-- <pre>{{ detalhesDespesa | json }}</pre> -->
+				</div>
+			</div>
+
 		</div>
 	</div>
 </div>
@@ -45,77 +156,82 @@
 			</div>
 			<div class="row margin-top-15">
 				<div class="col-md-12">
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th scope="col">Vencimento</th>
-							<th scope="col">Descrição</th>
-							<th scope="col">Categoria</th>
-							<th scope="col">Valor compra</th>
-							<th scope="col">Parcelas</th>
-							<th scope="col">Valor a pagar</th>
-							<th scope="col"></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr *ngFor="let movimentacao of movimentacoes">
-							<td>
-								{{
-									movimentacao.dt_vencimento
-										| date: "dd/MM/yyyy"
-								}}
-							</td>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">Compra</th>
+								<th scope="col">Descrição</th>
+								<th scope="col">Categoria</th>
+								<th scope="col">Valor compra</th>
+								<th scope="col">Parcelas</th>
+								<th scope="col">Valor a pagar</th>
+								<th scope="col"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let movimentacao of movimentacoes">
+								<td>
+									{{
+									movimentacao.dt_despesa
+									| date: "dd/MM/yyyy"
+									}}
+								</td>
 
-							<td>
-								{{ movimentacao.ds_despesa }}
-								<i *ngIf="movimentacao.bo_cartao" style="margin-left: 5px; color: #cbccce"
-									class="fa fa-credit-card"></i>
-								<i *ngIf="movimentacao.bo_amigo" style="margin-left: 5px; color: #cbccce"
-									class="fa fa-users"></i>
-								<span style="font-size: 0.5em">
-									{{ movimentacao.responsavel }}
-								</span>
-								<span *ngIf="movimentacao.pago" class="mov-pg" title="{{movimentacao.pagamento.created_at}}"
-								>
-									Pago
-									<a target="_BLANK" href="{{imgApi}}/{{movimentacao?.pagamento?.comprovante}}" *ngIf="movimentacao?.pagamento?.comprovante">
-										<i  class="fa fa-receipt"></i>
-									</a>
-								</span>
-							</td>
-							<td>
-								<i class="{{ movimentacao.icon }}"></i>
-								{{ movimentacao.no_categoria_despesa }}
-							</td>
-							<!-- <td>
+								<td>
+									{{ movimentacao.ds_despesa }} - <small>({{ movimentacao?.produto }})</small>
+									<i *ngIf="movimentacao.bo_cartao" style="margin-left: 5px; color: #cbccce"
+										class="fa fa-credit-card"></i>
+									<i *ngIf="movimentacao.bo_amigo" style="margin-left: 5px; color: #cbccce"
+										class="fa fa-users"></i>
+									<span style="font-size: 0.5em">
+										{{ movimentacao.responsavel }}
+									</span>
+									<span *ngIf="movimentacao.pago" class="mov-pg"
+										title="{{movimentacao.pagamento.created_at}}">
+										Pago
+										<a target="_BLANK" href="{{imgApi}}/{{movimentacao?.pagamento?.comprovante}}"
+											*ngIf="movimentacao?.pagamento?.comprovante">
+											<i class="fa fa-receipt"></i>
+										</a>
+									</span>
+								</td>
+								<td>
+									<i class="{{ movimentacao.icon }}"></i>
+									<small> {{ movimentacao.no_categoria_despesa }}</small>
+								</td>
+								<!-- <td>
 								{{
 									movimentacao.vl_despesac
 										| currency: "BRL":true
 								}}
 							</td> -->
-							<td>
-								{{
+								<td>
+									{{
 									movimentacao.vl_total_minha_parte
-										| currency: "BRL":true
-								}}
-							</td>
-							<td>{{ movimentacao.parcelas }}</td>
-							<td>
-								{{
+									| currency: "BRL":true
+									}}
+								</td>
+								<td>{{ movimentacao.parcelas }}</td>
+								<td>
+									{{
 									movimentacao.vl_despesa
-										| currency: "BRL":true
-								}}
-							</td>
-							<td>
-								<div *ngIf="!movimentacao.pago" class="action-pg" data-toggle="modal"
-									data-target="#modalPagamento" (click)="movimentacaoSelecionada(movimentacao)">
-									Pagar
-								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+									| currency: "BRL":true
+									}}
+								</td>
+								<td style="display:flex">
+									<div *ngIf="!movimentacao.pago" class="action-pg" data-toggle="modal"
+										data-target="#modalPagamento" (click)="movimentacaoSelecionada(movimentacao)">
+										Pagar
+									</div>
+									<div class="action-pg" data-toggle="modal" data-target="#alterarConta"
+										(click)="movimentacaoSelecionadaAlterar(movimentacao)">
+										<i class="fa fa-edit"></i>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 				<!-- <pre>{{ amigosPagar | json }}</pre> -->
 			</div>
 		</div>
@@ -127,9 +243,9 @@
 			<span class="text text-primary">Despesas no meu cartão</span>
 			<p class="valorResumo">
 				{{
-					resumo?.minhasDespesasComCartao +
-						resumo?.despesasCompartilhadasComAmigosMeuCartao
-						| currency: "BRL":true
+				resumo?.minhasDespesasComCartao +
+				resumo?.despesasCompartilhadasComAmigosMeuCartao
+				| currency: "BRL":true
 				}}
 			</p>
 		</div>
@@ -150,8 +266,8 @@
 			<span class="text-success">Despesas no cartão do amigo</span>
 			<p class="valorResumo">
 				{{
-					resumo?.despesasCompartilhadasComAmigosCartaoDoAmigo
-						| currency: "BRL":true
+				resumo?.despesasCompartilhadasComAmigosCartaoDoAmigo
+				| currency: "BRL":true
 				}}
 			</p>
 		</div>
@@ -160,9 +276,9 @@
 			<span class="text-info">Despesas em conta</span>
 			<p class="valorResumo">
 				{{
-					resumo?.minhasDespesasEmConta +
-						resumo?.despesasCompartilhadasComAmigosNaMinhaConta
-						| currency: "BRL":true
+				resumo?.minhasDespesasEmConta +
+				resumo?.despesasCompartilhadasComAmigosNaMinhaConta
+				| currency: "BRL":true
 				}}
 			</p>
 		</div>
@@ -183,8 +299,8 @@
 			<span class="text-warning">Despesas na conta do amigo</span>
 			<p class="valorResumo">
 				{{
-					resumo?.despesasCompartilhadasComAmigosNaContaDoAmigo
-						| currency: "BRL":true
+				resumo?.despesasCompartilhadasComAmigosNaContaDoAmigo
+				| currency: "BRL":true
 				}}
 			</p>
 		</div>

@@ -3,10 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  api: "http://127.0.0.1:8000/api",
-  apiPublic: "http://127.0.0.1:8000/public",
-  apiDominio: "http://127.0.0.1:8000",
+	production: false,
+	api: 'http://127.0.0.1:8000/api',
+	apiPublic: 'http://127.0.0.1:8000/public',
+	apiDominio: 'http://127.0.0.1:8000',
+
+	// api: 'https://apifinant.siagesc.com.br/api',
+	// apiPublic: 'https://apifinant.siagesc.com.br/public',
+	// apiDominio: 'https://apifinant.siagesc.com.br',
+	apiSite: 'https://finant.siagesc.com.br',
 };
 
 /*

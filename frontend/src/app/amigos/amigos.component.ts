@@ -1,18 +1,18 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-import { NotificationService } from "../shared/messages/notification.service";
-import { Amigos } from "./amigos.model";
-import { AmigosService } from "./amigos.service";
-import { Helper } from "../helper";
-import { BreadcrumbService } from "../layout/breadcrumb/breadcrumb.service";
-import { APIDominio } from "../app.api";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { NotificationService } from '../shared/messages/notification.service';
+import { Amigos } from './amigos.model';
+import { AmigosService } from './amigos.service';
+import { Helper } from '../helper';
+import { BreadcrumbService } from '../layout/breadcrumb/breadcrumb.service';
+import { APIDominio } from '../app.api';
 
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 
 @Component({
-	selector: "app-amigos",
-	templateUrl: "./amigos.component.html",
-	styleUrls: ["./amigos.component.css"],
+	selector: 'app-amigos',
+	templateUrl: './amigos.component.html',
+	styleUrls: ['./amigos.component.css'],
 })
 export class AmigosComponent implements OnInit {
 	amigos: Amigos[];
@@ -29,7 +29,7 @@ export class AmigosComponent implements OnInit {
 	// loaders
 	fimCarregamentoProcurarPessoa: string = null;
 
-	nomePessoaModel: string = "";
+	nomePessoaModel: string = '';
 	pessoas: any[] = [];
 
 	constructor(
@@ -46,8 +46,8 @@ export class AmigosComponent implements OnInit {
 	}
 	breadCrumb() {
 		this.breadcrumbService.chosenPagina([
-			{ no_rotina: "Amigos", ds_url: "amigos", active: "" },
-			{ no_rotina: "Inserir", ds_url: "mudar-texto", active: "active" },
+			{ no_rotina: 'Amigos', ds_url: 'amigos', active: '' },
+			{ no_rotina: 'Inserir', ds_url: 'mudar-texto', active: 'active' },
 		]);
 	}
 	procurarPessoa() {
@@ -56,14 +56,16 @@ export class AmigosComponent implements OnInit {
 			.procurarPessoa(this.nomePessoaModel)
 			.subscribe((res) => {
 				this.fimCarregamentoProcurarPessoa = !res.length
-					? "Nenhuma registro encontrado"
+					? 'Nenhuma registro encontrado'
 					: null;
 				this.pessoas = res;
 			});
 	}
 	getAmigos() {
 		this.amigosService.getAmigos().subscribe((res) => {
-			this.amigos = res["tudo"];
+			console.log(res);
+
+			this.amigos = res['tudo'];
 			this.loader = false;
 		});
 	}
@@ -78,9 +80,9 @@ export class AmigosComponent implements OnInit {
 		this.amigosService
 			.solicitarAmizade(pessoa.id_pessoa)
 			.subscribe((res) => {
-				this.amigos.push(res["dados"]);
+				this.amigos.push(res['dados']);
 				this.notificationService.notifySweet(
-					"Solicitação de amizade enviada"
+					'Solicitação de amizade enviada'
 				);
 				this.loader = false;
 			});
@@ -89,9 +91,9 @@ export class AmigosComponent implements OnInit {
 		this.amigosService
 			.aceitarOuRecusar(solicitacao.id_amigos, situacao)
 			.subscribe((res) => {
-				let msg = "Amizade feita!";
-				if (situacao == "r") {
-					msg = "recusado!";
+				let msg = 'Amizade feita!';
+				if (situacao == 'r') {
+					msg = 'recusado!';
 				}
 				this.notificationService.notifySweet(msg);
 				this.solicitacoesAmizade.splice(
@@ -104,12 +106,12 @@ export class AmigosComponent implements OnInit {
 	inativar(amigo) {
 		if (
 			confirm(
-				"Você tem certeza que deseja remover o (a)  AmigosComponent "
+				'Você tem certeza que deseja remover o (a)  AmigosComponent '
 			)
 		) {
 			this.loader = true;
 			this.amigosService.inativar(amigo.id_amigos).subscribe((data) => {
-				if (data["response"]) {
+				if (data['response']) {
 					amigo.bo_ativo = 0;
 					// this.amigos.splice(this.amigos.indexOf(amigo),1)
 					this.notificationService.notifySweet(`amigo inativado`);

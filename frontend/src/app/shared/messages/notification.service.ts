@@ -1,37 +1,22 @@
-import { EventEmitter } from "@angular/core";
+import { EventEmitter } from '@angular/core';
 import swal from 'sweetalert2';
 
-export class NotificationService{
-    constructor(  ) { }
+export class NotificationService {
+	constructor() {}
 
-    notifier = new EventEmitter<string>()
+	notifier = new EventEmitter<string>();
 
-
-    notifySweet(message:string){
-        swal.fire({
-            position: 'top',
-            type: 'success',
-            title: `${message}`,
-            showConfirmButton: false,
-            timer: 1500
-          })
-    }
-    notifyError(message:string){
-        swal.fire({
-            position: 'top',
-            type: 'error',
-            title: `${message}`,
-            showConfirmButton: false,
-            timer: 4500
-          })
-    }
-    notifyAlert(message:string){
-        swal.fire({
-            position: 'top',
-            type: 'warning',
-            title: `${message}`,
-            showConfirmButton: false,
-            timer: 1500
-          })
-    }
+	notifySweet(message: string) {
+		swal.fire(`${message}`, '', 'success');
+	}
+	notifyError(message: string) {
+		swal.fire({
+			icon: 'error',
+			title: 'Oops...',
+			text: `${message}`,
+		});
+	}
+	notifyAlert(message: string) {
+		swal.fire(`${message}`, '', 'info');
+	}
 }
