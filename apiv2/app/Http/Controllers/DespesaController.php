@@ -35,7 +35,7 @@ class DespesaController extends Controller
     public function uploadItau($request) {
         if ($file = $request->file('recibo')) {
             try {
-                $arExtrato = Helpers::readCSVExtrato($file, ['delimiter' => ',']);
+                $arExtrato = Helpers::readCSVExtrato($file, ['delimiter' => ';']);
                 $ar = [];
                 $i = 0;
                 foreach ($arExtrato as $key => $value) {
