@@ -117,6 +117,17 @@ class Helpers
 
         return (float)$value;
     }
+    public static function removerCaracteresMoeda($value)
+    {
+        $value = str_replace('+', '', $value);
+        if($value == 'Valor') {
+            return $value;
+        }
+
+        $value = str_replace('R$', '', $value);
+
+        return (float)$value;
+    }
     public static function removerMaisDeDoisEspacos($value){
         return str_replace('  ', '', $value);
     }
