@@ -219,7 +219,10 @@ export class DespesaComponent implements OnInit {
 		this.despesaService
 			.uploadeFile(
 				uploadData,
-				this.cartaoEscolhidoParaLancamento.id_cartao_credito
+				this.cartaoEscolhidoParaLancamento.no_cartao_credito.replace(
+					' ',
+					''
+				)
 			)
 			.subscribe((data) => {
 				this.extrato = data;
@@ -587,6 +590,7 @@ export class DespesaComponent implements OnInit {
 		this.formCartaoCredito.controls['id_categoria_despesa'].setValue('');
 		this.formCartaoCredito.controls['qtd_parcelas'].setValue('1');
 		this.formCartaoCredito.controls['referenciaExtrato'].setValue('');
+		this.formCartaoCredito.controls['produto'].setValue('');
 		// this.formCartaoCredito.controls["dt_vencimento"].setValue("");
 	}
 	setCamposAoSelecionarExtrato(

@@ -19,6 +19,17 @@ class DespesaController extends Controller
 
     public function uploadFileDespesa(Request $request, $id)
     {
+        $nameBancoLowerCase = strtolower($id);
+        if (str_contains($nameBancoLowerCase, 'nubank')) {
+            return $this->uploadNubank($request);
+        }else if (str_contains($nameBancoLowerCase, 'inter')) {
+            return $this->uploadBancoInter($request);
+        }
+
+
+    }
+
+    public function uploadNubank($request) {
         if ($file = $request->file('recibo')) {
             try {
                 $arExtrato = Helpers::readCSVExtrato($file, ['delimiter' => ',']);
@@ -37,6 +48,52 @@ class DespesaController extends Controller
                 }
                 // unset($arExtrato[0]);
                 return $arExtrato;
+            } catch (\Throwable $th) {
+                return response(['response' => $th->getMessage(), 400]);
+            }
+        }
+    }
+    public function uploadBancoInter($request) {
+        if ($file = $request->file('recibo')) {
+            try {
+                $arExtrato = Helpers::readCSVExtrato($file, ['delimiter' => ';']);
+                $ar = [];
+                $i = 0;
+                foreach ($arExtrato as $key => $item) {
+                    if(count($item) < 5){
+                        unset($arExtrato[$key]);
+                        continue;
+                    }
+
+                    $arTipoCompra = explode('Parcela ', $item[2]);
+                    $descricao = $item[1];
+                    if(count($arTipoCompra) > 1){
+                        $descricao = "{$descricao} {$arTipoCompra[1]}";
+                    }
+                    $ar[$i][0] = Helpers::convertdateBr2DB($item[0]);
+                    $ar[$i][1] = mb_convert_encoding($item[2], 'UTF-8', 'UTF-8');
+                    $ar[$i][2] = Helpers::removerMaisDeDoisEspacos($descricao);
+                    $ar[$i][3] = Helpers::justCurrency($item[3]);
+                    $ar[$i][4] = '';
+
+
+                    $referenciaExtrato = $ar[$i][2] . $ar[$i][1] . $ar[$i][0] . $ar[$i][3];
+                    $idUsuario = auth()->user()->id_usuario;
+                    $despesa = \App\Despesa::whereNotNull('referencia_extrato')
+                        ->where('referencia_extrato', $referenciaExtrato)
+                        ->where('id_usuario', $idUsuario)
+                        ->first()
+                    ;
+
+
+
+                    if($despesa) {
+                        $ar[$i][4] = 'Existe';
+                    }
+                    $i++;
+                }
+                // unset($arExtrato[0]);
+                return $ar;
             } catch (\Throwable $th) {
                 return response(['response' => $th->getMessage(), 400]);
             }

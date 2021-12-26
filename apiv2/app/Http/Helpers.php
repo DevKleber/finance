@@ -102,4 +102,22 @@ class Helpers
         fclose($file_handle);
         return $line_of_text;
     }
+    public static function justCurrency($value)
+    {
+        $value = str_replace('+', '', $value);
+        if($value == 'Valor') {
+            return $value;
+        }
+
+        $value = str_replace('R$', '', $value);
+        $value = str_replace('.', '', $value);
+        $value = str_replace(',', '.', $value);
+        $value = str_replace('+', '', $value);
+        $value = str_replace('-', '', $value);
+
+        return (float)$value;
+    }
+    public static function removerMaisDeDoisEspacos($value){
+        return str_replace('  ', '', $value);
+    }
 }

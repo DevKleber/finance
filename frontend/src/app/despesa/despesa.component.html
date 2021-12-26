@@ -1,13 +1,17 @@
 <div class="row">
 
 	<div [ngClass]="enviarExtrato ? 'col-md-4' : 'col-md-2 col-hd-1'">
-		<div class="file display-flex flex-column center-center" *ngIf="enviarExtrato">
+		<div class="file display-flex flex-column center-center" *ngIf="enviarExtrato && cartaoEscolhidoParaLancamento.id_cartao_credito">
 			<input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput
 				[(ngModel)]="anexoBanco" />
 			<div class="uploadArquivoExtrato" [style.background-image]=" 'url(' + img + ' )' | safeHtml: 'style' "> </div>
 			<button class="btn btn-upload" style="margin: 15px;" (click)="fileInput.click()"> Anexe a sua fatura </button>
 		</div>
 		<div class="extrato" *ngIf="enviarExtrato">
+				<div *ngIf="!cartaoEscolhidoParaLancamento.id_cartao_credito">
+					Para enviar uma fatura, selecione um cartão de crédito.
+				</div>
+
 				<div class="extrato-item" *ngFor="let item of extrato" (click)="selectItemExtrato(item,'Selected')">
 					<div class="container-extrato extrato-status{{item?.[item.length - 1]}}">
 						<div class="extrato-item-descricao">
