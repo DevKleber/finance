@@ -54,7 +54,7 @@ class DespesaController extends Controller
 
                     $ar[$i][0] = Helpers::convertdateBr2DB($value[0]);
                     $ar[$i][1] = $value[2];
-                    $ar[$i][2] = mb_convert_encoding($value[1], 'UTF-8', 'UTF-8');
+                    $ar[$i][2] = Helpers::removerMaisDeDoisEspacos(mb_convert_encoding($value[1], 'UTF-8', 'UTF-8'));
                     $ar[$i][3] = Helpers::removerCaracteresMoeda($value[3]);
                     $ar[$i][4] = "";
 
@@ -70,23 +70,6 @@ class DespesaController extends Controller
                     }
                     $i++;
                 }
-                return $ar;
-
-
-                // foreach ($arExtrato as $key => $item) {
-                //     $referenciaExtrato = $item[2] . $item[1] . $item[0] . $item[3];
-                //     $idUsuario = auth()->user()->id_usuario;
-                //     $despesa = \App\Despesa::whereNotNull('referencia_extrato')
-                //         ->where('referencia_extrato', $referenciaExtrato)
-                //         ->where('id_usuario', $idUsuario)
-                //         ->first()
-                //     ;
-                //     if($despesa) {
-                //         $lastIndice = count($item) - 1;
-                //         $arExtrato[$key][$lastIndice] = 'Existe';
-                //     }
-                // }
-                // unset($arExtrato[0]);
                 return $ar;
             } catch (\Throwable $th) {
                 return response(['response' => $th->getMessage(), 400]);

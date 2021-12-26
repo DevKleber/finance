@@ -108,6 +108,9 @@ class Helpers
         if($value == 'Valor') {
             return $value;
         }
+        if($value == '-127.98') {
+            $a = $value;
+        }
 
         $value = str_replace('R$', '', $value);
         $value = str_replace('.', '', $value);
@@ -119,6 +122,13 @@ class Helpers
     }
     public static function removerCaracteresMoeda($value)
     {
+        if(count(explode('-', $value)) > 1) {
+            $value = str_replace('R$', '', $value);
+            $value = str_replace(',', '.', $value);
+            $value = str_replace(' ', '', $value);
+            return (float)$value;
+        }
+
         $value = str_replace('+', '', $value);
         if($value == 'Valor') {
             return $value;
