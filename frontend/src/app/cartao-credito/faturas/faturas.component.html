@@ -40,7 +40,7 @@
 							</td>
 							<td>
 								{{ movimentacao.ds_despesa }} -
-								<small *ngIf="movimentacao?.produto.length > 0">
+								<small *ngIf="movimentacao?.produto">
 									({{ movimentacao?.produto }})
 								</small>
 								<span *ngIf="movimentacao.pago" class="mov-pg" >

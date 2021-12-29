@@ -179,7 +179,7 @@
 
 								<td>
 									{{ movimentacao.ds_despesa }} -
-									<small *ngIf="movimentacao?.produto.length > 0">
+									<small *ngIf="movimentacao?.produto">
 										({{ movimentacao?.produto }})
 									</small>
 									<i *ngIf="movimentacao.bo_cartao" style="margin-left: 5px; color: #cbccce"
