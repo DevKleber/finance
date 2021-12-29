@@ -8,10 +8,10 @@ export const environment = {
 	apiPublic: 'http://127.0.0.1:8000/public',
 	apiDominio: 'http://127.0.0.1:8000',
 
-	// api: 'https://apifinant.siagesc.com.br/api',
-	// apiPublic: 'https://apifinant.siagesc.com.br/public',
-	// apiDominio: 'https://apifinant.siagesc.com.br',
-	apiSite: 'https://finant.siagesc.com.br',
+	// api: 'https://apifinant.wiseller.com.br/api',
+	// apiPublic: 'https://apifinant.wiseller.com.br/public',
+	// apiDominio: 'https://apifinant.wiseller.com.br',
+	apiSite: 'https://finant.wiseller.com.br',
 };
 
 /*
