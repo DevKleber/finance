@@ -39,7 +39,10 @@
 								}}
 							</td>
 							<td>
-								{{ movimentacao.ds_despesa }}
+								{{ movimentacao.ds_despesa }} -
+								<small *ngIf="movimentacao?.produto.length > 0">
+									({{ movimentacao?.produto }})
+								</small>
 								<span *ngIf="movimentacao.pago" class="mov-pg" >
 									<!-- despesa minha sem compartilhar com amigos -->
 									Pago
