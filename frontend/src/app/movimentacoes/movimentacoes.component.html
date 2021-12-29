@@ -178,9 +178,9 @@
 								</td>
 
 								<td>
-									{{ movimentacao.ds_despesa }} -
+									{{ movimentacao.ds_despesa }}
 									<small *ngIf="movimentacao?.produto">
-										({{ movimentacao?.produto }})
+										- ({{ movimentacao?.produto }})
 									</small>
 									<i *ngIf="movimentacao.bo_cartao" style="margin-left: 5px; color: #cbccce"
 										class="fa fa-credit-card"></i>
