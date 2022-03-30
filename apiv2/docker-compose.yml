@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  finance-api:
+    build: .
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    container_name: finance-api
+    ports:
+      - "8081:80"
+    volumes:
+      - .:/var/www/html
+    working_dir: /var/www/html
+    networks:
+      - docker-mysql
+  mysql-finance:
+    image: 'mysql'
+    container_name: mysql-finance
+    ports:
+        - 3306:3306
+    environment:
+      # MYSQL_ROOT_USER: 'root'
+      MYSQL_ROOT_PASSWORD: '3ptp3tc'
+      # MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+      - '/.docker/mysql:/var/lib/mysql'
+    networks:
+      - docker-mysql
+networks:
+  docker-mysql:
+    driver: bridge
