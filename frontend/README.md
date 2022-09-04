@@ -1,27 +1,24 @@
-# Finant
+# [finant.siagesc.com.br](https://finant.wiseller.com.br/#/dashboard)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.2.
+## Participants
 
-## Development server
+[<img src="https://avatars0.githubusercontent.com/u/15957216?s=460&v=4" width="75px;"/>](https://github.com/DevKleber) <br />
+[Kleber S.](https://github.com/DevKleber)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Dependencies
 
-## Code scaffolding
+npm install -g @angular/cli  
+https://nodejs.org/en/
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+PHP 7.4  
+https://getcomposer.org/download/  
+composer global require laravel/installer
 
-## Build
+MYSQL
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Demonstration
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+![Home](https://i.imgur.com/mtBZLVt.png)
+![Cart](https://i.imgur.com/O5bZ0fC.jpg)
+![Cart](https://i.imgur.com/oW9uvEO.png)
+![Despesa](https://i.imgur.com/c0L9RBA.png)
